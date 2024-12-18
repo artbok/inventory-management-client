@@ -45,6 +45,7 @@ app.*.map.json
 /test
 /web
 /windows
+/test
 .metadata
 pubspec.lock
 
