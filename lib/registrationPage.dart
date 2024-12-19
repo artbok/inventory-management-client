@@ -56,7 +56,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1.0)),
-                border: UnderlineInputBorder(),
               ),
             ),
             const Text("Password",
@@ -73,18 +72,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             ElevatedButton(onPressed: registerUser, child: const Text("Save")),
             ElevatedButton(
-              onPressed: registerUser,
+              onPressed: () {},
               child: const Align(
                 alignment: Alignment.bottomRight,
-                child: Text("Registration for admin",
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
-              ),
-            )
-                border: UnderlineInputBorder(),
+                child: Text("Registration for admin",style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
               ),
             ),
-            ElevatedButton(onPressed: registerUser, child: const Text("Save")),
             Text(problem)
           ],
         ),
