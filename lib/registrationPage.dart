@@ -51,25 +51,53 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            TextFormField(
+            Row(children: [
+              Flexible(
+                flex: 2,
+                child: Container()
+              ),
+              Flexible(
+                flex: 1,
+                child: TextFormField(
               controller: usernameController,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(
+                  
                     borderSide: BorderSide(color: Colors.grey, width: 1.0)),
               ),
             ),
+              ),
+              Flexible(
+                flex: 2,
+                child: Container()
+              )
+            ],),
+            
             const Text("Password",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 )),
-            TextFormField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 1.0)),
+                Row(children: [
+                  Flexible(
+                    flex: 2,
+                    child: Container(),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child :TextFormField(
+                    controller: passwordController,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey, width: 1.0)),
               ),
             ),
+                  )
+                ],),
             ElevatedButton(onPressed: registerUser, child: const Text("Save")),
             ElevatedButton(
               onPressed: () {},
