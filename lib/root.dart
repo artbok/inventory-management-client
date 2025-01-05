@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'registrationPage.dart';
+import 'pages/registrationPage.dart';
+import 'pages/storagePage.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: const RegistrationPage(),
+      debugShowCheckedModeBanner: false,
+      home: const StoragePage(),
     );
   }
 }

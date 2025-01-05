@@ -6,7 +6,7 @@ import 'localStorage.dart';
 void main() async {
   await Hive.initFlutter();
   await Hive.openBox("storage");
-  // putToTheStorage('username', 'bebra');
-  // print(getValue('username'));
+  putToTheStorage("username", "bebra");
+  putToTheStorage("password", "12345");
   runApp(const MyApp());
 }
