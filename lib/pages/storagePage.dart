@@ -1,21 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import '../localStorage.dart';
-import 'dart:convert';
-
-List<dynamic> data = [
-  {"name": "Золотой тунец", "description": "тот самый", "amount": "999999"},
-  {
-    "name": "Серебрянный тунец",
-    "description": "а как без него?",
-    "amount": "69"
-  },
-  {
-    "name": "Бронзовый тунец",
-    "description": "утешительный приз",
-    "amount": "1"
-  },
-];
+import '../requests/getItemsOnPage.dart';
+import '../requests/createItem.dart';
 
 class StoragePage extends StatefulWidget {
   const StoragePage({super.key});
@@ -40,45 +25,9 @@ class _StoragePageState extends State<StoragePage> {
     );
   }
 
-  Future<List<dynamic>> getData(int currentPage) async {
-    String? username = getValue("username");
-    String? password = getValue("password");
-    Map<String, dynamic> params = {
-      "username": username,
-      "password": password,
-      "page": currentPage,
-    };
-    var response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/getItems'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(params),
-    );
-
-    Map<String, dynamic> _data =
-        jsonDecode(response.body) as Map<String, dynamic>;
-    totalPages = _data["totalPages"];
-    return _data["data"];
-  }
-
-  void createItem(String name, String description, String amount) async {
-    String? username = getValue("username");
-    String? password = getValue("password");
-    Map<String, dynamic> params = {
-      "username": username,
-      "password": password,
-      "name": name,
-      "description": description,
-      "amount": amount,
-    };
-    var response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/newItem'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(params),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    List<dynamic> data = [];
     return Scaffold(
         appBar: AppBar(
           title: Row(
@@ -106,14 +55,15 @@ class _StoragePageState extends State<StoragePage> {
           backgroundColor: Colors.amber,
         ),
         body: FutureBuilder(
-            future: getData(currentPage),
+            future: getItemsOnPage(currentPage),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
-                data = snapshot.data!;
+                totalPages = snapshot.data!["totalPages"];
+                data = snapshot.data!["data"];
                 List<Widget> items = [];
                 for (int i = 0; i < data.length; i++) {
                   items.add(getItemWidget(data[i]["name"]!,
@@ -154,14 +104,15 @@ class _StoragePageState extends State<StoragePage> {
                               ),
                               Text("   Page $currentPage/$totalPages   "),
                               InkWell(
-                                onTap: () {
+                                  onTap: () {
                                     if (currentPage != totalPages) {
                                       setState(() {
                                         currentPage++;
                                       });
                                     }
                                   },
-                                  child: const Icon(Icons.arrow_forward_rounded))
+                                  child:
+                                      const Icon(Icons.arrow_forward_rounded))
                             ],
                           )),
                     ]));

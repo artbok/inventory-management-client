@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'authorisationPage.dart';
 import '../localStorage.dart';
+import '../requests/registerUser.dart';
 
 class AdminRegistrationPage extends StatefulWidget {
   const AdminRegistrationPage({super.key});
@@ -16,32 +15,6 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
   TextEditingController passwordController = TextEditingController();
   String status = "";
 
-  void registerUser() async {
-    String username = usernameController.text;
-    String password = passwordController.text;
-    Map<String, dynamic> params = {
-      "username": username,
-      "password": password,
-      "rightsLevel": "2",
-    };
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/newUser'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-      body: json.encode(params),
-    );
-    Map<String, dynamic> data =
-        jsonDecode(response.body) as Map<String, dynamic>;
-    setState(() {
-      status = data["status"];
-      if (status == 'ok') {
-        putToTheStorage("username", username);
-        putToTheStorage('password', password);
-      }
-    });
-  }
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +74,6 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                   Flexible(
                     flex: 1,
                     child: TextFormField(
-                    
                       controller: passwordController,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(
@@ -120,7 +92,20 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
             Flexible(
               flex: 1,
               child: ElevatedButton(
-                  onPressed: registerUser, child: const Text("Save")),
+                  onPressed: () async {
+                    String username = usernameController.text;
+                    String password = passwordController.text;
+                    Map<String, dynamic> data = await registerUser(
+                        username, password, 2);
+                    setState(() {
+                      status = data["status"];
+                      if (status == 'ok') {
+                        putToTheStorage("username", username);
+                        putToTheStorage('password', password);
+                      }
+                    });
+                  },
+                  child: const Text("Save")),
             ),
             Flexible(
                 flex: 1,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'registrationPage.dart';
+import '../requests/loginUser.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,25 +13,6 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String status = "";
-
-  void loginUser() async {
-    Map<String, dynamic> params = {
-      "username": usernameController.text,
-      "password": passwordController.text,
-    };
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/authUser'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-      body: json.encode(params),
-    );
-    Map<String, dynamic> data =
-        jsonDecode(response.body) as Map<String, dynamic>;
-    setState(() {
-      status = data["status"];
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +91,16 @@ class _LoginPageState extends State<LoginPage> {
             Flexible(
               flex: 1,
               child: ElevatedButton(
-                  onPressed: loginUser, child: const Text("Login")),
+                  onPressed: () async {
+                    String username = usernameController.text;
+                    String password = passwordController.text;
+                    Map<String, dynamic> data =
+                        await loginUser(username, password);
+                    setState(() {
+                      status = data["status"];
+                    });
+                  },
+                  child: const Text("Login")),
             ),
             Flexible(
                 flex: 1,
