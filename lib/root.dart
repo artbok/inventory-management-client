@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/requests/loginUser.dart';
+import 'package:predprof/requests/authUser.dart';
 import 'pages/authorisationPage.dart';
 import 'pages/userStoragePage.dart';
 import 'localStorage.dart';
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     String username = getValue("username");
     String password = getValue("password");
     if (username.isNotEmpty && password.isNotEmpty) {
-      Map<String, dynamic> data = await loginUser(username, password);
+      Map<String, dynamic> data = await authUser(username, password);
       if (data["status"] == 'ok') {
         if (data["rightsLevel"] == 1) {
           return const UserStoragePage();

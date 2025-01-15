@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../localStorage.dart';
 
-Future<Map<String, dynamic>> getItemsOnPage(int currentPage, [String? owner]) async {
+Future<Map<String, dynamic>> getItems(int page, [String? owner]) async {
   String? username = getValue("username");
   String? password = getValue("password");
   Map<String, dynamic> params = {
     "username": username,
     "password": password,
-    "page": currentPage,
+    "page": page,
     "owner": owner
   };
   var response = await http.post(

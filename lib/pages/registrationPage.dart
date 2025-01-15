@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'authorisationPage.dart';
 import 'adminRegistrationPage.dart';
 import '../localStorage.dart';
-import '../requests/registerUser.dart';
+import '../requests/createUser.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -96,10 +96,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   onPressed: () async {
                     String username = usernameController.text;
                     String password = passwordController.text;
-                    Map<String, dynamic> data = await registerUser(
+                    String status = await createUser(
                         username, password, 1);
                     setState(() {
-                      status = data["status"];
                       if (status == 'ok') {
                         putToTheStorage("username", username);
                         putToTheStorage('password', password);

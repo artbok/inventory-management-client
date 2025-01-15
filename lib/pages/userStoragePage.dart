@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../requests/getItemsOnPage.dart';
+import '../requests/getItems.dart';
 
 class UserStoragePage extends StatefulWidget {
   const UserStoragePage({super.key});
@@ -82,7 +82,7 @@ class UserStoragePageState extends State<UserStoragePage> {
           backgroundColor: Colors.amber,
         ),
         body: FutureBuilder(
-            future: getItemsOnPage(
+            future: getItems(
               currentPage,
             ),
             builder: (context, snapshot) {
@@ -98,6 +98,8 @@ class UserStoragePageState extends State<UserStoragePage> {
                   items.add(getItemWidget(data[i]["name"]!,
                       data[i]["description"]!, data[i]["amount"]!));
                 }
+                List <Widget> itemsRequests = [];
+                
                 return Center(
                     child: Row(children: [
                   Expanded(
@@ -120,7 +122,20 @@ class UserStoragePageState extends State<UserStoragePage> {
                       child: Column(
                         children: [
                           Expanded(
-                              flex: 1, child: Container(color: Colors.blue)),
+                              flex: 1,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 2.0,
+                                  ),
+                                ),
+                              child: Column(children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Container())
+                              ],)
+                              )),
                           Expanded(
                               flex: 1, child: Container(color: Colors.green))
                         ],

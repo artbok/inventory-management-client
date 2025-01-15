@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../requests/getItemsOnPage.dart';
+import '../requests/getItems.dart';
 import '../requests/createItem.dart';
 
 class StoragePage extends StatefulWidget {
@@ -55,7 +55,7 @@ class _StoragePageState extends State<StoragePage> {
           backgroundColor: Colors.amber,
         ),
         body: FutureBuilder(
-            future: getItemsOnPage(currentPage),
+            future: getItems(currentPage),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
@@ -219,7 +219,7 @@ class _StoragePageState extends State<StoragePage> {
                                           createItem(
                                               nameController.text,
                                               descriptionController.text,
-                                              amountController.text);
+                                              int.parse(amountController.text));
                                           Navigator.pop(context);
                                           setState(() {});
                                         },

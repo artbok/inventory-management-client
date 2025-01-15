@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<Map<String, dynamic>> registerUser(String username, String password, int rightsLevel) async {
+Future<String> createUser(String username, String password, int rightsLevel) async {
   Map<String, dynamic> params = {
     "username": username,
     "password": password,
@@ -15,5 +15,5 @@ Future<Map<String, dynamic>> registerUser(String username, String password, int 
     body: json.encode(params),
   );
   Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
-  return data;
+  return data["status"];
 }

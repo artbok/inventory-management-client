@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'registrationPage.dart';
-import '../requests/loginUser.dart';
+import '../requests/authUser.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                     String username = usernameController.text;
                     String password = passwordController.text;
                     Map<String, dynamic> data =
-                        await loginUser(username, password);
+                        await authUser(username, password);
                     setState(() {
                       status = data["status"];
                     });
