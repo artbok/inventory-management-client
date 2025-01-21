@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/pages/replacementsRequestsPage.dart';
-import 'package:predprof/pages/userRequestsPage.dart';
-import '../requests/getItems.dart';
+import 'package:predprof/pages/user/replacementsRequestsPage.dart';
+import 'package:predprof/pages/user/userRequestsPage.dart';
+import 'package:predprof/widgets/adminNavigation.dart';
+import '../../requests/getItems.dart';
 import 'createItemPage.dart';
 import 'giveItemToUserPage.dart';
 
@@ -109,52 +110,7 @@ class _StoragePageState extends State<StoragePage> {
         ),
         body: Center(
                     child: Row(children: [
-                  NavigationRail(
-                    selectedIndex: selectedIndex,
-                    groupAlignment: -1.0,
-                    onDestinationSelected: (int index) {
-                      Widget? page;
-                      switch (index) {
-                        case 1:
-                          page = const ReplacementsRequestsPage();
-                        case 2:
-                          page = const UserRequestsPage();
-                        case 3:
-                          print("Шнип шнап шнапи");
-                      }
-                      if (page != null) {
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) =>
-                                page!,
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
-                          ),
-                        );
-                      }
-                    },
-                    labelType: NavigationRailLabelType.all,
-                    destinations: const <NavigationRailDestination>[
-                      NavigationRailDestination(
-                        icon: Icon(Icons.storage),
-                        label: Text('Storage'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.cached),
-                        label: Text('Replace Requests'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.get_app),
-                        label: Text('Items Requests'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.query_stats),
-                        label: Text('Stats'),
-                      ),
-                    ],
-                  ),
-                  const VerticalDivider(thickness: 1, width: 1),
+                  adminNavigation(0, context),
         Expanded(child: 
         FutureBuilder(
             future: getItems(currentPage),

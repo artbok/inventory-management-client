@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../requests/createItem.dart';
+import '../../requests/createItem.dart';
+import 'package:flutter/services.dart';
 
 Widget createItemDialog(BuildContext context, VoidCallback refreshPage) {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
-
 
   return Dialog(
     insetPadding: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
@@ -58,11 +58,8 @@ Widget createItemDialog(BuildContext context, VoidCallback refreshPage) {
                     flex: 2,
                     child: TextFormField(
                       controller: quantityController,
-                      keyboardType: TextInputType.number, // Numeric keyboard
-                      // inputFormatters: [
-                      //   FilteringTextInputFormatter
-                      //       .digitsOnly, // Allow only digits
-                      // ],
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: const InputDecoration(
                         labelText: "Quantity",
                       ),
@@ -79,6 +76,12 @@ Widget createItemDialog(BuildContext context, VoidCallback refreshPage) {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Cancel"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
                     createItem(nameController.text, descriptionController.text,
                         int.parse(quantityController.text));
                     Navigator.pop(context);
@@ -86,12 +89,6 @@ Widget createItemDialog(BuildContext context, VoidCallback refreshPage) {
                   },
                   child: const Text("Create"),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Cancel"),
-                )
               ],
             ))
       ],

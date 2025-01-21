@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/pages/replacementsRequestsPage.dart';
-import 'package:predprof/pages/userRequestsPage.dart';
-import '../requests/getUsersItems.dart';
-import '../localStorage.dart';
+import 'package:predprof/pages/user/replacementsRequestsPage.dart';
+import 'package:predprof/pages/user/userRequestsPage.dart';
+import 'package:predprof/widgets/userNavigation.dart';
+import '../../requests/getUsersItems.dart';
+import '../../localStorage.dart';
 
 class UserStoragePage extends StatefulWidget {
   const UserStoragePage({super.key});
@@ -17,16 +18,17 @@ class UserStoragePageState extends State<UserStoragePage> {
   int totalPages = 0;
 
   Widget getItemWidget(String name, String description, int quantity) {
-    return Padding(padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5), child: Container(
+    return Padding(padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5), child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+            gradient: const LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
                 colors: <Color>[
-                  Colors.purple,
-                  Colors.green,
-                  Colors.red,
-                  Colors.lightBlue
+                  Color.fromARGB(255, 108, 243, 213),
+                  Color.fromARGB(255, 113, 219, 196),
+                  Color.fromARGB(255, 19, 200, 181),
+                  Color.fromARGB(255, 33, 163, 163),
+                  Color.fromARGB(255, 115, 117, 165)
                 ],
                 tileMode: TileMode.clamp),
             border: Border.all(
@@ -106,45 +108,7 @@ class UserStoragePageState extends State<UserStoragePage> {
         ),
         body: Center(
             child: Row(children: [
-          NavigationRail(
-            selectedIndex: selectedIndex,
-            groupAlignment: -1.0,
-            onDestinationSelected: (int index) {
-              Widget? page;
-              switch (index) {
-                case 1:
-                  page = const UserRequestsPage();
-                case 2:
-                  page = const ReplacementsRequestsPage();
-              }
-              if (page != null) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => page!,
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              }
-            },
-            labelType: NavigationRailLabelType.all,
-            destinations: const <NavigationRailDestination>[
-              NavigationRailDestination(
-                icon: Icon(Icons.list_alt),
-                label: Text('Inventory'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.send),
-                label: Text('RequestItem'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.handyman),
-                label: Text('RequestRepairment'),
-              ),
-            ],
-          ),
-          const VerticalDivider(thickness: 1, width: 1),
+              userNavigation(0, context),
           Expanded(
               child: FutureBuilder(
                   future: getUsersItems(

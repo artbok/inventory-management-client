@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/pages/userStoragePage.dart';
-import 'authorisationPage.dart';
-import 'adminRegistrationPage.dart';
-import '../localStorage.dart';
-import '../requests/createUser.dart';
+import 'package:predprof/pages/admin/storagePage.dart';
+import 'package:predprof/pages/user/userStoragePage.dart';
+import 'registrationPage.dart';
+import '../../requests/authUser.dart';
 
-class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String status = "";
@@ -21,7 +20,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Registration"),
+        title: const Text("Authorisation"),
       ),
       body: Center(
         child: Column(
@@ -97,62 +96,59 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   onPressed: () async {
                     String username = usernameController.text;
                     String password = passwordController.text;
-                    String status = await createUser(username, password, 1);
+                    Map<String, dynamic> data =
+                        await authUser(username, password);
                     setState(() {
+                      status = data["status"];
                       if (status == 'ok') {
-                        putToTheStorage("username", username);
-                        putToTheStorage('password', password);
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) =>
-                                const UserStoragePage(),
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
-                          ),
-                        );
+                        if (data["rightsLevel"] == 1) {
+                           Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  const UserStoragePage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
+                        } else {
+                           Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  const StoragePage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
+                        }
                       }
+                     
                     });
                   },
-                  child: const Text("Save")),
+                  child: const Text("Login")),
             ),
             Flexible(
                 flex: 1,
                 child: InkWell(
-                  child: const Text("Already have an account?"),
+                  child: const Text("Don't have an account?"),
                   onTap: () => {
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) =>
-                            const LoginPage(),
+                            const RegistrationPage(),
                         transitionDuration: Duration.zero,
                         reverseTransitionDuration: Duration.zero,
                       ),
                     )
                   },
                 )),
+            Flexible(flex: 5, child: Container()),
             Flexible(
-                flex: 5,
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) =>
-                              const AdminRegistrationPage(),
-                          transitionDuration: Duration.zero,
-                          reverseTransitionDuration: Duration.zero,
-                        ),
-                      );
-                    },
-                    child: const Text("Registration for admin",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600)),
-                  ),
-                )),
+              flex: 1,
+              child: Text(status),
+            )
           ],
         ),
       ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../requests/getReplacementsRequests.dart';
-import '../localStorage.dart';
+import '../../requests/getReplacementsRequests.dart';
+import '../../localStorage.dart';
 import 'userStoragePage.dart';
+import '../../widgets/userNavigation.dart';
 
 class ReplacementsRequestsPage extends StatefulWidget {
   const ReplacementsRequestsPage({super.key});
@@ -17,7 +18,7 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
   int totalPages = 0;
   String problem = "";
   Widget getReplacementRequestWidget(
-      String itemName, String quantity, String status) {
+      String itemName, int quantity, String status) {
     return ListTile(
       title: Text("$itemName     ${quantity}x"),
       subtitle: Text(status, style: const TextStyle(fontSize: 15)),
@@ -35,28 +36,6 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
       appBar: AppBar(
           title: Row(
         children: [
-          Expanded(
-              flex: 1,
-              child: IconButton(
-                  style: const ButtonStyle(
-                    side: WidgetStatePropertyAll(
-                      BorderSide(
-                          color: Colors.black,
-                          width: 2.0), // Customize border color and width
-                    ),
-                  ),
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) =>
-                            const UserStoragePage(),
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                      ),
-                    );
-                  })),
           const Expanded(flex: 2, child: Text("ReplacementItemsRequests")),
           Expanded(flex: 2, child: Container()),
           Expanded(
@@ -78,23 +57,29 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
         ],
       )),
       backgroundColor: Colors.amber,
-      body: FutureBuilder(
-          future: getReplacementsRequests(owner),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              List<Map<String, dynamic>> data = snapshot.data!["data"];
-              List<Widget> items = [];
-              for (int i = 0; i < data.length; i++) {
-                items.add(getReplacementRequestWidget(data[i]["itemName"]!,
-                    data[i]["quantity"]!, data[i]["status"]!));
-              }
-              return Center(child: Column(children: items));
-            }
-          }),
+      body: Row(children: [
+        userNavigation(2, context),
+        Expanded(
+            child: FutureBuilder(
+                future: getReplacementsRequests(owner),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    List<dynamic> data = snapshot.data!["data"];
+                    List<Widget> items = [];
+                    for (int i = 0; i < data.length; i++) {
+                      items.add(getReplacementRequestWidget(
+                          data[i]["itemName"]!,
+                          data[i]["quantity"]!,
+                          data[i]["status"]!));
+                    }
+                    return Center(child: Column(children: items));
+                  }
+                }))
+      ]),
       floatingActionButton: IconButton(
         onPressed: () {
           // showDialog(
@@ -104,9 +89,7 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
           //           insetPadding: const EdgeInsets.symmetric(
           //               horizontal: 50, vertical: 30),
           //           child: Column()
-                    
-                    
-                    
+
           //           );
           //     });
         },

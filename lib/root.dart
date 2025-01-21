@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:predprof/requests/authUser.dart';
-import 'pages/authorisationPage.dart';
-import 'pages/userStoragePage.dart';
+import 'pages/user/authorisationPage.dart';
+import 'pages/user/userStoragePage.dart';
 import 'localStorage.dart';
-import 'pages/storagePage.dart';
+import 'pages/admin/storagePage.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

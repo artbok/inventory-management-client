@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../requests/giveItem.dart';
+import '../../requests/giveItem.dart';
 
 Widget giveItemToUser(String name, int quantityAtStorage, String description,
     List<String> users, VoidCallback refreshPage) {

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/pages/storagePage.dart';
-import 'package:predprof/pages/userStoragePage.dart';
-import 'registrationPage.dart';
-import '../requests/authUser.dart';
+import 'authorisationPage.dart';
+import '../../localStorage.dart';
+import '../../requests/createUser.dart';
+import '../admin/storagePage.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class AdminRegistrationPage extends StatefulWidget {
+  const AdminRegistrationPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<AdminRegistrationPage> createState() => _AdminRegistrationPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String status = "";
@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Authorisation"),
+        title: const Text("Registration for admins"),
       ),
       body: Center(
         child: Column(
@@ -96,59 +96,42 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () async {
                     String username = usernameController.text;
                     String password = passwordController.text;
-                    Map<String, dynamic> data =
-                        await authUser(username, password);
+                    String status = await createUser(username, password, 2);
                     setState(() {
-                      status = data["status"];
                       if (status == 'ok') {
-                        if (data["rightsLevel"] == 1) {
-                           Navigator.pushReplacement(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) =>
-                                  const UserStoragePage(),
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                            ),
-                          );
-                        } else {
-                           Navigator.pushReplacement(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) =>
-                                  const StoragePage(),
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                            ),
-                          );
-                        }
+                        putToTheStorage("username", username);
+                        putToTheStorage('password', password);
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                const StoragePage(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
                       }
-                     
                     });
                   },
-                  child: const Text("Login")),
+                  child: const Text("Save")),
             ),
             Flexible(
                 flex: 1,
                 child: InkWell(
-                  child: const Text("Don't have an account?"),
+                  child: const Text("Already have an account?"),
                   onTap: () => {
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) =>
-                            const RegistrationPage(),
+                            const LoginPage(),
                         transitionDuration: Duration.zero,
                         reverseTransitionDuration: Duration.zero,
                       ),
                     )
                   },
                 )),
-            Flexible(flex: 5, child: Container()),
-            Flexible(
-              flex: 1,
-              child: Text(status),
-            )
+            Flexible(flex: 4, child: Container()),
           ],
         ),
       ),

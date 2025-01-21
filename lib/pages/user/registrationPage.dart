@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:predprof/pages/user/userStoragePage.dart';
 import 'authorisationPage.dart';
-import '../localStorage.dart';
-import '../requests/createUser.dart';
-import 'storagePage.dart';
+import 'adminRegistrationPage.dart';
+import '../../localStorage.dart';
+import '../../requests/createUser.dart';
 
-class AdminRegistrationPage extends StatefulWidget {
-  const AdminRegistrationPage({super.key});
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
 
   @override
-  State<AdminRegistrationPage> createState() => _AdminRegistrationPageState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
-class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
+class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String status = "";
@@ -20,7 +21,7 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Registration for admins"),
+        title: const Text("Registration"),
       ),
       body: Center(
         child: Column(
@@ -96,7 +97,7 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                   onPressed: () async {
                     String username = usernameController.text;
                     String password = passwordController.text;
-                    String status = await createUser(username, password, 2);
+                    String status = await createUser(username, password, 1);
                     setState(() {
                       if (status == 'ok') {
                         putToTheStorage("username", username);
@@ -105,7 +106,7 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                           context,
                           PageRouteBuilder(
                             pageBuilder: (context, animation1, animation2) =>
-                                const StoragePage(),
+                                const UserStoragePage(),
                             transitionDuration: Duration.zero,
                             reverseTransitionDuration: Duration.zero,
                           ),
@@ -131,7 +132,27 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                     )
                   },
                 )),
-            Flexible(flex: 4, child: Container()),
+            Flexible(
+                flex: 5,
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              const AdminRegistrationPage(),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
+                    child: const Text("Registration for admin",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w600)),
+                  ),
+                )),
           ],
         ),
       ),
