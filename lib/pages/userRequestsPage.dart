@@ -29,9 +29,9 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
   int currentPage = 1;
   int totalPages = 0;
   String problem = "";
-  Widget getItemWidget(String name, String description, String amount) {
+  Widget getItemWidget(String name, String description, int quantity) {
     return ListTile(
-      title: Text("$name     ${amount}x"),
+      title: Text("$name     ${quantity}x"),
       subtitle: Text(description, style: const TextStyle(fontSize: 15)),
       shape: RoundedRectangleBorder(
         side: const BorderSide(color: Colors.black, width: 1),
@@ -65,7 +65,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
         appBar: AppBar(
             title: Row(
           children: [
-            const Expanded(flex: 2, child: Text("UserrequestsPage")),
+            const Expanded(flex: 2, child: Text("UserRequestsPage")),
             Expanded(flex: 2, child: Container()),
             Expanded(
                 flex: 2,
@@ -98,7 +98,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                 List<Widget> items = [];
                 for (int i = 0; i < data.length; i++) {
                   items.add(getItemWidget(data[i]["name"]!,
-                      data[i]["description"]!, data[i]["amount"]!));
+                      data[i]["description"]!, data[i]["quantity"]!));
                 }
                 return Center(
                     child: Column(

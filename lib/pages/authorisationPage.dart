@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:predprof/pages/storagePage.dart';
+import 'package:predprof/pages/userStoragePage.dart';
 import 'registrationPage.dart';
 import '../requests/authUser.dart';
 
@@ -98,6 +100,30 @@ class _LoginPageState extends State<LoginPage> {
                         await authUser(username, password);
                     setState(() {
                       status = data["status"];
+                      if (status == 'ok') {
+                        if (data["rightsLevel"] == 1) {
+                           Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  const UserStoragePage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
+                        } else {
+                           Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  const StoragePage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
+                        }
+                      }
+                     
                     });
                   },
                   child: const Text("Login")),

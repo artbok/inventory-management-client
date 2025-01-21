@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:predprof/pages/replacementsRequestsPage.dart';
+import 'package:predprof/pages/userRequestsPage.dart';
 import '../requests/getItems.dart';
-import '../requests/createItem.dart';
+import 'createItemPage.dart';
+import 'giveItemToUserPage.dart';
 
 class StoragePage extends StatefulWidget {
   const StoragePage({super.key});
@@ -14,9 +17,30 @@ class _StoragePageState extends State<StoragePage> {
   int currentPage = 1;
   int totalPages = 0;
   String problem = "";
-  Widget getItemWidget(String name, String description, String amount) {
+  List<String> users = [];
+
+  Widget getItemWidget(
+      String name, String description, int quantity, int quantityInStorage) {
+    Widget titleText = Text(
+        "$name     available: ${quantityInStorage}x    total: ${quantity}x");
     return ListTile(
-      title: Text("$name     ${amount}x"),
+      title: (users.isNotEmpty && quantityInStorage != 0)
+          ? Row(children: [
+              titleText,
+              ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return giveItemToUser(
+                              name, quantityInStorage, description, users, () {
+                            setState(() {});
+                          });
+                        });
+                  },
+                  child: const Text("Give to user"))
+            ])
+          : titleText,
       subtitle: Text(description, style: const TextStyle(fontSize: 15)),
       shape: RoundedRectangleBorder(
         side: const BorderSide(color: Colors.black, width: 1),
@@ -25,9 +49,38 @@ class _StoragePageState extends State<StoragePage> {
     );
   }
 
+  Widget pageChanger() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        InkWell(
+          onTap: () {
+            if (currentPage != 1) {
+              setState(() {
+                currentPage--;
+              });
+            }
+          },
+          child: const Icon(Icons.arrow_back_rounded),
+        ),
+        Text("   Page $currentPage/$totalPages   "),
+        InkWell(
+            onTap: () {
+              if (currentPage != totalPages) {
+                setState(() {
+                  currentPage++;
+                });
+              }
+            },
+            child: const Icon(Icons.arrow_forward_rounded))
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<dynamic> data = [];
+     int selectedIndex = 0;
     return Scaffold(
         appBar: AppBar(
           title: Row(
@@ -54,7 +107,56 @@ class _StoragePageState extends State<StoragePage> {
           ),
           backgroundColor: Colors.amber,
         ),
-        body: FutureBuilder(
+        body: Center(
+                    child: Row(children: [
+                  NavigationRail(
+                    selectedIndex: selectedIndex,
+                    groupAlignment: -1.0,
+                    onDestinationSelected: (int index) {
+                      Widget? page;
+                      switch (index) {
+                        case 1:
+                          page = const ReplacementsRequestsPage();
+                        case 2:
+                          page = const UserRequestsPage();
+                        case 3:
+                          print("Шнип шнап шнапи");
+                      }
+                      if (page != null) {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                page!,
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
+                      }
+                    },
+                    labelType: NavigationRailLabelType.all,
+                    destinations: const <NavigationRailDestination>[
+                      NavigationRailDestination(
+                        icon: Icon(Icons.storage),
+                        label: Text('Storage'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.cached),
+                        label: Text('Replace Requests'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.get_app),
+                        label: Text('Items Requests'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.query_stats),
+                        label: Text('Stats'),
+                      ),
+                    ],
+                  ),
+                  const VerticalDivider(thickness: 1, width: 1),
+        Expanded(child: 
+        FutureBuilder(
             future: getItems(currentPage),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -63,61 +165,36 @@ class _StoragePageState extends State<StoragePage> {
                 return Text('Error: ${snapshot.error}');
               } else {
                 totalPages = snapshot.data!["totalPages"];
+                users = snapshot.data!["users"].cast<String>();
                 data = snapshot.data!["data"];
                 List<Widget> items = [];
                 for (int i = 0; i < data.length; i++) {
-                  items.add(getItemWidget(data[i]["name"]!,
-                      data[i]["description"]!, data[i]["amount"]!));
+                  items.add(getItemWidget(
+                      data[i]["name"]!,
+                      data[i]["description"]!,
+                      data[i]["quantity"]!,
+                      data[i]["quantityInStorage"]));
                 }
-                return Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                      Expanded(
-                          flex: 5,
-                          child: Row(
-                            children: [
-                              Expanded(flex: 1, child: Container()),
-                              Expanded(
-                                  flex: 2,
-                                  child: SingleChildScrollView(
-                                      child: Column(
-                                    children: items,
-                                  ))),
-                              Expanded(flex: 1, child: Container()),
-                            ],
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  if (currentPage != 1) {
-                                    setState(() {
-                                      currentPage--;
-                                    });
-                                  }
-                                },
-                                child: const Icon(Icons.arrow_back_rounded),
-                              ),
-                              Text("   Page $currentPage/$totalPages   "),
-                              InkWell(
-                                  onTap: () {
-                                    if (currentPage != totalPages) {
-                                      setState(() {
-                                        currentPage++;
-                                      });
-                                    }
-                                  },
-                                  child:
-                                      const Icon(Icons.arrow_forward_rounded))
-                            ],
-                          )),
-                    ]));
-              }
-            }),
+                return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                            flex: 5,
+                            child: Row(
+                              children: [
+                                Expanded(flex: 1, child: Container()),
+                                Expanded(
+                                    flex: 2,
+                                    child: SingleChildScrollView(
+                                        child: Column(
+                                      children: items,
+                                    ))),
+                                Expanded(flex: 1, child: Container()),
+                              ],
+                            )),
+                        Expanded(flex: 1, child: pageChanger()),
+                      ]);}}))
+                ])),
         floatingActionButton: CircleAvatar(
             backgroundColor: Colors.amber,
             child: IconButton(
@@ -130,112 +207,12 @@ class _StoragePageState extends State<StoragePage> {
                 ),
                 icon: const Icon(Icons.add),
                 onPressed: () {
-                  TextEditingController nameController =
-                      TextEditingController();
-                  TextEditingController descriptionController =
-                      TextEditingController();
-
-                  TextEditingController amountController =
-                      TextEditingController();
-
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return Dialog(
-                          insetPadding: const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 30),
-                          child: Column(
-                            children: [
-                              const Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    "New item",
-                                    style: TextStyle(fontSize: 35),
-                                  )),
-                              Expanded(
-                                flex: 4,
-                                child: Column(children: [
-                                  Expanded(
-                                      flex: 1,
-                                      child: Row(children: [
-                                        Expanded(flex: 1, child: Container()),
-                                        Expanded(
-                                          flex: 2,
-                                          child: TextFormField(
-                                            controller: nameController,
-                                            decoration: const InputDecoration(
-                                              labelText: "Name",
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(flex: 1, child: Container()),
-                                      ])),
-                                  Expanded(
-                                      flex: 1,
-                                      child: Row(children: [
-                                        Expanded(flex: 1, child: Container()),
-                                        Expanded(
-                                          flex: 2,
-                                          child: TextFormField(
-                                            controller: descriptionController,
-                                            decoration: const InputDecoration(
-                                              labelText: "Description",
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(flex: 1, child: Container()),
-                                      ])),
-                                  Expanded(
-                                      flex: 1,
-                                      child: Row(children: [
-                                        Expanded(flex: 1, child: Container()),
-                                        Expanded(
-                                          flex: 2,
-                                          child: TextFormField(
-                                            controller: amountController,
-                                            keyboardType: TextInputType
-                                                .number, // Numeric keyboard
-                                            // inputFormatters: [
-                                            //   FilteringTextInputFormatter
-                                            //       .digitsOnly, // Allow only digits
-                                            // ],
-                                            decoration: const InputDecoration(
-                                              labelText: "Amount",
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(flex: 1, child: Container()),
-                                      ])),
-                                ]),
-                              ),
-                              Expanded(
-                                  flex: 2,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          createItem(
-                                              nameController.text,
-                                              descriptionController.text,
-                                              int.parse(amountController.text));
-                                          Navigator.pop(context);
-                                          setState(() {});
-                                        },
-                                        child: const Text("Create"),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("Cancel"),
-                                      )
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        );
+                        return createItemDialog(context, () {
+                          setState(() {});
+                        });
                       });
                 })));
   }

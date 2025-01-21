@@ -9,9 +9,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   Future<Widget> checkAuth() async {
-    String username = getValue("username");
-    String password = getValue("password");
-    if (username.isNotEmpty && password.isNotEmpty) {
+    String? username = getValue("username");
+    String? password = getValue("password");
+    if (username != null && password != null) {
       Map<String, dynamic> data = await authUser(username, password);
       if (data["status"] == 'ok') {
         if (data["rightsLevel"] == 1) {

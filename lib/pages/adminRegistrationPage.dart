@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'authorisationPage.dart';
 import '../localStorage.dart';
 import '../requests/createUser.dart';
+import 'storagePage.dart';
 
 class AdminRegistrationPage extends StatefulWidget {
   const AdminRegistrationPage({super.key});
@@ -95,12 +96,20 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                   onPressed: () async {
                     String username = usernameController.text;
                     String password = passwordController.text;
-                    String status = await createUser(
-                        username, password, 2);
+                    String status = await createUser(username, password, 2);
                     setState(() {
                       if (status == 'ok') {
                         putToTheStorage("username", username);
                         putToTheStorage('password', password);
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                const StoragePage(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
                       }
                     });
                   },

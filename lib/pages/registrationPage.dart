@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:predprof/pages/userStoragePage.dart';
 import 'authorisationPage.dart';
 import 'adminRegistrationPage.dart';
 import '../localStorage.dart';
@@ -96,15 +97,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   onPressed: () async {
                     String username = usernameController.text;
                     String password = passwordController.text;
-                    String status = await createUser(
-                        username, password, 1);
+                    String status = await createUser(username, password, 1);
                     setState(() {
                       if (status == 'ok') {
                         putToTheStorage("username", username);
                         putToTheStorage('password', password);
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                const UserStoragePage(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
                       }
                     });
-                  }, child: const Text("Save")),
+                  },
+                  child: const Text("Save")),
             ),
             Flexible(
                 flex: 1,
