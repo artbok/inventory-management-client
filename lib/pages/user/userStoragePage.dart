@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/pages/user/replacementsRequestsPage.dart';
-import 'package:predprof/pages/user/userRequestsPage.dart';
-import 'package:predprof/widgets/userNavigation.dart';
+import '../../widgets/userNavigation.dart';
 import '../../requests/getUsersItems.dart';
 import '../../localStorage.dart';
+import '../../widgets/pageChanger.dart';
+
 
 class UserStoragePage extends StatefulWidget {
   const UserStoragePage({super.key});
@@ -47,38 +47,21 @@ class UserStoragePageState extends State<UserStoragePage> {
 
   }
 
-  Widget pageChanger() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        InkWell(
-          onTap: () {
-            if (currentPage != 1) {
-              setState(() {
-                currentPage--;
-              });
-            }
-          },
-          child: const Icon(Icons.arrow_back_rounded),
-        ),
-        Text("   Page $currentPage/$totalPages   "),
-        InkWell(
-            onTap: () {
-              if (currentPage != totalPages) {
-                setState(() {
-                  currentPage++;
-                });
-              }
-            },
-            child: const Icon(Icons.arrow_forward_rounded))
-      ],
-    );
+  void nextPage() {
+    setState(() {
+      currentPage++;
+    });
+  }
+
+  void previousPage() {
+    setState(() {
+      currentPage--;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     List<dynamic> data = [];
-    int selectedIndex = 0;
     String owner = getValue("username");
     return Scaffold(
         appBar: AppBar(
@@ -103,8 +86,7 @@ class UserStoragePageState extends State<UserStoragePage> {
                   )),
               Expanded(flex: 1, child: Container()),
             ],
-          ),
-          backgroundColor: Colors.amber,
+          )
         ),
         body: Center(
             child: Row(children: [
@@ -148,7 +130,7 @@ class UserStoragePageState extends State<UserStoragePage> {
                                       child: Column(
                                     children: items,
                                   ))),
-                              Expanded(flex: 1, child: pageChanger()),
+                              Expanded(flex: 1, child: pageChanger(currentPage, totalPages, nextPage, previousPage)),
                               Expanded(flex: 1, child: Container())
                             ],
                           ));

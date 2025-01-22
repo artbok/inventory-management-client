@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../pages/user/replacementsRequestsPage.dart';
-import '../pages/user/userRequestsPage.dart';
+import '../pages/user/requestItemPage.dart';
 import '../pages/admin/storagePage.dart';
 
 Widget adminNavigation(
@@ -18,7 +18,7 @@ Widget adminNavigation(
         case 1:
           page = const ReplacementsRequestsPage();
         case 2:
-          page = const UserRequestsPage();
+          page = const RequestItemPage();
         case 3:
           print("Шнип шнап шнапи");
       }

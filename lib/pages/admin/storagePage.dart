@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/pages/user/replacementsRequestsPage.dart';
-import 'package:predprof/pages/user/userRequestsPage.dart';
-import 'package:predprof/widgets/adminNavigation.dart';
+import '../../widgets/adminNavigation.dart';
 import '../../requests/getItems.dart';
 import 'createItemPage.dart';
 import 'giveItemToUserPage.dart';
+import '../../widgets/pageChanger.dart';
 
 class StoragePage extends StatefulWidget {
   const StoragePage({super.key});
@@ -19,69 +18,69 @@ class _StoragePageState extends State<StoragePage> {
   int totalPages = 0;
   String problem = "";
   List<String> users = [];
-
   Widget getItemWidget(
       String name, String description, int quantity, int quantityInStorage) {
-    Widget titleText = Text(
+        Widget titleText = Text(
         "$name     available: ${quantityInStorage}x    total: ${quantity}x");
-    return ListTile(
-      title: (users.isNotEmpty && quantityInStorage != 0)
-          ? Row(children: [
-              titleText,
-              ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return giveItemToUser(
-                              name, quantityInStorage, description, users, () {
-                            setState(() {});
-                          });
-                        });
-                  },
-                  child: const Text("Give to user"))
-            ])
-          : titleText,
-      subtitle: Text(description, style: const TextStyle(fontSize: 15)),
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(color: Colors.black, width: 1),
-        borderRadius: BorderRadius.circular(20),
-      ),
-    );
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+        child: Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: <Color>[
+                    Color.fromARGB(255, 108, 243, 213),
+                    Color.fromARGB(255, 113, 219, 196),
+                    Color.fromARGB(255, 19, 200, 181),
+                    Color.fromARGB(255, 33, 163, 163),
+                    Color.fromARGB(255, 115, 117, 165)
+                  ],
+                  tileMode: TileMode.clamp),
+              border: Border.all(
+                color: Colors.black, // Border color
+                width: 2.0, // Border width
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: ListTile(
+              title: (users.isNotEmpty && quantityInStorage != 0)
+                  ? Row(children: [
+                      titleText,
+                      ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return giveItemToUser(name, quantityInStorage,
+                                      description, users, () {
+                                    setState(() {});
+                                  });
+                                });
+                          },
+                          child: const Text("Give to user"))
+                    ])
+                  : titleText,
+              subtitle: Text(description, style: const TextStyle(fontSize: 15)),
+            )));
+  }
+  
+
+  void nextPage() {
+    setState(() {
+      currentPage++;
+    });
   }
 
-  Widget pageChanger() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        InkWell(
-          onTap: () {
-            if (currentPage != 1) {
-              setState(() {
-                currentPage--;
-              });
-            }
-          },
-          child: const Icon(Icons.arrow_back_rounded),
-        ),
-        Text("   Page $currentPage/$totalPages   "),
-        InkWell(
-            onTap: () {
-              if (currentPage != totalPages) {
-                setState(() {
-                  currentPage++;
-                });
-              }
-            },
-            child: const Icon(Icons.arrow_forward_rounded))
-      ],
-    );
+  void previousPage() {
+    setState(() {
+      currentPage--;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     List<dynamic> data = [];
-     int selectedIndex = 0;
     return Scaffold(
         appBar: AppBar(
           title: Row(
@@ -109,56 +108,69 @@ class _StoragePageState extends State<StoragePage> {
           backgroundColor: Colors.amber,
         ),
         body: Center(
-                    child: Row(children: [
-                  adminNavigation(0, context),
-        Expanded(child: 
-        FutureBuilder(
-            future: getItems(currentPage),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                totalPages = snapshot.data!["totalPages"];
-                users = snapshot.data!["users"].cast<String>();
-                data = snapshot.data!["data"];
-                List<Widget> items = [];
-                for (int i = 0; i < data.length; i++) {
-                  items.add(getItemWidget(
-                      data[i]["name"]!,
-                      data[i]["description"]!,
-                      data[i]["quantity"]!,
-                      data[i]["quantityInStorage"]));
-                }
-                return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(
-                            flex: 5,
-                            child: Row(
-                              children: [
-                                Expanded(flex: 1, child: Container()),
-                                Expanded(
-                                    flex: 2,
-                                    child: SingleChildScrollView(
-                                        child: Column(
-                                      children: items,
-                                    ))),
-                                Expanded(flex: 1, child: Container()),
-                              ],
-                            )),
-                        Expanded(flex: 1, child: pageChanger()),
-                      ]);}}))
-                ])),
+            child: Row(children: [
+          adminNavigation(0, context),
+          Expanded(
+              child: Container(
+                          decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: <Color>[
+                                    Color.fromARGB(255, 6, 94, 209),
+                                    Color.fromARGB(255, 32, 192, 93),
+                                    Color.fromARGB(255, 6, 152, 209),
+                                  ],
+                                  tileMode: TileMode.clamp)), child: FutureBuilder(
+                  future: getItems(currentPage),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      totalPages = snapshot.data!["totalPages"];
+                      users = snapshot.data!["users"].cast<String>();
+                      data = snapshot.data!["data"];
+                      List<Widget> items = [];
+                      for (int i = 0; i < data.length; i++) {
+                        items.add(getItemWidget(
+                            data[i]["name"]!,
+                            data[i]["description"]!,
+                            data[i]["quantity"]!,
+                            data[i]["quantityInStorage"]));
+                      }
+                      return Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                                flex: 7,
+                                child: Row(
+                                  children: [
+                                    Expanded(flex: 1, child: Container()),
+                                    Expanded(
+                                        flex: 2,
+                                        child: SingleChildScrollView(
+                                            child: Column(
+                                          children: items,
+                                        ))),
+                                    Expanded(flex: 1, child: Container()),
+                                  ],
+                                )),
+                            Expanded(
+                                flex: 1,
+                                child: pageChanger(currentPage, totalPages,
+                                    nextPage, previousPage)),
+                          ]);
+                    }
+                  })))
+        ])),
         floatingActionButton: CircleAvatar(
             backgroundColor: Colors.amber,
             child: IconButton(
                 style: const ButtonStyle(
                   side: WidgetStatePropertyAll(
-                    BorderSide(
-                        color: Colors.black,
-                        width: 2.0), // Customize border color and width
+                    BorderSide(color: Colors.black, width: 2.0),
                   ),
                 ),
                 icon: const Icon(Icons.add),

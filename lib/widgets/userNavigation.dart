@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import '../pages/user/userRequestsPage.dart';
+import '../pages/user/requestsPage.dart';
 import '../pages/user/replacementsRequestsPage.dart';
 import '../pages/user/userStoragePage.dart';
-
-
 
 Widget userNavigation(
   int curPage,
@@ -18,7 +16,7 @@ Widget userNavigation(
         case 0:
           page = const UserStoragePage();
         case 1:
-          page = const UserRequestsPage();
+          page = const RequestsPage();
         case 2:
           page = const ReplacementsRequestsPage();
       }

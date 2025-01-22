@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../localStorage.dart';
 
-Future<String> getItemsRequests(bool isCustom, String itemName, int amount, String owner) async {
+Future<String> createItemRequest(bool isCustom, String itemName, int quantity, String owner) async {
   String? username = getValue("username");
   String? password = getValue("password");
   Map<String, dynamic> params = {
@@ -10,7 +10,7 @@ Future<String> getItemsRequests(bool isCustom, String itemName, int amount, Stri
     "password": password,
     "isCustom": isCustom,
     "itemName": itemName,
-    "amount": amount,
+    "quantity": quantity,
     "owner": owner
   };
   var response = await http.post(
