@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       return MaterialApp(
-        title: 'InventoryManagement',
+        title: 'Управление спортивным инвентарем',
         theme: ThemeData(
           useMaterial3: true,
         ),
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
               } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return Text('Ошибка: ${snapshot.error}');
               } {
                 return snapshot.data!;
               }

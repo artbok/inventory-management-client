@@ -5,14 +5,14 @@ void showIncorrectDataAlert(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Provide correct data"),
+          title: const Text("Укажите правильные данные"),
           actionsAlignment: MainAxisAlignment.center,
           actions: [
             ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text("OK"))
+                child: const Text("Окей"))
           ],
         );
       });

@@ -51,7 +51,7 @@ class RequestsPageState extends State<RequestsPage> {
         appBar: AppBar(
             title: Row(
           children: [
-            const Expanded(flex: 2, child: Text("Your inventory")),
+            const Expanded(flex: 2, child: Text("Предметы")),
             Expanded(flex: 2, child: Container()),
             Expanded(
                 flex: 2,
@@ -60,7 +60,7 @@ class RequestsPageState extends State<RequestsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "search",
+                      "поиск",
                       style: TextStyle(fontSize: 16),
                     ),
                     Container(
@@ -83,7 +83,7 @@ class RequestsPageState extends State<RequestsPage> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
+                      return Text('Ошибка: ${snapshot.error}');
                     } else {
                       data = snapshot.data!["data"];
                       List<Widget> items = [];
@@ -122,7 +122,7 @@ class RequestsPageState extends State<RequestsPage> {
                                                     });
                                                   });
                                             },
-                                            child: const Text("Request custom item"))),
+                                            child: const Text("Заказать кастомный предмет"))),
                                     Expanded(flex: 1, child: Container()),
                                     Expanded(
                                         flex: 1,
@@ -143,7 +143,7 @@ class RequestsPageState extends State<RequestsPage> {
                                               );
                                             },
                                             child: const Text(
-                                                "Request item from the storage"))),
+                                                "Заказать предмет из магазина"))),
                                     Expanded(
                                       flex: 1,
                                       child: Container(),

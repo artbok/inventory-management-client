@@ -21,7 +21,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Registration"),
+        title: const Text("Регистрация"),
       ),
       body: Center(
         child: Column(
@@ -30,7 +30,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             const Flexible(
               flex: 1,
               child: Text(
-                "Username",
+                "Имя пользователя",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             const Flexible(
               flex: 1,
-              child: Text("Password",
+              child: Text("Пароль",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -114,12 +114,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       }
                     });
                   },
-                  child: const Text("Save")),
+                  child: const Text("Сохранить")),
             ),
             Flexible(
                 flex: 1,
                 child: InkWell(
-                  child: const Text("Already have an account?"),
+                  child: const Text("Уже есть аккаунт?"),
                   onTap: () => {
                     Navigator.pushReplacement(
                       context,
@@ -148,7 +148,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                       );
                     },
-                    child: const Text("Registration for admin",
+                    child: const Text("Регистрация для админов",
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w600)),
                   ),

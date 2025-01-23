@@ -37,19 +37,19 @@ Widget adminNavigation(
     destinations: const <NavigationRailDestination>[
       NavigationRailDestination(
         icon: Icon(Icons.storage),
-        label: Text('Storage'),
+        label: Text('Хранилище'),
       ),
       NavigationRailDestination(
         icon: Icon(Icons.cached),
-        label: Text('Replace Requests'),
+        label: Text('Запросы на замену'),
       ),
       NavigationRailDestination(
         icon: Icon(Icons.get_app),
-        label: Text('Items Requests'),
+        label: Text('Запросы предметов'),
       ),
       NavigationRailDestination(
         icon: Icon(Icons.query_stats),
-        label: Text('Stats'),
+        label: Text('Статистика'),
       ),
     ],
   );

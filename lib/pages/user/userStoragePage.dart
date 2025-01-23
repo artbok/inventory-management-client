@@ -41,16 +41,19 @@ class UserStoragePageState extends State<UserStoragePage> {
             ),
             child: ListTile(
               title: Row(children: [
-                Text("$name     ${quantity}x"),
+                Text("$name     $quantityшт."),
                 IconButton(
                     onPressed: () {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return createReplacementRequestPage(name, quantity);
+                            return createReplacementRequestPage(
+                                name, description, quantity, () {
+                              setState(() {});
+                            });
                           });
                     },
-                    icon: const Icon(Icons.recycling))
+                    icon: const Icon(Icons.find_replace))
               ]),
               subtitle: Text(description, style: const TextStyle(fontSize: 15)),
             )));
@@ -76,7 +79,7 @@ class UserStoragePageState extends State<UserStoragePage> {
         appBar: AppBar(
             title: Row(
           children: [
-            const Expanded(flex: 2, child: Text("Your inventory")),
+            const Expanded(flex: 2, child: Text("Предметы")),
             Expanded(flex: 2, child: Container()),
             Expanded(
                 flex: 2,
@@ -85,7 +88,7 @@ class UserStoragePageState extends State<UserStoragePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "search",
+                      "поиск",
                       style: TextStyle(fontSize: 16),
                     ),
                     Container(
@@ -109,7 +112,7 @@ class UserStoragePageState extends State<UserStoragePage> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
+                      return Text('Ошибка: ${snapshot.error}');
                     } else {
                       totalPages = snapshot.data!["totalPages"];
                       data = snapshot.data!["data"];

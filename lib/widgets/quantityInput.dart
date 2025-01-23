@@ -10,7 +10,7 @@ Widget quantityInput(int quantityAtStorage, TextEditingController controller) {
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         decoration: InputDecoration(
-          labelText: 'quantity of items',
+          labelText: 'Количество предметов',
           errorText: errorText,
           border: const OutlineInputBorder(),
         ),
@@ -19,7 +19,7 @@ Widget quantityInput(int quantityAtStorage, TextEditingController controller) {
           if (number == null || number < 1 || number > quantityAtStorage) {
             setState(() {
               errorText =
-                  'Number should be beetween 1 and $quantityAtStorage';
+                  'Введите число от 1 до $quantityAtStorage';
             });
           } else {
             setState(() {

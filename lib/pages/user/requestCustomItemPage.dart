@@ -15,7 +15,7 @@ Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
             child: Padding(
                 padding: EdgeInsets.all(40.0),
                 child: Text(
-                  "Request custom item",
+                  "Заказать пользовательский предмет",
                   style: TextStyle(fontSize: 40),
                 ))),
         Expanded(flex: 1, child: Container()),
@@ -26,7 +26,7 @@ Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
               child: TextField(
                 controller: nameController,
                 decoration: const InputDecoration(
-                  labelText: 'Item name',
+                  labelText: 'Название предмета',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -40,7 +40,7 @@ Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: const InputDecoration(
-                  labelText: 'Quantity of items',
+                  labelText: 'Количество предметов',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -51,12 +51,12 @@ Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                      child: const Text("Cancel"),
+                      child: const Text("Отмена"),
                       onPressed: () {
                         Navigator.pop(context);
                       }),
                   ElevatedButton(
-                    child: const Text("Submit"),
+                    child: const Text("Сохранить"),
                     onPressed: () async {
                       if (nameController.text.isNotEmpty &&
                           quantityController.text.isNotEmpty &&

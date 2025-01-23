@@ -38,7 +38,7 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
       appBar: AppBar(
           title: Row(
         children: [
-          const Expanded(flex: 2, child: Text("ReplacementItemsRequests")),
+          const Expanded(flex: 2, child: Text("Запросы на замену предметов")),
           Expanded(flex: 2, child: Container()),
           Expanded(
               flex: 2,
@@ -47,7 +47,7 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "search",
+                    "поиск",
                     style: TextStyle(fontSize: 16),
                   ),
                   Container(
@@ -68,7 +68,7 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return Text('ошибка: ${snapshot.error}');
                   } else {
                     List<dynamic> data = snapshot.data!["data"];
                     List<Widget> items = [];
@@ -90,14 +90,14 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
                 return AlertDialog(
                   title: const Text(
                       maxLines: 3,
-                      "Press the repair button next to the item on the Inventory page to create Repairement Request"),
+                      "Нажмите кнопку ремонта рядом с товаром на странице инвентаря, чтобы создать запрос на ремонт"),
                   actionsAlignment: MainAxisAlignment.spaceAround,
                   actions: [
                     ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text("Ok")),
+                        child: const Text("Окей")),
                     ElevatedButton(
                         onPressed: () {
                           Navigator.pushReplacement(
@@ -110,7 +110,7 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
                             ),
                           );
                         },
-                        child: const Text("Go to Inventory"))
+                        child: const Text("Перейти к инвентарю"))
                   ],
                 );
               });

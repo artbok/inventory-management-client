@@ -4,7 +4,8 @@ import '../../requests/createReplacementRequest.dart';
 import '../../localStorage.dart';
 import '../../widgets/showIncorrectDataAlert.dart';
 
-Widget createReplacementRequestPage(String itemName, int maxQuantity) {
+Widget createReplacementRequestPage(String itemName, String description,
+    int maxQuantity, VoidCallback refreshPage) {
   TextEditingController controller = TextEditingController();
   String? errorText;
   return StatefulBuilder(builder: (context, setState) {
@@ -13,7 +14,7 @@ Widget createReplacementRequestPage(String itemName, int maxQuantity) {
         children: [
           const Expanded(
               child: Text(
-            "How many items do you want to repair?",
+            "Сколько предметов вы хотите запросить на починку?",
             style: TextStyle(fontSize: 40),
           )),
           Expanded(
@@ -26,7 +27,7 @@ Widget createReplacementRequestPage(String itemName, int maxQuantity) {
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
-                    labelText: 'quantity of items',
+                    labelText: 'количество предметов',
                     errorText: errorText,
                     border: const OutlineInputBorder(),
                   ),
@@ -35,7 +36,7 @@ Widget createReplacementRequestPage(String itemName, int maxQuantity) {
                     if (number == null || number < 1 || number > maxQuantity) {
                       setState(() {
                         errorText =
-                            'Please enter a number between 1 and $maxQuantity';
+                            'Пожалуйста введите число от 1 до $maxQuantity';
                       });
                     } else {
                       setState(() {
@@ -53,19 +54,20 @@ Widget createReplacementRequestPage(String itemName, int maxQuantity) {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("Cancel")),
+                    child: const Text("Отмена")),
                 ElevatedButton(
                     onPressed: () async {
                       if (errorText == null) {
                         String owner = getValue("username");
                         Navigator.pop(context);
-                        await createReplacementRequest(
-                            owner, itemName, int.parse(controller.text));
+                        await createReplacementRequest(owner, itemName,
+                            description, int.parse(controller.text));
+                        refreshPage();
                       } else {
                         showIncorrectDataAlert(context);
                       }
                     },
-                    child: const Text("Request")),
+                    child: const Text("Запрос")),
               ],
             ),
           )

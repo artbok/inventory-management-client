@@ -68,7 +68,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
                               controllers[i].clear();
                               setState(() {});
                             },
-                            child: const Text("Request")))
+                            child: const Text("Запросить")))
                   ],
                 ))));
   }
@@ -92,7 +92,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
         appBar: AppBar(
             title: Row(
           children: [
-            const Expanded(flex: 2, child: Text("UserRequestsPage")),
+            const Expanded(flex: 2, child: Text("Запросы предметов")),
             Expanded(flex: 2, child: Container()),
             Expanded(
                 flex: 2,
@@ -101,7 +101,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "search",
+                      "поиск",
                       style: TextStyle(fontSize: 16),
                     ),
                     Container(
@@ -122,7 +122,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
+                      return Text('ошибка: ${snapshot.error}');
                     } else {
                       data = snapshot.data!['data'];
                       totalPages = snapshot.data!['totalPages'];

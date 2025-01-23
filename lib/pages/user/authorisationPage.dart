@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Authorisation"),
+        title: const Text("Авторизация"),
       ),
       body: Center(
         child: Column(
@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
             const Flexible(
               flex: 1,
               child: Text(
-                "Username",
+                "Имя пользователя",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const Flexible(
               flex: 1,
-              child: Text("Password",
+              child: Text("Пароль",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -126,12 +126,12 @@ class _LoginPageState extends State<LoginPage> {
                      
                     });
                   },
-                  child: const Text("Login")),
+                  child: const Text("Логин")),
             ),
             Flexible(
                 flex: 1,
                 child: InkWell(
-                  child: const Text("Don't have an account?"),
+                  child: const Text("Нету аккаунта?"),
                   onTap: () => {
                     Navigator.pushReplacement(
                       context,

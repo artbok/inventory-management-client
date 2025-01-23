@@ -21,7 +21,7 @@ class _StoragePageState extends State<StoragePage> {
   Widget getItemWidget(
       String name, String description, int quantity, int quantityInStorage) {
         Widget titleText = Text(
-        "$name     available: ${quantityInStorage}x    total: ${quantity}x");
+        "$name     допустимое: $quantityInStorageшт.    общее количество: ${quantity}x");
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         child: Container(
@@ -58,7 +58,7 @@ class _StoragePageState extends State<StoragePage> {
                                   });
                                 });
                           },
-                          child: const Text("Give to user"))
+                          child: const Text("Выдать пользователю"))
                     ])
                   : titleText,
               subtitle: Text(description, style: const TextStyle(fontSize: 15)),
@@ -85,7 +85,7 @@ class _StoragePageState extends State<StoragePage> {
         appBar: AppBar(
           title: Row(
             children: [
-              const Expanded(flex: 2, child: Text("StoragePage")),
+              const Expanded(flex: 2, child: Text("Хранилище")),
               Expanded(flex: 2, child: Container()),
               Expanded(
                   flex: 2,
@@ -94,7 +94,7 @@ class _StoragePageState extends State<StoragePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "search",
+                        "поиск",
                         style: TextStyle(fontSize: 16),
                       ),
                       Container(
@@ -127,7 +127,7 @@ class _StoragePageState extends State<StoragePage> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
+                      return Text('ошибка: ${snapshot.error}');
                     } else {
                       totalPages = snapshot.data!["totalPages"];
                       users = snapshot.data!["users"].cast<String>();

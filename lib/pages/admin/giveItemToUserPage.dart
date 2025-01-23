@@ -20,7 +20,7 @@ Widget giveItemToUser(String name, int quantityAtStorage, String description,
                 child: Padding(
                     padding: const EdgeInsets.all(40.0),
                     child: Text(
-                      "Give $name to user",
+                      "Выдать $name пользователю",
                       style: const TextStyle(fontSize: 40),
                     ))),
             Flexible(
@@ -48,10 +48,10 @@ Widget giveItemToUser(String name, int quantityAtStorage, String description,
                       controller: controller1,
                       focusNode: focusNode,
                       decoration: InputDecoration(
-                        hintText: 'Select user...',
+                        hintText: 'Выбрать пользователя...',
                         border: const OutlineInputBorder(),
                         errorText:
-                            !flag ? 'Please select a valid option' : null,
+                            !flag ? 'Пожалуйста выберете допустимый вариант' : null,
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -73,7 +73,7 @@ Widget giveItemToUser(String name, int quantityAtStorage, String description,
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: InputDecoration(
-                      labelText: 'quantity of items',
+                      labelText: 'Количество предметов',
                       errorText: errorText,
                       border: const OutlineInputBorder(),
                     ),
@@ -84,7 +84,7 @@ Widget giveItemToUser(String name, int quantityAtStorage, String description,
                           number > quantityAtStorage) {
                         setState(() {
                           errorText =
-                              'Please enter a number between 1 and $quantityAtStorage';
+                              'Пожалуйста введите число от 1 до $quantityAtStorage';
                         });
                       } else {
                         setState(() {
@@ -97,7 +97,7 @@ Widget giveItemToUser(String name, int quantityAtStorage, String description,
             Expanded(
                 flex: 1,
                 child: ElevatedButton(
-                    child: const Text("Submit"),
+                    child: const Text("Подтвердить"),
                     onPressed: () async {
                       if (flag && errorText == null) {
                         Navigator.pop(context);

@@ -13,10 +13,10 @@ Widget pageChanger(int currentPage, int totalPages, VoidCallback nextPage,
         },
         child: const Icon(Icons.arrow_back_rounded),
       ),
-      Text("   Page $currentPage/$totalPages   "),
+      Text("   Страница $currentPage/$totalPages   "),
       InkWell(
           onTap: () {
-            if (currentPage != totalPages) {
+            if (currentPage < totalPages) {
               nextPage();
             }
           },

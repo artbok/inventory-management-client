@@ -35,15 +35,15 @@ Widget userNavigation(
     destinations: const <NavigationRailDestination>[
       NavigationRailDestination(
         icon: Icon(Icons.list_alt),
-        label: Text('Inventory'),
+        label: Text('Предметы'),
       ),
       NavigationRailDestination(
         icon: Icon(Icons.send),
-        label: Text('Request Item'),
+        label: Text('Запросить предметы'),
       ),
       NavigationRailDestination(
         icon: Icon(Icons.handyman),
-        label: Text('Request Repairment'),
+        label: Text('Запросить замену'),
       ),
     ],
   );

@@ -14,7 +14,7 @@ Widget createItemDialog(BuildContext context, VoidCallback refreshPage) {
         const Expanded(
             flex: 1,
             child: Text(
-              "New item",
+              "Новый предмет",
               style: TextStyle(fontSize: 35),
             )),
         Expanded(
@@ -29,7 +29,7 @@ Widget createItemDialog(BuildContext context, VoidCallback refreshPage) {
                     child: TextFormField(
                       controller: nameController,
                       decoration: const InputDecoration(
-                        labelText: "Name",
+                        labelText: "Название",
                       ),
                     ),
                   ),
@@ -44,7 +44,7 @@ Widget createItemDialog(BuildContext context, VoidCallback refreshPage) {
                     child: TextFormField(
                       controller: descriptionController,
                       decoration: const InputDecoration(
-                        labelText: "Description",
+                        labelText: "Описание",
                       ),
                     ),
                   ),
@@ -61,7 +61,7 @@ Widget createItemDialog(BuildContext context, VoidCallback refreshPage) {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: const InputDecoration(
-                        labelText: "Quantity",
+                        labelText: "Количество",
                       ),
                     ),
                   ),
@@ -78,7 +78,7 @@ Widget createItemDialog(BuildContext context, VoidCallback refreshPage) {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text("Cancel"),
+                  child: const Text("Отмена"),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -87,7 +87,7 @@ Widget createItemDialog(BuildContext context, VoidCallback refreshPage) {
                     Navigator.pop(context);
                     refreshPage();
                   },
-                  child: const Text("Create"),
+                  child: const Text("Создать"),
                 ),
               ],
             ))
