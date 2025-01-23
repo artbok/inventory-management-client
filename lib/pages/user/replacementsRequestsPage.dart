@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:predprof/pages/user/userStoragePage.dart';
 import '../../requests/getReplacementsRequests.dart';
 import '../../localStorage.dart';
 import '../../widgets/userNavigation.dart';
@@ -18,14 +19,16 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
   String problem = "";
   Widget getReplacementRequestWidget(
       String itemName, int quantity, String status) {
-    return ListTile(
-      title: Text("$itemName     ${quantity}x"),
-      subtitle: Text(status, style: const TextStyle(fontSize: 15)),
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(color: Colors.black, width: 1),
-        borderRadius: BorderRadius.circular(20),
-      ),
-    );
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+        child: ListTile(
+          title: Text("$itemName     ${quantity}x"),
+          subtitle: Text(status, style: const TextStyle(fontSize: 15)),
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Colors.black, width: 1),
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ));
   }
 
   @override
@@ -81,16 +84,36 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
       ]),
       floatingActionButton: IconButton(
         onPressed: () {
-          // showDialog(
-          //     context: context,
-          //     builder: (BuildContext context) {
-          //       return Dialog(
-          //           insetPadding: const EdgeInsets.symmetric(
-          //               horizontal: 50, vertical: 30),
-          //           child: Column()
-
-          //           );
-          //     });
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text(
+                      maxLines: 3,
+                      "Press the repair button next to the item on the Inventory page to create Repairement Request"),
+                  actionsAlignment: MainAxisAlignment.spaceAround,
+                  actions: [
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Ok")),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  const UserStoragePage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
+                        },
+                        child: const Text("Go to Inventory"))
+                  ],
+                );
+              });
         },
         style: const ButtonStyle(
           side: WidgetStatePropertyAll(

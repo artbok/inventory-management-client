@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../requests/giveItem.dart';
+import '../../widgets/showIncorrectDataAlert.dart';
 
 Widget giveItemToUser(String name, int quantityAtStorage, String description,
     List<String> users, VoidCallback refreshPage) {
@@ -104,21 +105,7 @@ Widget giveItemToUser(String name, int quantityAtStorage, String description,
                             int.parse(controller2.text));
                         refreshPage();
                       } else {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Provide correct data"),
-                                actionsAlignment: MainAxisAlignment.center,
-                                actions: [
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text("OK"))
-                                ],
-                              );
-                            });
+                        showIncorrectDataAlert(context);
                       }
                     }))
           ],

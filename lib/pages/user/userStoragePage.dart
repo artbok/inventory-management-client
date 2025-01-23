@@ -3,7 +3,7 @@ import '../../widgets/userNavigation.dart';
 import '../../requests/getUsersItems.dart';
 import '../../localStorage.dart';
 import '../../widgets/pageChanger.dart';
-
+import 'createReplacementRequestPage.dart';
 
 class UserStoragePage extends StatefulWidget {
   const UserStoragePage({super.key});
@@ -18,33 +18,42 @@ class UserStoragePageState extends State<UserStoragePage> {
   int totalPages = 0;
 
   Widget getItemWidget(String name, String description, int quantity) {
-    return Padding(padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5), child: Container(
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: <Color>[
-                  Color.fromARGB(255, 108, 243, 213),
-                  Color.fromARGB(255, 113, 219, 196),
-                  Color.fromARGB(255, 19, 200, 181),
-                  Color.fromARGB(255, 33, 163, 163),
-                  Color.fromARGB(255, 115, 117, 165)
-                ],
-                tileMode: TileMode.clamp),
-            border: Border.all(
-              color: Colors.black, // Border color
-              width: 2.0, // Border width
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+        child: Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: <Color>[
+                    Color.fromARGB(255, 108, 243, 213),
+                    Color.fromARGB(255, 113, 219, 196),
+                    Color.fromARGB(255, 19, 200, 181),
+                    Color.fromARGB(255, 33, 163, 163),
+                    Color.fromARGB(255, 115, 117, 165)
+                  ],
+                  tileMode: TileMode.clamp),
+              border: Border.all(
+                color: Colors.black, // Border color
+                width: 2.0, // Border width
+              ),
+              borderRadius: BorderRadius.circular(20),
             ),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: ListTile(
-            title: Text("$name     ${quantity}x"),
-            subtitle: Text(description, style: const TextStyle(fontSize: 15)),
-          )
-
-
-            ));
-
+            child: ListTile(
+              title: Row(children: [
+                Text("$name     ${quantity}x"),
+                IconButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return createReplacementRequestPage(name, quantity);
+                          });
+                    },
+                    icon: const Icon(Icons.recycling))
+              ]),
+              subtitle: Text(description, style: const TextStyle(fontSize: 15)),
+            )));
   }
 
   void nextPage() {
@@ -65,32 +74,31 @@ class UserStoragePageState extends State<UserStoragePage> {
     String owner = getValue("username");
     return Scaffold(
         appBar: AppBar(
-          title: Row(
-            children: [
-              const Expanded(flex: 2, child: Text("Your inventory")),
-              Expanded(flex: 2, child: Container()),
-              Expanded(
-                  flex: 2,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "search",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Container(
-                          color: const Color.fromARGB(255, 219, 240, 35),
-                          child: TextFormField(controller: searchController)),
-                    ],
-                  )),
-              Expanded(flex: 1, child: Container()),
-            ],
-          )
-        ),
+            title: Row(
+          children: [
+            const Expanded(flex: 2, child: Text("Your inventory")),
+            Expanded(flex: 2, child: Container()),
+            Expanded(
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "search",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Container(
+                        color: const Color.fromARGB(255, 219, 240, 35),
+                        child: TextFormField(controller: searchController)),
+                  ],
+                )),
+            Expanded(flex: 1, child: Container()),
+          ],
+        )),
         body: Center(
             child: Row(children: [
-              userNavigation(0, context),
+          userNavigation(0, context),
           Expanded(
               child: FutureBuilder(
                   future: getUsersItems(
@@ -130,7 +138,10 @@ class UserStoragePageState extends State<UserStoragePage> {
                                       child: Column(
                                     children: items,
                                   ))),
-                              Expanded(flex: 1, child: pageChanger(currentPage, totalPages, nextPage, previousPage)),
+                              Expanded(
+                                  flex: 1,
+                                  child: pageChanger(currentPage, totalPages,
+                                      nextPage, previousPage)),
                               Expanded(flex: 1, child: Container())
                             ],
                           ));

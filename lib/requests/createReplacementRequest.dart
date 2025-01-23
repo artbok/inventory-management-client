@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../localStorage.dart';
 
 Future<String> createReplacementRequest(
-    String owner, String itemName, int amount) async {
+    String owner, String itemName, int quantity) async {
   String? username = getValue("username");
   String? password = getValue("password");
   Map<String, dynamic> params = {
@@ -11,7 +11,7 @@ Future<String> createReplacementRequest(
     "password": password,
     "owner": owner,
     "itemName": itemName,
-    "amount": amount
+    "quantity": quantity
     
   };
   var response = await http.post(

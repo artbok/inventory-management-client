@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../requests/createItemRequest.dart';
 import '../../localStorage.dart';
+import '../../widgets/showIncorrectDataAlert.dart';
 
 Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
   TextEditingController quantityController = TextEditingController();
@@ -60,27 +61,14 @@ Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
                       if (nameController.text.isNotEmpty &&
                           quantityController.text.isNotEmpty &&
                           int.tryParse(quantityController.text) != null) {
+                        Navigator.pop(context);
                         String owner = getValue("username");
                         await createItemRequest(true, nameController.text,
                             int.parse(quantityController.text), owner);
-                        Navigator.pop(context);
+                        
                         refreshPage();
                       } else {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Provide correct data"),
-                                actionsAlignment: MainAxisAlignment.center,
-                                actions: [
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text("OK"))
-                                ],
-                              );
-                            });
+                        showIncorrectDataAlert(context);
                       }
                     },
                   ),
