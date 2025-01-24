@@ -15,9 +15,15 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String status = "";
+  bool obscureText = true;
 
   @override
   Widget build(BuildContext context) {
+    Icon icon = const Icon(Icons.visibility_off);
+    if (obscureText) {
+      icon = const Icon(Icons.visibility);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Регистрация для администратора"),
@@ -76,8 +82,16 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                     flex: 1,
                     child: TextFormField(
                       controller: passwordController,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(
+                      obscureText: obscureText,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: icon,
+                            onPressed: () {
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            }),
+                        border: const UnderlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.grey, width: 1.0)),
                       ),

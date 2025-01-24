@@ -5,8 +5,9 @@ import '../../localStorage.dart';
 import '../../widgets/showIncorrectDataAlert.dart';
 
 Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
-  TextEditingController quantityController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
   return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
       child: Column(children: [
@@ -27,6 +28,18 @@ Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
                 controller: nameController,
                 decoration: const InputDecoration(
                   labelText: 'Название предмета',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            )),
+        Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: TextField(
+                controller: descriptionController,
+                decoration: const InputDecoration(
+                  labelText: 'Описание предмета',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -63,7 +76,7 @@ Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
                           int.tryParse(quantityController.text) != null) {
                         Navigator.pop(context);
                         String owner = getValue("username");
-                        await createItemRequest(true, nameController.text,
+                        await createItemRequest(true, nameController.text, descriptionController.text,
                             int.parse(quantityController.text), owner);
                         
                         refreshPage();

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/widgets/adminNavigation.dart';
-import '../../requests/getItemsRequests.dart';
+import '../../requests/getReplacementsRequests.dart';
+import '../../widgets/adminNavigation.dart';
 
-class ItemsRequestsPage extends StatefulWidget {
-  const ItemsRequestsPage({super.key});
+class ReplacementsRequestsPage extends StatefulWidget {
+  const ReplacementsRequestsPage({super.key});
 
   @override
-  State<ItemsRequestsPage> createState() => ItemsRequestsState();
+  State<ReplacementsRequestsPage> createState() => ReplacementsRequestsState();
 }
 
-class ItemsRequestsState extends State<ItemsRequestsPage> {
+class ReplacementsRequestsState extends State<ReplacementsRequestsPage> {
   TextEditingController searchController = TextEditingController();
 
   Widget getItemWidget(String name, String status, int quantity) {
@@ -69,10 +69,10 @@ class ItemsRequestsState extends State<ItemsRequestsPage> {
         )),
         body: Center(
             child: Row(children: [
-          adminNavigation(2, context),
+          adminNavigation(1, context),
           Expanded(
               child: FutureBuilder(
-                  future: getItemsRequests(),
+                  future: getReplacementsRequests(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
@@ -86,32 +86,31 @@ class ItemsRequestsState extends State<ItemsRequestsPage> {
                             data[i]["status"]!, data[i]["quantity"]!));
                       }
                       if (items.isEmpty) {
-                        items.add(const Text("Ничего не найдено :("));
+                        items.add(const Text("Ничего не найдено :(", style: TextStyle(fontSize: 40),));
                       }
                       return Container(
-                        decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: <Color>[
-                                  Color.fromARGB(255, 6, 94, 209),
-                                  Color.fromARGB(255, 32, 192, 93),
-                                  Color.fromARGB(255, 6, 152, 209),
-                                ],
-                                tileMode: TileMode.clamp)),
-                        child: Column(
-                          children: [
-                            Expanded(flex: 1, child: Container()),
-                            Expanded(
-                                flex: 7,
-                                child: SingleChildScrollView(
-                                    child: Column(
-                                  children: items,
-                                ))),
-                            Expanded(flex: 1, child: Container())
-                          ],
-                        ),
-                      );
+                          decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: <Color>[
+                                    Color.fromARGB(255, 6, 94, 209),
+                                    Color.fromARGB(255, 32, 192, 93),
+                                    Color.fromARGB(255, 6, 152, 209),
+                                  ],
+                                  tileMode: TileMode.clamp)),
+                          child: Column(
+                            children: [
+                              Expanded(flex: 1, child: Container()),
+                              Expanded(
+                                  flex: 7,
+                                  child: SingleChildScrollView(
+                                      child: Column(
+                                    children: items,
+                                  ))),
+                              Expanded(flex: 1, child: Container())
+                            ],
+                          ));
                     }
                   }))
         ])));

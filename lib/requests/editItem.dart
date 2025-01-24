@@ -2,20 +2,20 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../localStorage.dart';
 
-Future<String> createItemRequest(bool isCustom, String itemName, String description, int quantity, String owner) async {
+Future<String> editItem(
+     String name, String description, String newName, String newDescription) async {
   String? username = getValue("username");
   String? password = getValue("password");
   Map<String, dynamic> params = {
     "username": username,
     "password": password,
-    "isCustom": isCustom,
-    "itemName": itemName,
+    "name": name, 
     "description": description,
-    "quantity": quantity,
-    "owner": owner
+    "newName": newName,
+    "newDescription": newDescription
   };
   var response = await http.post(
-    Uri.parse('http://127.0.0.1:5000/newItemRequest'),
+    Uri.parse('http://127.0.0.1:5000/editItem'),
     headers: {'Content-Type': 'application/json'},
     body: json.encode(params),
   );

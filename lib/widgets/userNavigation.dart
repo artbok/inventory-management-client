@@ -8,6 +8,7 @@ Widget userNavigation(
   BuildContext context,
 ) {
   return NavigationRail(
+    backgroundColor: Colors.transparent,
     selectedIndex: curPage,
     groupAlignment: -1.0,
     onDestinationSelected: (int index) {

@@ -26,15 +26,13 @@ class UserStoragePageState extends State<UserStoragePage> {
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: <Color>[
-                    Color.fromARGB(255, 108, 243, 213),
-                    Color.fromARGB(255, 113, 219, 196),
-                    Color.fromARGB(255, 19, 200, 181),
-                    Color.fromARGB(255, 33, 163, 163),
-                    Color.fromARGB(255, 115, 117, 165)
+                   // Color.fromARGB(255, 236, 221, 208),
+                    Color.fromARGB(200, 248, 201, 222),
+                    Color.fromARGB(255, 226, 209, 247),
                   ],
                   tileMode: TileMode.clamp),
               border: Border.all(
-                color: Colors.black, // Border color
+                color: const Color.fromARGB(200,47, 47, 143), // Border color
                 width: 2.0, // Border width
               ),
               borderRadius: BorderRadius.circular(20),
@@ -76,31 +74,20 @@ class UserStoragePageState extends State<UserStoragePage> {
     List<dynamic> data = [];
     String owner = getValue("username");
     return Scaffold(
-        appBar: AppBar(
-            title: Row(
-          children: [
-            const Expanded(flex: 2, child: Text("Предметы")),
-            Expanded(flex: 2, child: Container()),
-            Expanded(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "поиск",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Container(
-                        color: const Color.fromARGB(255, 219, 240, 35),
-                        child: TextFormField(controller: searchController)),
+        body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: <Color>[
+                   // Color.fromARGB(255, 236, 221, 208),
+                    Color.fromARGB(200, 248, 201, 222),
+                    Color.fromARGB(255, 226, 209, 247),
                   ],
-                )),
-            Expanded(flex: 1, child: Container()),
-          ],
-        )),
-        body: Center(
-            child: Row(children: [
+                  tileMode: TileMode.clamp),
+            ),
+            child:
+          Row(children: [
           userNavigation(0, context),
           Expanded(
               child: FutureBuilder(
@@ -121,15 +108,26 @@ class UserStoragePageState extends State<UserStoragePage> {
                         items.add(getItemWidget(data[i]["itemName"]!,
                             data[i]["description"]!, data[i]["quantity"]!));
                       }
+                      if (items.isEmpty) {
+                            items.add(const Text(
+                              "Ничего не найдено :(",
+                              style: TextStyle(fontSize: 40),
+                            ));
+                          }
                       return Container(
                           decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: <Color>[
-                                    Color.fromARGB(255, 6, 94, 209),
-                                    Color.fromARGB(255, 32, 192, 93),
-                                    Color.fromARGB(255, 6, 152, 209),
+                                    Color.fromARGB(255, 51, 51, 124),
+                                    Color.fromARGB(255, 91, 91, 177),
+                                    Color.fromARGB(255, 111, 131, 191),
+                                    Color.fromARGB(255, 164, 168, 217),
+                                    Color.fromARGB(255, 164, 168, 217),
+                                    Color.fromARGB(255, 111, 131, 191),
+                                    Color.fromARGB(255, 91, 91, 177),
+                                    Color.fromARGB(255, 51, 51, 124),
                                   ],
                                   tileMode: TileMode.clamp)),
                           child: Column(

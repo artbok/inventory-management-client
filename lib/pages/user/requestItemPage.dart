@@ -63,7 +63,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
                         child: ElevatedButton(
                             onPressed: () async {
                               String username = getValue("username");
-                              await createItemRequest(false, name,
+                              await createItemRequest(false, name, description,
                                   int.parse(controllers[i].text), username);
                               controllers[i].clear();
                               setState(() {});
@@ -130,6 +130,12 @@ class _RequestItemPageState extends State<RequestItemPage> {
                       for (int i = 0; i < data.length; i++) {
                         items.add(getItemWidget(i, data[i]["name"]!,
                             data[i]["description"]!, data[i]["quantity"]!));
+                      }
+                                            if (items.isEmpty) {
+                        items.add(const Text(
+                          "Ничего не найдено :(",
+                          style: TextStyle(fontSize: 40),
+                        ));
                       }
                       return Container(
                           decoration: const BoxDecoration(

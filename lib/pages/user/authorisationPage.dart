@@ -15,9 +15,13 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String status = "";
-
+  bool obscureText = true;
   @override
   Widget build(BuildContext context) {
+    Icon icon = const Icon(Icons.visibility_off);
+    if (obscureText) {
+      icon = const Icon(Icons.visibility);
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Авторизация"),
@@ -76,8 +80,16 @@ class _LoginPageState extends State<LoginPage> {
                     flex: 1,
                     child: TextFormField(
                       controller: passwordController,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(
+                      obscureText: obscureText,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: icon,
+                            onPressed: () {
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            }),
+                        border: const UnderlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.grey, width: 1.0)),
                       ),
@@ -102,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                       status = data["status"];
                       if (status == 'ok') {
                         if (data["rightsLevel"] == 1) {
-                           Navigator.pushReplacement(
+                          Navigator.pushReplacement(
                             context,
                             PageRouteBuilder(
                               pageBuilder: (context, animation1, animation2) =>
@@ -112,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           );
                         } else {
-                           Navigator.pushReplacement(
+                          Navigator.pushReplacement(
                             context,
                             PageRouteBuilder(
                               pageBuilder: (context, animation1, animation2) =>
@@ -123,7 +135,6 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         }
                       }
-                     
                     });
                   },
                   child: const Text("Логин")),

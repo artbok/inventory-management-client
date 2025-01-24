@@ -78,8 +78,16 @@ class _ReplacementsRequestsPageState extends State<ReplacementsRequestsPage> {
                           data[i]["quantity"]!,
                           data[i]["status"]!));
                     }
+                    if (items.isEmpty) {
+                      items.add(const Text(
+                        "Ничего не найдено :(",
+                        style: TextStyle(fontSize: 40),
+                      ));
+                    }
                     return Center(child: Column(children: items));
+                    
                   }
+                  
                 }))
       ]),
       floatingActionButton: IconButton(

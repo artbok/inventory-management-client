@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:predprof/pages/admin/editItemPage.dart';
 import '../../widgets/adminNavigation.dart';
 import '../../requests/getItems.dart';
 import 'createItemPage.dart';
@@ -20,8 +21,8 @@ class _StoragePageState extends State<StoragePage> {
   List<String> users = [];
   Widget getItemWidget(
       String name, String description, int quantity, int quantityInStorage) {
-        Widget titleText = Text(
-        "$name     допустимое: $quantityInStorageшт.    общее количество: ${quantity}x");
+    Widget titleText =
+        Text("$name  Доступно: $quantityInStorageшт.  Всего: $quantityшт.");
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         child: Container(
@@ -38,8 +39,8 @@ class _StoragePageState extends State<StoragePage> {
                   ],
                   tileMode: TileMode.clamp),
               border: Border.all(
-                color: Colors.black, // Border color
-                width: 2.0, // Border width
+                color: Colors.black,
+                width: 2.0,
               ),
               borderRadius: BorderRadius.circular(20),
             ),
@@ -58,13 +59,24 @@ class _StoragePageState extends State<StoragePage> {
                                   });
                                 });
                           },
-                          child: const Text("Выдать пользователю"))
+                          child: const Text("Выдать пользователю")),
+                      IconButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return editItemDialog(
+                                      name, description, context, () {
+                                    setState(() {});
+                                  });
+                                });
+                          },
+                          icon: const Icon(Icons.edit))
                     ])
                   : titleText,
               subtitle: Text(description, style: const TextStyle(fontSize: 15)),
             )));
   }
-  
 
   void nextPage() {
     setState(() {
@@ -112,58 +124,66 @@ class _StoragePageState extends State<StoragePage> {
           adminNavigation(0, context),
           Expanded(
               child: Container(
-                          decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: <Color>[
-                                    Color.fromARGB(255, 6, 94, 209),
-                                    Color.fromARGB(255, 32, 192, 93),
-                                    Color.fromARGB(255, 6, 152, 209),
-                                  ],
-                                  tileMode: TileMode.clamp)), child: FutureBuilder(
-                  future: getItems(currentPage),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('ошибка: ${snapshot.error}');
-                    } else {
-                      totalPages = snapshot.data!["totalPages"];
-                      users = snapshot.data!["users"].cast<String>();
-                      data = snapshot.data!["data"];
-                      List<Widget> items = [];
-                      for (int i = 0; i < data.length; i++) {
-                        items.add(getItemWidget(
-                            data[i]["name"]!,
-                            data[i]["description"]!,
-                            data[i]["quantity"]!,
-                            data[i]["quantityInStorage"]));
-                      }
-                      return Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                                flex: 7,
-                                child: Row(
-                                  children: [
-                                    Expanded(flex: 1, child: Container()),
-                                    Expanded(
-                                        flex: 2,
-                                        child: SingleChildScrollView(
-                                            child: Column(
-                                          children: items,
-                                        ))),
-                                    Expanded(flex: 1, child: Container()),
-                                  ],
-                                )),
-                            Expanded(
-                                flex: 1,
-                                child: pageChanger(currentPage, totalPages,
-                                    nextPage, previousPage)),
-                          ]);
-                    }
-                  })))
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: <Color>[
+                            Color.fromARGB(255, 6, 94, 209),
+                            Color.fromARGB(255, 32, 192, 93),
+                            Color.fromARGB(255, 6, 152, 209),
+                          ],
+                          tileMode: TileMode.clamp)),
+                  child: FutureBuilder(
+                      future: getItems(currentPage),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('ошибка: ${snapshot.error}');
+                        } else {
+                          totalPages = snapshot.data!["totalPages"];
+                          users = snapshot.data!["users"].cast<String>();
+                          data = snapshot.data!["data"];
+                          List<Widget> items = [];
+                          for (int i = 0; i < data.length; i++) {
+                            items.add(getItemWidget(
+                                data[i]["name"]!,
+                                data[i]["description"]!,
+                                data[i]["quantity"]!,
+                                data[i]["quantityInStorage"]));
+                          }
+                          if (items.isEmpty) {
+                            items.add(const Text(
+                              "Ничего не найдено :(",
+                              style: TextStyle(fontSize: 40),
+                            ));
+                          }
+                          return Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                    flex: 7,
+                                    child: Row(
+                                      children: [
+                                        Expanded(flex: 1, child: Container()),
+                                        Expanded(
+                                            flex: 2,
+                                            child: SingleChildScrollView(
+                                                child: Column(
+                                              children: items,
+                                            ))),
+                                        Expanded(flex: 1, child: Container()),
+                                      ],
+                                    )),
+                                Expanded(
+                                    flex: 1,
+                                    child: pageChanger(currentPage, totalPages,
+                                        nextPage, previousPage)),
+                              ]);
+                        }
+                      })))
         ])),
         floatingActionButton: CircleAvatar(
             backgroundColor: Colors.amber,

@@ -5,7 +5,7 @@ Future<String> createUser(String username, String password, int rightsLevel) asy
   Map<String, dynamic> params = {
     "username": username,
     "password": password,
-    "rightsLevel": rightsLevel,
+    "rightsLevel": rightsLevel
   };
   final response = await http.post(
     Uri.parse('http://127.0.0.1:5000/newUser'),
