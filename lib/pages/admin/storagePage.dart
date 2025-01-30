@@ -132,7 +132,6 @@ class _StoragePageState extends State<StoragePage> {
         body: background(Row(children: [
           adminNavigation(0, context),
           Expanded(
-              flex: 8,
               child: FutureBuilder(
                   future: getItems(currentPage),
                   builder: (context, snapshot) {

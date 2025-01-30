@@ -4,6 +4,8 @@ import '../../requests/getUsersItems.dart';
 import '../../localStorage.dart';
 import '../../widgets/pageChanger.dart';
 import 'createReplacementRequestPage.dart';
+import '../../widgets/background.dart';
+
 
 class UserStoragePage extends StatefulWidget {
   const UserStoragePage({super.key});
@@ -26,13 +28,13 @@ class UserStoragePageState extends State<UserStoragePage> {
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: <Color>[
-                   // Color.fromARGB(255, 236, 221, 208),
+                    // Color.fromARGB(255, 236, 221, 208),
                     Color.fromARGB(200, 248, 201, 222),
                     Color.fromARGB(255, 226, 209, 247),
                   ],
                   tileMode: TileMode.clamp),
               border: Border.all(
-                color: const Color.fromARGB(200,47, 47, 143), // Border color
+                color: const Color.fromARGB(200, 47, 47, 143), // Border color
                 width: 2.0, // Border width
               ),
               borderRadius: BorderRadius.circular(20),
@@ -45,8 +47,8 @@ class UserStoragePageState extends State<UserStoragePage> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return createReplacementRequestPage(id, 
-                                name, description, quantity, () {
+                            return createReplacementRequestPage(
+                                id, name, description, quantity, () {
                               setState(() {});
                             });
                           });
@@ -74,80 +76,84 @@ class UserStoragePageState extends State<UserStoragePage> {
     List<dynamic> data = [];
     String owner = getValue("username");
     return Scaffold(
-        body: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: <Color>[
-                   // Color.fromARGB(255, 236, 221, 208),
-                    Color.fromARGB(200, 248, 201, 222),
-                    Color.fromARGB(255, 226, 209, 247),
-                  ],
-                  tileMode: TileMode.clamp),
-            ),
-            child:
-          Row(children: [
-          userNavigation(0, context),
-          Expanded(
-              child: FutureBuilder(
-                  future: getUsersItems(
-                    owner,
-                    currentPage,
-                  ),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Ошибка: ${snapshot.error}');
-                    } else {
-                      totalPages = snapshot.data!["totalPages"];
-                      data = snapshot.data!["data"];
-                      List<Widget> items = [];
-                      for (int i = 0; i < data.length; i++) {
-                        items.add(getItemWidget(data[i]["id"], data[i]["name"]!,
-                            data[i]["description"]!, data[i]["quantity"]!));
-                      }
-                      if (items.isEmpty) {
-                            items.add(const Text(
-                              "Ничего не найдено :(",
-                              style: TextStyle(fontSize: 40),
-                            ));
-                          }
-                      return Container(
-                          decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: <Color>[
-                                    Color.fromARGB(255, 51, 51, 124),
-                                    Color.fromARGB(255, 91, 91, 177),
-                                    Color.fromARGB(255, 111, 131, 191),
-                                    Color.fromARGB(255, 164, 168, 217),
-                                    Color.fromARGB(255, 164, 168, 217),
-                                    Color.fromARGB(255, 111, 131, 191),
-                                    Color.fromARGB(255, 91, 91, 177),
-                                    Color.fromARGB(255, 51, 51, 124),
-                                  ],
-                                  tileMode: TileMode.clamp)),
-                          child: Column(
-                            children: [
-                              Expanded(flex: 1, child: Container()),
-                              Expanded(
-                                  flex: 6,
-                                  child: SingleChildScrollView(
-                                      child: Column(
-                                    children: items,
-                                  ))),
-                              Expanded(
-                                  flex: 1,
-                                  child: pageChanger(currentPage, totalPages,
-                                      nextPage, previousPage)),
-                              Expanded(flex: 1, child: Container())
-                            ],
+        body: background(Row(children: [
+      Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: <Color>[
+                  // Color.fromARGB(255, 236, 221, 208),
+                  Color.fromARGB(200, 248, 201, 222),
+                  Color.fromARGB(255, 226, 209, 247),
+                ],
+                tileMode: TileMode.clamp),
+          ),
+          child: Row(children: [
+            userNavigation(0, context),
+            Expanded(
+                child: FutureBuilder(
+                    future: getUsersItems(
+                      owner,
+                      currentPage,
+                    ),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Ошибка: ${snapshot.error}');
+                      } else {
+                        totalPages = snapshot.data!["totalPages"];
+                        data = snapshot.data!["data"];
+                        List<Widget> items = [];
+                        for (int i = 0; i < data.length; i++) {
+                          items.add(getItemWidget(
+                              data[i]["id"],
+                              data[i]["name"]!,
+                              data[i]["description"]!,
+                              data[i]["quantity"]!));
+                        }
+                        if (items.isEmpty) {
+                          items.add(const Text(
+                            "Ничего не найдено :(",
+                            style: TextStyle(fontSize: 40),
                           ));
-                    }
-                  }))
-        ])));
+                        }
+                        return Container(
+                            decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: <Color>[
+                                      Color.fromARGB(255, 51, 51, 124),
+                                      Color.fromARGB(255, 91, 91, 177),
+                                      Color.fromARGB(255, 111, 131, 191),
+                                      Color.fromARGB(255, 164, 168, 217),
+                                      Color.fromARGB(255, 164, 168, 217),
+                                      Color.fromARGB(255, 111, 131, 191),
+                                      Color.fromARGB(255, 91, 91, 177),
+                                      Color.fromARGB(255, 51, 51, 124),
+                                    ],
+                                    tileMode: TileMode.clamp)),
+                            child: Column(
+                              children: [
+                                Expanded(flex: 1, child: Container()),
+                                Expanded(
+                                    flex: 6,
+                                    child: SingleChildScrollView(
+                                        child: Column(
+                                      children: items,
+                                    ))),
+                                Expanded(
+                                    flex: 1,
+                                    child: pageChanger(currentPage, totalPages,
+                                        nextPage, previousPage)),
+                                Expanded(flex: 1, child: Container())
+                              ],
+                            ));
+                      }
+                    }))
+          ]))
+    ])));
   }
 }

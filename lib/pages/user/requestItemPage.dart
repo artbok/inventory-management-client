@@ -5,6 +5,8 @@ import '../../widgets/quantityInput.dart';
 import '../../requests/createItemRequest.dart';
 import '../../localStorage.dart';
 import '../../widgets/pageChanger.dart';
+import '../../widgets/background.dart';
+
 
 class RequestItemPage extends StatefulWidget {
   const RequestItemPage({super.key});
@@ -20,7 +22,8 @@ class _RequestItemPageState extends State<RequestItemPage> {
   String problem = "";
   List<Widget> inputWidgets = [];
   List<TextEditingController> controllers = [];
-  Widget getItemWidget(int i, int id, String name, String description, int quantity) {
+  Widget getItemWidget(
+      int i, int id, String name, String description, int quantity) {
     if (inputWidgets.length - 1 < i) {
       controllers.add(TextEditingController());
       inputWidgets.add(quantityInput(quantity, controllers[i]));
@@ -112,61 +115,68 @@ class _RequestItemPageState extends State<RequestItemPage> {
             Expanded(flex: 1, child: Container()),
           ],
         )),
-        body: Center(
-            child: Row(children: [
-          userNavigation(1, context),
-          Expanded(
-              child: FutureBuilder(
-                  future: getItems(currentPage),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('ошибка: ${snapshot.error}');
-                    } else {
-                      data = snapshot.data!['data'];
-                      totalPages = snapshot.data!['totalPages'];
-                      List<Widget> items = [];
-                      for (int i = 0; i < data.length; i++) {
-                        items.add(getItemWidget(i, data[i]["id"], data[i]["name"]!,
-                            data[i]["description"]!, data[i]["quantity"]!));
+        body: background(Row(children: [
+          Container(
+              child: Center(
+                  child: Row(children: [
+            userNavigation(1, context),
+            Expanded(
+                child: FutureBuilder(
+                    future: getItems(currentPage),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('ошибка: ${snapshot.error}');
+                      } else {
+                        data = snapshot.data!['data'];
+                        totalPages = snapshot.data!['totalPages'];
+                        List<Widget> items = [];
+                        for (int i = 0; i < data.length; i++) {
+                          items.add(getItemWidget(
+                              i,
+                              data[i]["id"],
+                              data[i]["name"]!,
+                              data[i]["description"]!,
+                              data[i]["quantity"]!));
+                        }
+                        if (items.isEmpty) {
+                          items.add(const Text(
+                            "Ничего не найдено :(",
+                            style: TextStyle(fontSize: 40),
+                          ));
+                        }
+                        return Container(
+                            decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: <Color>[
+                                      Color.fromARGB(255, 6, 94, 209),
+                                      Color.fromARGB(255, 32, 192, 93),
+                                      Color.fromARGB(255, 6, 152, 209),
+                                    ],
+                                    tileMode: TileMode.clamp)),
+                            child: Center(
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                  Expanded(flex: 1, child: Container()),
+                                  Expanded(
+                                      flex: 7,
+                                      child: SingleChildScrollView(
+                                          child: Column(
+                                        children: items,
+                                      ))),
+                                  Expanded(
+                                      flex: 1,
+                                      child: pageChanger(currentPage,
+                                          totalPages, nextPage, previousPage))
+                                ])));
                       }
-                                            if (items.isEmpty) {
-                        items.add(const Text(
-                          "Ничего не найдено :(",
-                          style: TextStyle(fontSize: 40),
-                        ));
-                      }
-                      return Container(
-                          decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: <Color>[
-                                    Color.fromARGB(255, 6, 94, 209),
-                                    Color.fromARGB(255, 32, 192, 93),
-                                    Color.fromARGB(255, 6, 152, 209),
-                                  ],
-                                  tileMode: TileMode.clamp)),
-                          child: Center(
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                Expanded(flex: 1, child: Container()),
-                                Expanded(
-                                    flex: 7,
-                                    child: SingleChildScrollView(
-                                        child: Column(
-                                      children: items,
-                                    ))),
-                                Expanded(
-                                    flex: 1,
-                                    child: pageChanger(currentPage, totalPages,
-                                        nextPage, previousPage))
-                              ])));
-                    }
-                  }))
+                    }))
+          ])))
         ])));
   }
 }
