@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:predprof/pages/admin/editItemPage.dart';
 import '../../widgets/adminNavigation.dart';
@@ -5,6 +6,7 @@ import '../../requests/getItems.dart';
 import 'createItemPage.dart';
 import 'giveItemToUserPage.dart';
 import '../../widgets/pageChanger.dart';
+import '../../widgets/background.dart';
 
 class StoragePage extends StatefulWidget {
   const StoragePage({super.key});
@@ -20,7 +22,7 @@ class _StoragePageState extends State<StoragePage> {
   String problem = "";
   List<String> users = [];
   Widget getItemWidget(
-      String name, String description, int quantity, int quantityInStorage) {
+      String name, String description, int quantity, int quantityInStorage, String status) {
     Widget titleText =
         Text("$name  Доступно: $quantityInStorageшт.  Всего: $quantityшт.");
     return Padding(
@@ -31,11 +33,11 @@ class _StoragePageState extends State<StoragePage> {
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: <Color>[
-                    Color.fromARGB(255, 108, 243, 213),
-                    Color.fromARGB(255, 113, 219, 196),
-                    Color.fromARGB(255, 19, 200, 181),
-                    Color.fromARGB(255, 33, 163, 163),
-                    Color.fromARGB(255, 115, 117, 165)
+
+                    Color.fromARGB(255, 214, 195, 198),
+                    Color.fromARGB(255, 235, 205, 197),
+                    Color.fromARGB(255, 243, 175, 150),
+                    //Color.fromARGB(255, 215, 92, 80)
                   ],
                   tileMode: TileMode.clamp),
               border: Border.all(
@@ -66,7 +68,7 @@ class _StoragePageState extends State<StoragePage> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return editItemDialog(
-                                      name, description, context, () {
+                                      name, description, quantity, quantity - quantityInStorage, status, context, () {
                                     setState(() {});
                                   });
                                 });
@@ -119,27 +121,18 @@ class _StoragePageState extends State<StoragePage> {
           ),
           backgroundColor: Colors.amber,
         ),
-        body: Center(
-            child: Row(children: [
-          adminNavigation(0, context),
-          Expanded(
-              child: Container(
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: <Color>[
-                            Color.fromARGB(255, 6, 94, 209),
-                            Color.fromARGB(255, 32, 192, 93),
-                            Color.fromARGB(255, 6, 152, 209),
-                          ],
-                          tileMode: TileMode.clamp)),
-                  child: FutureBuilder(
+        body:
+          background(
+                  Row(children: [
+                    Expanded(flex: 1, child:
+                      adminNavigation(0, context)),
+                   Expanded(flex: 8, child:
+                   FutureBuilder(
                       future: getItems(currentPage),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
+                          return Container();
                         } else if (snapshot.hasError) {
                           return Text('ошибка: ${snapshot.error}');
                         } else {
@@ -152,7 +145,10 @@ class _StoragePageState extends State<StoragePage> {
                                 data[i]["name"]!,
                                 data[i]["description"]!,
                                 data[i]["quantity"]!,
-                                data[i]["quantityInStorage"]));
+                                data[i]["quantityInStorage"]!,
+                                data[i]["status"]
+
+                                ));
                           }
                           if (items.isEmpty) {
                             items.add(const Text(
@@ -183,8 +179,8 @@ class _StoragePageState extends State<StoragePage> {
                                         nextPage, previousPage)),
                               ]);
                         }
-                      })))
-        ])),
+                      }))])
+        ),
         floatingActionButton: CircleAvatar(
             backgroundColor: Colors.amber,
             child: IconButton(

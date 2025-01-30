@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../localStorage.dart';
 
 Future<String> editItem(
-     String name, String description, String newName, String newDescription) async {
+     String name, String description, String newName, int newQuantity, String newDescription) async {
   String? username = getValue("username");
   String? password = getValue("password");
   Map<String, dynamic> params = {
@@ -12,6 +12,7 @@ Future<String> editItem(
     "name": name, 
     "description": description,
     "newName": newName,
+    "newQuantity": newQuantity,
     "newDescription": newDescription
   };
   var response = await http.post(

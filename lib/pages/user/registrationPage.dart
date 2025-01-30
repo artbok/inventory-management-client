@@ -111,11 +111,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   onPressed: () async {
                     String username = usernameController.text;
                     String password = passwordController.text;
-                    String status = await createUser(username, password, 1);
+                    Map<String, dynamic> data = await createUser(username, password, 1);
                     setState(() {
-                      if (status == 'ok') {
+                      if (data["status"] == "ok") {
                         putToTheStorage("username", username);
-                        putToTheStorage('password', password);
+                        putToTheStorage("password", password);
                         Navigator.pushReplacement(
                           context,
                           PageRouteBuilder(

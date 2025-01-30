@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../pages/admin/itemsRequestsPage.dart';
-import '../pages/user/requestItemPage.dart';
+import '../pages/admin/statsPAge.dart';
 import '../pages/admin/storagePage.dart';
 import '../pages/admin/replacementsRequestsPage.dart';
 
@@ -11,7 +11,8 @@ Widget adminNavigation(
   return NavigationRail(
     selectedIndex: curPage,
     groupAlignment: -1.0,
-    backgroundColor: Colors.transparent,
+    backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+
     onDestinationSelected: (int index) {
       Widget? page;
       switch (index) {
@@ -22,9 +23,9 @@ Widget adminNavigation(
         case 2:
           page = const ItemsRequestsPage();
         case 3:
-          page = const RequestItemPage();
-        case 4:
-          print("Шнип шнап шнапи");
+          //page = const Statspage();
+          print("шнип шнап шнапи");
+
       }
       if (page != null) {
         Navigator.pushReplacement(

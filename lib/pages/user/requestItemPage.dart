@@ -20,7 +20,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
   String problem = "";
   List<Widget> inputWidgets = [];
   List<TextEditingController> controllers = [];
-  Widget getItemWidget(int i, String name, String description, int quantity) {
+  Widget getItemWidget(int i, int itemId, String name, String description, int quantity) {
     if (inputWidgets.length - 1 < i) {
       controllers.add(TextEditingController());
       inputWidgets.add(quantityInput(quantity, controllers[i]));
@@ -63,8 +63,8 @@ class _RequestItemPageState extends State<RequestItemPage> {
                         child: ElevatedButton(
                             onPressed: () async {
                               String username = getValue("username");
-                              await createItemRequest(false, name, description,
-                                  int.parse(controllers[i].text), username);
+                              await createItemRequest(itemId, name, description,
+                                  int.parse(controllers[i].text));
                               controllers[i].clear();
                               setState(() {});
                             },
@@ -128,7 +128,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
                       totalPages = snapshot.data!['totalPages'];
                       List<Widget> items = [];
                       for (int i = 0; i < data.length; i++) {
-                        items.add(getItemWidget(i, data[i]["name"]!,
+                        items.add(getItemWidget(i, data[i]["itemId"], data[i]["name"]!,
                             data[i]["description"]!, data[i]["quantity"]!));
                       }
                                             if (items.isEmpty) {

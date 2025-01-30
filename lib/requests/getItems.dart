@@ -16,7 +16,6 @@ Future<Map<String, dynamic>> getItems(int page) async {
     body: json.encode(params),
   );
 
-  Map<String, dynamic> data =
-      jsonDecode(response.body) as Map<String, dynamic>;
+  Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
   return data;
 }

@@ -3,7 +3,7 @@ import 'package:predprof/pages/admin/storagePage.dart';
 import 'package:predprof/pages/user/userStoragePage.dart';
 import 'registrationPage.dart';
 import '../../requests/authUser.dart';
-
+import '../../localStorage.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -108,11 +108,12 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () async {
                     String username = usernameController.text;
                     String password = passwordController.text;
-                    Map<String, dynamic> data =
-                        await authUser(username, password);
+                    Map<String, dynamic> data = await authUser(username, password);
                     setState(() {
                       status = data["status"];
                       if (status == 'ok') {
+                        putToTheStorage("username", username);
+                        putToTheStorage('password', password);
                         if (data["rightsLevel"] == 1) {
                           Navigator.pushReplacement(
                             context,

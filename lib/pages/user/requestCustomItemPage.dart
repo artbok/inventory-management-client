@@ -75,9 +75,8 @@ Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
                           quantityController.text.isNotEmpty &&
                           int.tryParse(quantityController.text) != null) {
                         Navigator.pop(context);
-                        String owner = getValue("username");
-                        await createItemRequest(true, nameController.text, descriptionController.text,
-                            int.parse(quantityController.text), owner);
+                        await createItemRequest(null, nameController.text, descriptionController.text,
+                            int.parse(quantityController.text));
                         
                         refreshPage();
                       } else {
