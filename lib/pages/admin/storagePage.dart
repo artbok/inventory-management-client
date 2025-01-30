@@ -120,17 +120,17 @@ class _StoragePageState extends State<StoragePage> {
                         style: TextStyle(fontSize: 16),
                       ),
                       Container(
-                          color: const Color.fromARGB(255, 219, 240, 35),
+                          color: Colors.white,
                           child: TextFormField(controller: searchController)),
                     ],
                   )),
               Expanded(flex: 1, child: Container()),
             ],
           ),
-          backgroundColor: Colors.amber,
+          backgroundColor: const Color.fromARGB(255, 235, 205, 197),
         ),
         body: background(Row(children: [
-          Expanded(flex: 1, child: adminNavigation(0, context)),
+          adminNavigation(0, context),
           Expanded(
               flex: 8,
               child: FutureBuilder(
@@ -185,23 +185,17 @@ class _StoragePageState extends State<StoragePage> {
                     }
                   }))
         ])),
-        floatingActionButton: CircleAvatar(
-            backgroundColor: Colors.amber,
-            child: IconButton(
-                style: const ButtonStyle(
-                  side: WidgetStatePropertyAll(
-                    BorderSide(color: Colors.black, width: 2.0),
-                  ),
-                ),
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return createItemDialog(context, () {
-                          setState(() {});
-                        });
-                      });
-                })));
+        floatingActionButton: FloatingActionButton.extended(
+            label: Text("Создать предмет", style: TextStyle(fontSize: 40),),
+            icon: const Icon(Icons.add, size: 50),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return createItemDialog(context, () {
+                      setState(() {});
+                    });
+                  });
+            }));
   }
 }

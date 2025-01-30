@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:predprof/widgets/adminNavigation.dart';
 import '../../requests/getItemsRequests.dart';
+import 'package:predprof/widgets/background.dart';
 
 class ItemsRequestsPage extends StatefulWidget {
   const ItemsRequestsPage({super.key});
@@ -67,8 +68,7 @@ class ItemsRequestsState extends State<ItemsRequestsPage> {
             Expanded(flex: 1, child: Container()),
           ],
         )),
-        body: Center(
-            child: Row(children: [
+        body: background(Row(children: [
           adminNavigation(2, context),
           Expanded(
               child: FutureBuilder(
@@ -89,16 +89,6 @@ class ItemsRequestsState extends State<ItemsRequestsPage> {
                         items.add(const Text("Ничего не найдено :("));
                       }
                       return Container(
-                        decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: <Color>[
-                                  Color.fromARGB(255, 6, 94, 209),
-                                  Color.fromARGB(255, 32, 192, 93),
-                                  Color.fromARGB(255, 6, 152, 209),
-                                ],
-                                tileMode: TileMode.clamp)),
                         child: Column(
                           children: [
                             Expanded(flex: 1, child: Container()),

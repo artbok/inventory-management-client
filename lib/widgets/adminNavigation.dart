@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../pages/admin/itemsRequestsPage.dart';
-import '../pages/admin/statsPAge.dart';
 import '../pages/admin/storagePage.dart';
 import '../pages/admin/replacementsRequestsPage.dart';
 
@@ -12,7 +11,13 @@ Widget adminNavigation(
     selectedIndex: curPage,
     groupAlignment: -1.0,
     backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-
+    selectedLabelTextStyle: const TextStyle(
+      color: Color.fromARGB(255, 243, 175, 150),
+      fontSize: 20,
+      
+      
+    ),
+    unselectedLabelTextStyle: const TextStyle(color: Color.fromARGB(255, 243, 175, 150), fontSize: 20),
     onDestinationSelected: (int index) {
       Widget? page;
       switch (index) {
@@ -39,6 +44,8 @@ Widget adminNavigation(
       }
     },
     labelType: NavigationRailLabelType.all,
+    
+
     destinations: const <NavigationRailDestination>[
       NavigationRailDestination(
         icon: Icon(Icons.storage),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:predprof/widgets/background.dart';
 import '../../requests/getReplacementsRequests.dart';
 import '../../widgets/adminNavigation.dart';
 
@@ -67,8 +68,7 @@ class ReplacementsRequestsState extends State<ReplacementsRequestsPage> {
             Expanded(flex: 1, child: Container()),
           ],
         )),
-        body: Center(
-            child: Row(children: [
+        body: background(Row(children: [
           adminNavigation(1, context),
           Expanded(
               child: FutureBuilder(
@@ -86,31 +86,23 @@ class ReplacementsRequestsState extends State<ReplacementsRequestsPage> {
                             data[i]["status"]!, data[i]["quantity"]!));
                       }
                       if (items.isEmpty) {
-                        items.add(const Text("Ничего не найдено :(", style: TextStyle(fontSize: 40),));
+                        items.add(const Text(
+                          "Ничего не найдено :(",
+                          style: TextStyle(fontSize: 40),
+                        ));
                       }
-                      return Container(
-                          decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: <Color>[
-                                    Color.fromARGB(255, 6, 94, 209),
-                                    Color.fromARGB(255, 32, 192, 93),
-                                    Color.fromARGB(255, 6, 152, 209),
-                                  ],
-                                  tileMode: TileMode.clamp)),
-                          child: Column(
-                            children: [
-                              Expanded(flex: 1, child: Container()),
-                              Expanded(
-                                  flex: 7,
-                                  child: SingleChildScrollView(
-                                      child: Column(
-                                    children: items,
-                                  ))),
-                              Expanded(flex: 1, child: Container())
-                            ],
-                          ));
+                      return Column(
+                        children: [
+                          Expanded(flex: 1, child: Container()),
+                          Expanded(
+                              flex: 7,
+                              child: SingleChildScrollView(
+                                  child: Column(
+                                children: items,
+                              ))),
+                          Expanded(flex: 1, child: Container())
+                        ],
+                      );
                     }
                   }))
         ])));
