@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import '../../requests/giveItem.dart';
 import '../../widgets/showIncorrectDataAlert.dart';
 
-Widget giveItemToUser(String name, int quantityAtStorage, String description,
+Widget giveItemToUser(int itemId, String name, int quantityAtStorage, String description,
     List<String> users, VoidCallback refreshPage) {
   final TextEditingController controller1 = TextEditingController();
   final TextEditingController controller2 = TextEditingController();
@@ -101,7 +101,7 @@ Widget giveItemToUser(String name, int quantityAtStorage, String description,
                     onPressed: () async {
                       if (flag && errorText == null) {
                         Navigator.pop(context);
-                        await giveItem(controller1.text, name, description,
+                        await giveItem(controller1.text, itemId, 
                             int.parse(controller2.text));
                         refreshPage();
                       } else {

@@ -17,7 +17,7 @@ class UserStoragePageState extends State<UserStoragePage> {
   int currentPage = 1;
   int totalPages = 0;
 
-  Widget getItemWidget(String name, String description, int quantity) {
+  Widget getItemWidget(int id, String name, String description, int quantity) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         child: Container(
@@ -45,7 +45,7 @@ class UserStoragePageState extends State<UserStoragePage> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return createReplacementRequestPage(
+                            return createReplacementRequestPage(id, 
                                 name, description, quantity, () {
                               setState(() {});
                             });
@@ -105,7 +105,7 @@ class UserStoragePageState extends State<UserStoragePage> {
                       data = snapshot.data!["data"];
                       List<Widget> items = [];
                       for (int i = 0; i < data.length; i++) {
-                        items.add(getItemWidget(data[i]["itemName"]!,
+                        items.add(getItemWidget(data[i]["id"], data[i]["name"]!,
                             data[i]["description"]!, data[i]["quantity"]!));
                       }
                       if (items.isEmpty) {

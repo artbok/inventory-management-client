@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../localStorage.dart';
 
-Future<String> editItem(
+Future<String> editItem(int itemId,
      String name, String description, String newName, int newQuantity, String newDescription) async {
   String? username = getValue("username");
   String? password = getValue("password");
@@ -13,7 +13,8 @@ Future<String> editItem(
     "description": description,
     "newName": newName,
     "newQuantity": newQuantity,
-    "newDescription": newDescription
+    "newDescription": newDescription,
+    "itemId": itemId
   };
   var response = await http.post(
     Uri.parse('http://127.0.0.1:5000/editItem'),

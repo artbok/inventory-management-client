@@ -4,7 +4,7 @@ import '../../requests/createReplacementRequest.dart';
 import '../../localStorage.dart';
 import '../../widgets/showIncorrectDataAlert.dart';
 
-Widget createReplacementRequestPage(String itemName, String description,
+Widget createReplacementRequestPage(int itemId, String itemName, String description,
     int maxQuantity, VoidCallback refreshPage) {
   TextEditingController controller = TextEditingController();
   String? errorText;
@@ -60,8 +60,8 @@ Widget createReplacementRequestPage(String itemName, String description,
                       if (errorText == null) {
                         String owner = getValue("username");
                         Navigator.pop(context);
-                        await createReplacementRequest(owner, itemName,
-                            description, int.parse(controller.text));
+                        await createReplacementRequest(owner, itemId,
+                            int.parse(controller.text));
                         refreshPage();
                       } else {
                         showIncorrectDataAlert(context);

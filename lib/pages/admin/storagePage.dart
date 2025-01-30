@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:predprof/pages/admin/editItemPage.dart';
 import '../../widgets/adminNavigation.dart';
@@ -21,8 +20,8 @@ class _StoragePageState extends State<StoragePage> {
   int totalPages = 0;
   String problem = "";
   List<String> users = [];
-  Widget getItemWidget(
-      String name, String description, int quantity, int quantityInStorage, String status) {
+  Widget getItemWidget(int itemId, String name, String description,
+      int quantity, int quantityInStorage, String status) {
     Widget titleText =
         Text("$name  Доступно: $quantityInStorageшт.  Всего: $quantityшт.");
     return Padding(
@@ -33,7 +32,6 @@ class _StoragePageState extends State<StoragePage> {
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: <Color>[
-
                     Color.fromARGB(255, 214, 195, 198),
                     Color.fromARGB(255, 235, 205, 197),
                     Color.fromARGB(255, 243, 175, 150),
@@ -55,8 +53,12 @@ class _StoragePageState extends State<StoragePage> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return giveItemToUser(name, quantityInStorage,
-                                      description, users, () {
+                                  return giveItemToUser(
+                                      itemId,
+                                      name,
+                                      quantityInStorage,
+                                      description,
+                                      users, () {
                                     setState(() {});
                                   });
                                 });
@@ -68,7 +70,13 @@ class _StoragePageState extends State<StoragePage> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return editItemDialog(
-                                      name, description, quantity, quantity - quantityInStorage, status, context, () {
+                                      itemId,
+                                      name,
+                                      description,
+                                      quantity,
+                                      quantity - quantityInStorage,
+                                      status,
+                                      context, () {
                                     setState(() {});
                                   });
                                 });
@@ -121,66 +129,62 @@ class _StoragePageState extends State<StoragePage> {
           ),
           backgroundColor: Colors.amber,
         ),
-        body:
-          background(
-                  Row(children: [
-                    Expanded(flex: 1, child:
-                      adminNavigation(0, context)),
-                   Expanded(flex: 8, child:
-                   FutureBuilder(
-                      future: getItems(currentPage),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Container();
-                        } else if (snapshot.hasError) {
-                          return Text('ошибка: ${snapshot.error}');
-                        } else {
-                          totalPages = snapshot.data!["totalPages"];
-                          users = snapshot.data!["users"].cast<String>();
-                          data = snapshot.data!["data"];
-                          List<Widget> items = [];
-                          for (int i = 0; i < data.length; i++) {
-                            items.add(getItemWidget(
-                                data[i]["name"]!,
-                                data[i]["description"]!,
-                                data[i]["quantity"]!,
-                                data[i]["quantityInStorage"]!,
-                                data[i]["status"]
-
-                                ));
-                          }
-                          if (items.isEmpty) {
-                            items.add(const Text(
-                              "Ничего не найдено :(",
-                              style: TextStyle(fontSize: 40),
-                            ));
-                          }
-                          return Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Expanded(
-                                    flex: 7,
-                                    child: Row(
-                                      children: [
-                                        Expanded(flex: 1, child: Container()),
-                                        Expanded(
-                                            flex: 2,
-                                            child: SingleChildScrollView(
-                                                child: Column(
-                                              children: items,
-                                            ))),
-                                        Expanded(flex: 1, child: Container()),
-                                      ],
-                                    )),
-                                Expanded(
-                                    flex: 1,
-                                    child: pageChanger(currentPage, totalPages,
-                                        nextPage, previousPage)),
-                              ]);
-                        }
-                      }))])
-        ),
+        body: background(Row(children: [
+          Expanded(flex: 1, child: adminNavigation(0, context)),
+          Expanded(
+              flex: 8,
+              child: FutureBuilder(
+                  future: getItems(currentPage),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container();
+                    } else if (snapshot.hasError) {
+                      return Text('ошибка: ${snapshot.error}');
+                    } else {
+                      totalPages = snapshot.data!["totalPages"];
+                      users = snapshot.data!["users"].cast<String>();
+                      data = snapshot.data!["data"];
+                      List<Widget> items = [];
+                      for (int i = 0; i < data.length; i++) {
+                        items.add(getItemWidget(
+                            data[i]["id"],
+                            data[i]["name"]!,
+                            data[i]["description"]!,
+                            data[i]["quantity"]!,
+                            data[i]["quantityInStorage"]!,
+                            data[i]["status"]));
+                      }
+                      if (items.isEmpty) {
+                        items.add(const Text(
+                          "Ничего не найдено :(",
+                          style: TextStyle(fontSize: 40),
+                        ));
+                      }
+                      return Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                                flex: 7,
+                                child: Row(
+                                  children: [
+                                    Expanded(flex: 1, child: Container()),
+                                    Expanded(
+                                        flex: 2,
+                                        child: SingleChildScrollView(
+                                            child: Column(
+                                          children: items,
+                                        ))),
+                                    Expanded(flex: 1, child: Container()),
+                                  ],
+                                )),
+                            Expanded(
+                                flex: 1,
+                                child: pageChanger(currentPage, totalPages,
+                                    nextPage, previousPage)),
+                          ]);
+                    }
+                  }))
+        ])),
         floatingActionButton: CircleAvatar(
             backgroundColor: Colors.amber,
             child: IconButton(

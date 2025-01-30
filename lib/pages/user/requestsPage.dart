@@ -15,7 +15,7 @@ class RequestsPage extends StatefulWidget {
 class RequestsPageState extends State<RequestsPage> {
   TextEditingController searchController = TextEditingController();
 
-  Widget getItemWidget(String name, String status, int quantity) {
+  Widget getItemWidget(String name, String status, int itemQuantity) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         child: Container(
@@ -38,7 +38,7 @@ class RequestsPageState extends State<RequestsPage> {
               borderRadius: BorderRadius.circular(20),
             ),
             child: ListTile(
-              title: Text("$name     ${quantity}x"),
+              title: Text("$name     ${itemQuantity}x"),
               subtitle: Text(status, style: const TextStyle(fontSize: 15)),
             )));
   }
@@ -89,7 +89,7 @@ class RequestsPageState extends State<RequestsPage> {
                       List<Widget> items = [];
                       for (int i = 0; i < data.length; i++) {
                         items.add(getItemWidget(data[i]["itemName"]!,
-                            data[i]["status"]!, data[i]["quantity"]!));
+                            data[i]["status"]!, data[i]["itemQuantity"]!));
                       }
                       return Container(
                           decoration: const BoxDecoration(
@@ -143,7 +143,7 @@ class RequestsPageState extends State<RequestsPage> {
                                               );
                                             },
                                             child: const Text(
-                                                "Заказать предмет из магазина"))),
+                                                "Заказать предмет со склада"))),
                                     Expanded(
                                       flex: 1,
                                       child: Container(),

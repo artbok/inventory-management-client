@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../requests/editItem.dart';
 import 'package:flutter/services.dart';
 
-Widget editItemDialog(String name, String description, int quantity,
+Widget editItemDialog(int itemId, String name, String description, int quantity,
     int minQuantity, String status, BuildContext context, VoidCallback refreshPage) {
   TextEditingController nameController = TextEditingController(text: name);
   TextEditingController descriptionController =
@@ -39,25 +39,25 @@ Widget editItemDialog(String name, String description, int quantity,
                   ),
                   Expanded(flex: 1, child: Container()),
                 ])),
-            Expanded(
-              flex: 1,
-              child: StatefulBuilder(builder: (context, setState) {
-                        return
-              DropdownButton<String>(
-        value: status,
-        onChanged: (String? newValue) {
-          setState(() {
-            status = newValue!;
-          });
-        },
-        items: statuses.map((String item) {
-          return DropdownMenuItem<String>(
-            value: item,
-            child: Text(item),
-          );
-        }).toList(),
-      );}),
-            ),
+      //       Expanded(
+      //         flex: 1,
+      //         child: StatefulBuilder(builder: (context, setState) {
+      //                   return
+      //         DropdownButton<String>(
+      //   value: status,
+      //   onChanged: (String? newValue) {
+      //     setState(() {
+      //       status = newValue!;
+      //     });
+      //   },
+      //   items: statuses.map((String item) {
+      //     return DropdownMenuItem<String>(
+      //       value: item,
+      //       child: Text(item),
+      //     );
+      //   }).toList(),
+      // );}),
+      //       ),
             Expanded(
                 flex: 1,
                 child: Row(children: [
@@ -122,7 +122,7 @@ Widget editItemDialog(String name, String description, int quantity,
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    editItem(name, description, nameController.text, int.parse(quantityController.text),
+                    editItem(itemId, name, description, nameController.text, int.parse(quantityController.text),
                         descriptionController.text);
                     Navigator.pop(context);
                     refreshPage();

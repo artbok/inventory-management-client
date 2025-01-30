@@ -83,7 +83,7 @@ class ItemsRequestsState extends State<ItemsRequestsPage> {
                       List<Widget> items = [];
                       for (int i = 0; i < data.length; i++) {
                         items.add(getItemWidget(data[i]["itemName"]!,
-                            data[i]["status"]!, data[i]["quantity"]!));
+                            data[i]["status"]!, data[i]["itemQuantity"]!));
                       }
                       if (items.isEmpty) {
                         items.add(const Text("Ничего не найдено :("));
