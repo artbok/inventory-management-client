@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-Widget wrappedItem(Widget title, Widget subtitle) {
+Widget wrappedItem(Widget child) {
   return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       child: Container(
@@ -21,8 +21,6 @@ Widget wrappedItem(Widget title, Widget subtitle) {
             ),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: ListTile(
-            title: title,
-            subtitle: subtitle,
-          )));
+          child: child
+          ));
 }

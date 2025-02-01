@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+
 Future<Map<String, dynamic>> createUser(String username, String password, int rightsLevel) async {
   Map<String, dynamic> params = {
     "username": username,

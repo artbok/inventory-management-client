@@ -8,7 +8,6 @@ import 'package:inventory_managment/widgets/page_changer.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 
-
 class StoragePage extends StatefulWidget {
   const StoragePage({super.key});
 
@@ -28,8 +27,8 @@ class _StoragePageState extends State<StoragePage> {
     Widget titleText = Text(
         "$name  Доступно: $quantityInStorageшт.  Всего: $quantityшт.",
         overflow: TextOverflow.ellipsis);
-    return wrappedItem(
-        (users.isNotEmpty && quantityInStorage != 0)
+    return wrappedItem(ListTile(
+        title: (users.isNotEmpty && quantityInStorage != 0)
             ? Row(children: [
                 titleText,
                 ElevatedButton(
@@ -64,9 +63,9 @@ class _StoragePageState extends State<StoragePage> {
                     icon: const Icon(Icons.edit))
               ])
             : titleText,
-        Text(description,
+        subtitle: Text(description,
             style: const TextStyle(fontSize: 15),
-            overflow: TextOverflow.ellipsis));
+            overflow: TextOverflow.ellipsis)));
   }
 
   void nextPage() {

@@ -8,28 +8,28 @@ class ReplacementRequestsPage extends StatefulWidget {
   const ReplacementRequestsPage({super.key});
 
   @override
-  State<ReplacementRequestsPage> createState() => _ReplacementRequestsPageState();
+  State<ReplacementRequestsPage> createState() =>
+      _ReplacementRequestsPageState();
 }
-
 
 class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
   TextEditingController searchController = TextEditingController();
 
   Widget getItemWidget(String name, String status, int quantity) {
-    return wrappedItem(
-        Row(children: [
-          Text("$name     $quantityшт."),
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.check,
-                color: Colors.green,
-              )),
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.close, color: Colors.red))
-        ]),
-        Text(status, style: const TextStyle(fontSize: 15)));
+    return wrappedItem(ListTile(
+      title: Row(children: [
+        Text("$name     $quantityшт."),
+        IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.check,
+              color: Colors.green,
+            )),
+        IconButton(
+            onPressed: () {}, icon: const Icon(Icons.close, color: Colors.red))
+      ]),
+      subtitle: Text(status, style: const TextStyle(fontSize: 15)),
+    ));
   }
 
   @override
