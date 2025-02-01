@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_managment/widgets/background.dart';
-import 'package:inventory_managment/requests/getReplacementsRequests.dart';
+import 'package:inventory_managment/requests/get_replacements_requests.dart';
 import 'package:inventory_managment/widgets/admin_navigation.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_managment/admin/dialogs/edit_item_dialog.dart';
 import 'package:inventory_managment/widgets/admin_navigation.dart';
-import 'package:inventory_managment/requests/getItems.dart';
+import 'package:inventory_managment/requests/get_items.dart';
 import 'package:inventory_managment/admin/dialogs/create_item_dialog.dart';
 import 'package:inventory_managment/admin/dialogs/give_item_to_user_dialog.dart';
 import 'package:inventory_managment/widgets/page_changer.dart';

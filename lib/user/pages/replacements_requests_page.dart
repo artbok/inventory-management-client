@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_managment/user/pages/user_storage_page.dart';
-import 'package:inventory_managment/requests/getReplacementsRequests.dart';
+import 'package:inventory_managment/requests/get_replacements_requests.dart';
 import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/widgets/user_navigation.dart';
 import 'package:inventory_managment/widgets/background.dart';

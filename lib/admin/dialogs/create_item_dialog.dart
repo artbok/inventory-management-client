@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:inventory_managment/requests/createItem.dart';
+import 'package:inventory_managment/requests/create_item.dart';
 
 
 void showCreateItemDialog(BuildContext context, VoidCallback refreshPage) {

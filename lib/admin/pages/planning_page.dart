@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_managment/widgets/admin_navigation.dart';
-import 'package:inventory_managment/requests/getPlans.dart';
+import 'package:inventory_managment/requests/get_plans.dart';
 import 'package:inventory_managment/admin/dialogs/create_item_dialog.dart';
 import 'package:inventory_managment/widgets/page_changer.dart';
 import 'package:inventory_managment/widgets/background.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_managment/widgets/user_navigation.dart';
 import 'package:inventory_managment/local_storage.dart';
-import 'package:inventory_managment/requests/getItemsRequests.dart';
+import 'package:inventory_managment/requests/get_items_requests.dart';
 import 'package:inventory_managment/user/pages/request_storage_item_page.dart';
 import 'package:inventory_managment/user/pages/request_custom_item_page.dart';
 import 'package:inventory_managment/widgets/background.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_managment/requests/authUser.dart';
+import 'package:inventory_managment/requests/auth_user.dart';
 import 'user/pages/authorisation_page.dart';
 import 'user/pages/user_storage_page.dart';
 import 'local_storage.dart';

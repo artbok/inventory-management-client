@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_managment/widgets/user_navigation.dart';
-import 'package:inventory_managment/requests/getItems.dart';
+import 'package:inventory_managment/requests/get_items.dart';
 import 'package:inventory_managment/widgets/quantity_input.dart';
-import 'package:inventory_managment/requests/createItemRequest.dart';
+import 'package:inventory_managment/requests/create_item_request.dart';
 import 'package:inventory_managment/widgets/page_changer.dart';
 import 'package:inventory_managment/widgets/background.dart';
 

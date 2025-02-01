@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:inventory_managment/requests/editItem.dart';
+import 'package:inventory_managment/requests/edit_item.dart';
 
 
 Widget editItemDialog(int itemId, String name, String description, int quantity,

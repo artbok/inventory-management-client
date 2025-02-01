@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_managment/user/pages/authorisation_page.dart';
 import 'package:inventory_managment/local_storage.dart';
-import 'package:inventory_managment/requests/createUser.dart';
+import 'package:inventory_managment/requests/create_user.dart';
 import 'package:inventory_managment/admin/pages/storage_page.dart';
 
 

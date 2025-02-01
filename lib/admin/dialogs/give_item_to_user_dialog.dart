@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:inventory_managment/requests/giveItem.dart';
+import 'package:inventory_managment/requests/give_item.dart';
 import 'package:inventory_managment/widgets/show_alert.dart';
 
 

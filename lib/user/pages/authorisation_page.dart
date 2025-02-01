@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventory_managment/admin/pages/storage_page.dart';
 import 'package:inventory_managment/user/pages/user_storage_page.dart';
 import 'package:inventory_managment/user/pages/registration_page.dart';
-import 'package:inventory_managment/requests/authUser.dart';
+import 'package:inventory_managment/requests/auth_user.dart';
 import 'package:inventory_managment/local_storage.dart';
 
 class LoginPage extends StatefulWidget {
