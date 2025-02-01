@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/requests/authUser.dart';
-import 'pages/user/authorisationPage.dart';
-import 'pages/user/userStoragePage.dart';
-import 'localStorage.dart';
-import 'pages/admin/storagePage.dart';
+import 'package:inventory_managment/requests/authUser.dart';
+import 'user/pages/authorisation_page.dart';
+import 'user/pages/user_storage_page.dart';
+import 'local_storage.dart';
+import 'admin/pages/storage_page.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+class RedirectPage extends StatelessWidget {
+  const RedirectPage({super.key});
+
 
   Future<Widget> checkAuth() async {
     String? username = getValue("username");
@@ -23,25 +25,28 @@ class MyApp extends StatelessWidget {
     }
     return const LoginPage();
   }
+
+
   @override
   Widget build(BuildContext context) {
-      return MaterialApp(
+    return MaterialApp(
         title: 'Управление спортивным инвентарем',
         theme: ThemeData(
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
         home: FutureBuilder(
-            future: checkAuth(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return Text('Ошибка: ${snapshot.error}');
-              } {
-                return snapshot.data!;
-              }
-            },
-      ));
+          future: checkAuth(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Ошибка: ${snapshot.error}');
+            }
+            {
+              return snapshot.data!;
+            }
+          },
+        ));
   }
 }

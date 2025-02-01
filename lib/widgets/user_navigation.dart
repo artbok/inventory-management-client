@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../pages/user/requestsPage.dart';
-import '../pages/user/replacementsRequestsPage.dart';
-import '../pages/user/userStoragePage.dart';
+import 'package:inventory_managment/user/pages/item_requests_page.dart';
+import 'package:inventory_managment/user/pages/replacements_requests_page.dart';
+import 'package:inventory_managment/user/pages/user_storage_page.dart';
+
 
 Widget userNavigation(
   int curPage,

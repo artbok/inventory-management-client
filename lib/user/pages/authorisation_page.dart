@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'authorisationPage.dart';
-import '../../localStorage.dart';
-import '../../requests/createUser.dart';
-import '../admin/storagePage.dart';
+import 'package:inventory_managment/admin/pages/storage_page.dart';
+import 'package:inventory_managment/user/pages/user_storage_page.dart';
+import 'package:inventory_managment/user/pages/registration_page.dart';
+import 'package:inventory_managment/requests/authUser.dart';
+import 'package:inventory_managment/local_storage.dart';
 
-class AdminRegistrationPage extends StatefulWidget {
-  const AdminRegistrationPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<AdminRegistrationPage> createState() => _AdminRegistrationPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
+class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String status = "";
@@ -23,10 +24,9 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
     if (obscureText) {
       icon = const Icon(Icons.visibility);
     }
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Регистрация для администратора"),
+        title: const Text("Авторизация"),
       ),
       body: Center(
         child: Column(
@@ -111,42 +111,59 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                     String username = usernameController.text;
                     String password = passwordController.text;
                     Map<String, dynamic> data =
-                        await createUser(username, password, 2);
+                        await authUser(username, password);
                     setState(() {
-                      if (data["status"] == 'ok') {
+                      status = data["status"];
+                      if (status == 'ok') {
                         putToTheStorage("username", username);
                         putToTheStorage('password', password);
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) =>
-                                const StoragePage(),
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
-                          ),
-                        );
+                        if (data["rightsLevel"] == 1) {
+                          Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  const UserStoragePage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
+                        } else {
+                          Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  const StoragePage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
+                        }
                       }
                     });
                   },
-                  child: const Text("Сохранить")),
+                  child: const Text("Логин")),
             ),
             Flexible(
                 flex: 1,
                 child: InkWell(
-                  child: const Text("Уже есть аккаунт?"),
+                  child: const Text("Нету аккаунта?"),
                   onTap: () => {
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) =>
-                            const LoginPage(),
+                            const RegistrationPage(),
                         transitionDuration: Duration.zero,
                         reverseTransitionDuration: Duration.zero,
                       ),
                     )
                   },
                 )),
-            Flexible(flex: 4, child: Container()),
+            Flexible(flex: 5, child: Container()),
+            Flexible(
+              flex: 1,
+              child: Text(status),
+            )
           ],
         ),
       ),

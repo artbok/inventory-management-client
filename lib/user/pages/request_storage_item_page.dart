@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../widgets/userNavigation.dart';
-import '../../requests/getItems.dart';
-import '../../widgets/quantityInput.dart';
-import '../../requests/createItemRequest.dart';
-import '../../localStorage.dart';
-import '../../widgets/pageChanger.dart';
-import '../../widgets/background.dart';
+import 'package:inventory_managment/widgets/user_navigation.dart';
+import 'package:inventory_managment/requests/getItems.dart';
+import 'package:inventory_managment/widgets/quantity_input.dart';
+import 'package:inventory_managment/requests/createItemRequest.dart';
+import 'package:inventory_managment/widgets/page_changer.dart';
+import 'package:inventory_managment/widgets/background.dart';
 
 
 class RequestItemPage extends StatefulWidget {
@@ -65,7 +64,6 @@ class _RequestItemPageState extends State<RequestItemPage> {
                         flex: 1,
                         child: ElevatedButton(
                             onPressed: () async {
-                              String username = getValue("username");
                               await createItemRequest(id, name, description,
                                   int.parse(controllers[i].text));
                               controllers[i].clear();
@@ -116,9 +114,6 @@ class _RequestItemPageState extends State<RequestItemPage> {
           ],
         )),
         body: background(Row(children: [
-          Container(
-              child: Center(
-                  child: Row(children: [
             userNavigation(1, context),
             Expanded(
                 child: FutureBuilder(
@@ -138,7 +133,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
                               data[i]["id"],
                               data[i]["name"]!,
                               data[i]["description"]!,
-                              data[i]["quantity"]!));
+                              data[i]["quantityInStorage"]!));
                         }
                         if (items.isEmpty) {
                           items.add(const Text(
@@ -176,7 +171,6 @@ class _RequestItemPageState extends State<RequestItemPage> {
                                 ])));
                       }
                     }))
-          ])))
-        ])));
+          ])));
   }
 }

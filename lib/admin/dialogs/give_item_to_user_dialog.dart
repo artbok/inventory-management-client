@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../requests/giveItem.dart';
-import '../../widgets/showIncorrectDataAlert.dart';
+import 'package:inventory_managment/requests/giveItem.dart';
+import 'package:inventory_managment/widgets/show_alert.dart';
 
 
 Widget giveItemToUser(int itemId, String name, int quantityAtStorage, String description,

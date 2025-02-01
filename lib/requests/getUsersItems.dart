@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../localStorage.dart';
+import 'package:inventory_managment/local_storage.dart';
 
 Future<Map<String, dynamic>> getUsersItems(String owner, int page) async {
   String? username = getValue("username");

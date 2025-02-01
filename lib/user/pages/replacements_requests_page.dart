@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/pages/user/userStoragePage.dart';
-import '../../requests/getReplacementsRequests.dart';
-import '../../localStorage.dart';
-import '../../widgets/userNavigation.dart';
-import '../../widgets/background.dart';
+import 'package:inventory_managment/user/pages/user_storage_page.dart';
+import 'package:inventory_managment/requests/getReplacementsRequests.dart';
+import 'package:inventory_managment/local_storage.dart';
+import 'package:inventory_managment/widgets/user_navigation.dart';
+import 'package:inventory_managment/widgets/background.dart';
 
 
 class ReplacementsRequestsPage extends StatefulWidget {

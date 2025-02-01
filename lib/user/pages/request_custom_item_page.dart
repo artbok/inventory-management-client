@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../requests/createItemRequest.dart';
-import '../../localStorage.dart';
-import '../../widgets/showIncorrectDataAlert.dart';
+import 'package:inventory_managment/requests/createItemRequest.dart';
+import 'package:inventory_managment/widgets/show_alert.dart';
 
 Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
   TextEditingController nameController = TextEditingController();

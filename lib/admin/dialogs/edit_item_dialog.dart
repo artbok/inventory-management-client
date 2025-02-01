@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../requests/editItem.dart';
 import 'package:flutter/services.dart';
+import 'package:inventory_managment/requests/editItem.dart';
+
 
 Widget editItemDialog(int itemId, String name, String description, int quantity,
     int minQuantity, String status, BuildContext context, VoidCallback refreshPage) {

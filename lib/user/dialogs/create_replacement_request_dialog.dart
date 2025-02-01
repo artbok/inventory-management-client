@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../requests/createReplacementRequest.dart';
-import '../../localStorage.dart';
-import '../../widgets/showIncorrectDataAlert.dart';
+import 'package:inventory_managment/requests/createReplacementRequest.dart';
+import 'package:inventory_managment/local_storage.dart';
+import 'package:inventory_managment/widgets/show_alert.dart';
 
 Widget createReplacementRequestPage(int itemId, String itemName, String description,
     int maxQuantity, VoidCallback refreshPage) {

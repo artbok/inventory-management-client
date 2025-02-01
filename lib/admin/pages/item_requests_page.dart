@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/widgets/adminNavigation.dart';
-import '../../requests/getItemsRequests.dart';
-import 'package:predprof/widgets/background.dart';
+import 'package:inventory_managment/widgets/admin_navigation.dart';
+import 'package:inventory_managment/requests/getItemsRequests.dart';
+import 'package:inventory_managment/widgets/background.dart';
 
-class ItemsRequestsPage extends StatefulWidget {
-  const ItemsRequestsPage({super.key});
+
+class ItemRequestsPage extends StatefulWidget {
+  const ItemRequestsPage({super.key});
 
   @override
-  State<ItemsRequestsPage> createState() => ItemsRequestsState();
+  State<ItemRequestsPage> createState() => _ItemRequestsPageState();
 }
 
-class ItemsRequestsState extends State<ItemsRequestsPage> {
+
+class _ItemRequestsPageState extends State<ItemRequestsPage> {
   TextEditingController searchController = TextEditingController();
 
   Widget getItemWidget(String name, String status, int quantity) {
@@ -88,8 +90,7 @@ class ItemsRequestsState extends State<ItemsRequestsPage> {
                       if (items.isEmpty) {
                         items.add(const Text("Ничего не найдено :("));
                       }
-                      return Container(
-                        child: Column(
+                      return Column(
                           children: [
                             Expanded(flex: 1, child: Container()),
                             Expanded(
@@ -100,7 +101,6 @@ class ItemsRequestsState extends State<ItemsRequestsPage> {
                                 ))),
                             Expanded(flex: 1, child: Container())
                           ],
-                        ),
                       );
                     }
                   }))

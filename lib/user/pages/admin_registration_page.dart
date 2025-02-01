@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/pages/user/userStoragePage.dart';
-import 'authorisationPage.dart';
-import 'adminRegistrationPage.dart';
-import '../../localStorage.dart';
-import '../../requests/createUser.dart';
+import 'package:inventory_managment/user/pages/authorisation_page.dart';
+import 'package:inventory_managment/local_storage.dart';
+import 'package:inventory_managment/requests/createUser.dart';
+import 'package:inventory_managment/admin/pages/storage_page.dart';
 
-class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({super.key});
+
+class AdminRegistrationPage extends StatefulWidget {
+  const AdminRegistrationPage({super.key});
 
   @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
+  State<AdminRegistrationPage> createState() => _AdminRegistrationPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String status = "";
@@ -27,7 +27,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Регистрация"),
+        title: const Text("Регистрация для администратора"),
       ),
       body: Center(
         child: Column(
@@ -111,16 +111,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   onPressed: () async {
                     String username = usernameController.text;
                     String password = passwordController.text;
-                    Map<String, dynamic> data = await createUser(username, password, 1);
+                    Map<String, dynamic> data =
+                        await createUser(username, password, 2);
                     setState(() {
-                      if (data["status"] == "ok") {
+                      if (data["status"] == 'ok') {
                         putToTheStorage("username", username);
-                        putToTheStorage("password", password);
+                        putToTheStorage('password', password);
                         Navigator.pushReplacement(
                           context,
                           PageRouteBuilder(
                             pageBuilder: (context, animation1, animation2) =>
-                                const UserStoragePage(),
+                                const StoragePage(),
                             transitionDuration: Duration.zero,
                             reverseTransitionDuration: Duration.zero,
                           ),
@@ -146,27 +147,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     )
                   },
                 )),
-            Flexible(
-                flex: 5,
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) =>
-                              const AdminRegistrationPage(),
-                          transitionDuration: Duration.zero,
-                          reverseTransitionDuration: Duration.zero,
-                        ),
-                      );
-                    },
-                    child: const Text("Регистрация для админов",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600)),
-                  ),
-                )),
+            Flexible(flex: 4, child: Container()),
           ],
         ),
       ),

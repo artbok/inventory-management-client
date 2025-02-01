@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../localStorage.dart';
+import 'package:inventory_managment/local_storage.dart';
+
 
 Future<String> createItem(
     String name, String description, int quantity) async {

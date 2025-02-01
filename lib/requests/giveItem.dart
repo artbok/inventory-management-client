@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../localStorage.dart';
+import 'package:inventory_managment/local_storage.dart';
 
 Future<String> giveItem(String user, int itemId, int quantity) async {
   String? username = getValue("username");

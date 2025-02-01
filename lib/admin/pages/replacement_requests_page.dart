@@ -1,44 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:predprof/widgets/background.dart';
-import '../../requests/getReplacementsRequests.dart';
-import '../../widgets/adminNavigation.dart';
+import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/requests/getReplacementsRequests.dart';
+import 'package:inventory_managment/widgets/admin_navigation.dart';
+import 'package:inventory_managment/widgets/wrapped_item.dart';
 
-class ReplacementsRequestsPage extends StatefulWidget {
-  const ReplacementsRequestsPage({super.key});
+class ReplacementRequestsPage extends StatefulWidget {
+  const ReplacementRequestsPage({super.key});
 
   @override
-  State<ReplacementsRequestsPage> createState() => ReplacementsRequestsState();
+  State<ReplacementRequestsPage> createState() => _ReplacementRequestsPageState();
 }
 
-class ReplacementsRequestsState extends State<ReplacementsRequestsPage> {
+
+class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
   TextEditingController searchController = TextEditingController();
 
   Widget getItemWidget(String name, String status, int quantity) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-        child: Container(
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: <Color>[
-                    Color.fromARGB(255, 108, 243, 213),
-                    Color.fromARGB(255, 113, 219, 196),
-                    Color.fromARGB(255, 19, 200, 181),
-                    Color.fromARGB(255, 33, 163, 163),
-                    Color.fromARGB(255, 115, 117, 165)
-                  ],
-                  tileMode: TileMode.clamp),
-              border: Border.all(
-                color: Colors.black,
-                width: 2.0,
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: ListTile(
-              title: Text("$name     ${quantity}x"),
-              subtitle: Text(status, style: const TextStyle(fontSize: 15)),
-            )));
+    return wrappedItem(
+        Row(children: [
+          Text("$name     $quantityшт."),
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.check,
+                color: Colors.green,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.close, color: Colors.red))
+        ]),
+        Text(status, style: const TextStyle(fontSize: 15)));
   }
 
   @override

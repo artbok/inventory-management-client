@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../widgets/userNavigation.dart';
-import '../../localStorage.dart';
-import '../../requests/getItemsRequests.dart';
-import 'requestItemPage.dart';
-import 'requestCustomItemPage.dart';
-import '../../widgets/background.dart';
-
+import 'package:inventory_managment/widgets/user_navigation.dart';
+import 'package:inventory_managment/local_storage.dart';
+import 'package:inventory_managment/requests/getItemsRequests.dart';
+import 'package:inventory_managment/user/pages/request_storage_item_page.dart';
+import 'package:inventory_managment/user/pages/request_custom_item_page.dart';
+import 'package:inventory_managment/widgets/background.dart';
 
 class RequestsPage extends StatefulWidget {
   const RequestsPage({super.key});
