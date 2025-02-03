@@ -1,14 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'package:inventory_managment/local_storage.dart';
 
 Future<Map<String, dynamic>> authUser(String username, String password) async {
   Map<String, dynamic> params = {
     "username": username,
     "password": password,
   };
+  final Uri url = Uri.parse('${getValue("serverAddress")}/authUser');
+  
   final response = await http.post(
-    Uri.parse('http://127.0.0.1:5000/authUser'),
+    url,
     headers: <String, String>{
       'Content-Type': 'application/json',
     },

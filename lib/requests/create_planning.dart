@@ -16,8 +16,9 @@ Future<Map<String, dynamic>> createPlanning(
     "supplier": supplier,
     "price": price
   };
+  final Uri url = Uri.parse('${getValue("serverAddress")}/newPlaning');
   var response = await http.post(
-    Uri.parse('http://127.0.0.1:5000/newPlaning'),
+    url,
     headers: {'Content-Type': 'application/json'},
     body: json.encode(params),
   );

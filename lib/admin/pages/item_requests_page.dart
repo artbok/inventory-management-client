@@ -47,29 +47,6 @@ class _ItemRequestsPageState extends State<ItemRequestsPage> {
   Widget build(BuildContext context) {
     List<dynamic> data = [];
     return Scaffold(
-        appBar: AppBar(
-            title: Row(
-          children: [
-            const Expanded(flex: 2, child: Text("Предметы")),
-            Expanded(flex: 2, child: Container()),
-            Expanded(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "поиск",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Container(
-                        color: const Color.fromARGB(255, 219, 240, 35),
-                        child: TextFormField(controller: searchController)),
-                  ],
-                )),
-            Expanded(flex: 1, child: Container()),
-          ],
-        )),
         body: background(Row(children: [
           adminNavigation(2, context),
           Expanded(
@@ -88,7 +65,7 @@ class _ItemRequestsPageState extends State<ItemRequestsPage> {
                             data[i]["status"]!, data[i]["itemQuantity"]!));
                       }
                       if (items.isEmpty) {
-                        items.add(const Text("Ничего не найдено :("));
+                        items.add(const Text("Ничего не найдено :(", style: TextStyle(fontSize: 40),));
                       }
                       return Column(
                           children: [

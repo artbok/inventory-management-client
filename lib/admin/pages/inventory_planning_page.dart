@@ -45,31 +45,6 @@ class _InventoryPlanningPageState extends State<InventoryPlanningPage> {
     List<dynamic> data1 = [];
     List<dynamic> data2 = [];
     return Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              const Expanded(flex: 2, child: Text("Планирование закупок")),
-              Expanded(flex: 2, child: Container()),
-              Expanded(
-                  flex: 2,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "поиск",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Container(
-                          color: Colors.white,
-                          child: TextFormField(controller: searchController)),
-                    ],
-                  )),
-              Expanded(flex: 1, child: Container()),
-            ],
-          ),
-          backgroundColor: const Color.fromARGB(255, 235, 205, 197),
-        ),
         body: background(Row(children: [
           adminNavigation(3, context),
           Expanded(
@@ -81,7 +56,6 @@ class _InventoryPlanningPageState extends State<InventoryPlanningPage> {
                     } else if (snapshot.hasError) {
                       return Text('ошибка: ${snapshot.error}');
                     } else {
-                      print("GOT DATA!!!");
                       data1 = snapshot.data!["uncompletedPlannings"];
                       data2 = snapshot.data!["completedPlannings"];
                       List<Widget> uncompletedPlannings = [];

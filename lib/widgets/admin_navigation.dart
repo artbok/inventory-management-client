@@ -4,6 +4,7 @@ import 'package:inventory_managment/admin/pages/storage_page.dart';
 import 'package:inventory_managment/admin/pages/replacement_requests_page.dart';
 import 'package:inventory_managment/admin/pages/inventory_planning_page.dart';
 
+
 Widget adminNavigation(
   int curPage,
   BuildContext context,
@@ -29,9 +30,6 @@ Widget adminNavigation(
           page = const ItemRequestsPage();
         case 3:
           page = const InventoryPlanningPage();
-        case 4:
-          //page = const Statspage();
-          print("шнип шнап шнапи");
       }
       if (page != null) {
         Navigator.pushReplacement(
@@ -61,10 +59,6 @@ Widget adminNavigation(
       NavigationRailDestination(
         icon: Icon(Icons.calendar_today),
         label: Text('Планирование закупок'),
-      ),
-      NavigationRailDestination(
-        icon: Icon(Icons.query_stats),
-        label: Text('Статистика'),
       ),
     ],
   );

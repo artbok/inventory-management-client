@@ -17,8 +17,9 @@ Future<String> editItem(int itemId,
     "newDescription": newDescription,
     "itemId": itemId
   };
+  final Uri url = Uri.parse('${getValue("serverAddress")}/editItem');
   var response = await http.post(
-    Uri.parse('http://127.0.0.1:5000/editItem'),
+    url,
     headers: {'Content-Type': 'application/json'},
     body: json.encode(params),
   );

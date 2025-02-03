@@ -7,6 +7,7 @@ import 'package:inventory_managment/admin/dialogs/give_item_to_user_dialog.dart'
 import 'package:inventory_managment/widgets/page_changer.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
+import 'package:inventory_managment/admin/dialogs/delete_item_dialog.dart';
 
 class StoragePage extends StatefulWidget {
   const StoragePage({super.key});
@@ -28,41 +29,41 @@ class _StoragePageState extends State<StoragePage> {
         "$name  Доступно: $quantityInStorageшт.  Всего: $quantityшт.",
         overflow: TextOverflow.ellipsis);
     return wrappedItem(ListTile(
-        title: (users.isNotEmpty && quantityInStorage != 0)
-            ? Row(children: [
-                titleText,
-                ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return giveItemToUser(itemId, name,
-                                quantityInStorage, description, users, () {
-                              setState(() {});
+        title: Row(children: [
+          Expanded(child: titleText),
+          Row(children: [
+            ElevatedButton(
+                onPressed: (users.isNotEmpty && quantityInStorage != 0)
+                    ? () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return giveItemToUser(itemId, name,
+                                  quantityInStorage, description, users, () {
+                                setState(() {});
+                              });
                             });
-                          });
-                    },
-                    child: const Text("Выдать пользователю")),
-                IconButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return editItemDialog(
-                                itemId,
-                                name,
-                                description,
-                                quantity,
-                                quantity - quantityInStorage,
-                                status,
-                                context, () {
-                              setState(() {});
-                            });
-                          });
-                    },
-                    icon: const Icon(Icons.edit))
-              ])
-            : titleText,
+                      }
+                    : null,
+                child: const Text("Выдать пользователю")),
+            IconButton(
+                onPressed: () {
+                  editItemDialog(itemId, name, description, quantity,
+                      quantity - quantityInStorage, status, context, () {
+                    setState(() {});
+                  });
+                },
+                icon: const Icon(Icons.edit)),
+            IconButton(
+                onPressed: (quantityInStorage != 0)
+                    ? () {
+                        deleteItemDialog(itemId, name, quantityInStorage,
+                            context, () => setState(() {}));
+                      }
+                    : null,
+                icon: const Icon(Icons.delete))
+          ])
+        ]),
         subtitle: Text(description,
             style: const TextStyle(fontSize: 15),
             overflow: TextOverflow.ellipsis)));
@@ -84,31 +85,6 @@ class _StoragePageState extends State<StoragePage> {
   Widget build(BuildContext context) {
     List<dynamic> data = [];
     return Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              const Expanded(flex: 2, child: Text("Хранилище")),
-              Expanded(flex: 2, child: Container()),
-              Expanded(
-                  flex: 2,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "поиск",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Container(
-                          color: Colors.white,
-                          child: TextFormField(controller: searchController)),
-                    ],
-                  )),
-              Expanded(flex: 1, child: Container()),
-            ],
-          ),
-          backgroundColor: const Color.fromARGB(255, 235, 205, 197),
-        ),
         body: background(Row(children: [
           adminNavigation(0, context),
           Expanded(

@@ -15,8 +15,9 @@ Future<String> createReplacementRequest(
     "quantity": quantity
     
   };
+  final Uri url = Uri.parse('${getValue("serverAddress")}/newReplacementRequest');
   var response = await http.post(
-    Uri.parse('http://127.0.0.1:5000/newReplacementRequest'),
+    url,
     headers: {'Content-Type': 'application/json'},
     body: json.encode(params),
   );

@@ -12,8 +12,9 @@ Future<Map<String, dynamic>> getUsersItems(String owner, int page) async {
     "owner": owner,
     "page": page,
   };
+  final Uri url = Uri.parse('${getValue("serverAddress")}/getUsersItems');
   var response = await http.post(
-    Uri.parse('http://127.0.0.1:5000/getUsersItems'),
+    url,
     headers: {'Content-Type': 'application/json'},
     body: json.encode(params),
   );

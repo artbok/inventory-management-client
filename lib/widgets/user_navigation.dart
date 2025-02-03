@@ -3,7 +3,6 @@ import 'package:inventory_managment/user/pages/item_requests_page.dart';
 import 'package:inventory_managment/user/pages/replacements_requests_page.dart';
 import 'package:inventory_managment/user/pages/user_storage_page.dart';
 
-
 Widget userNavigation(
   int curPage,
   BuildContext context,
@@ -20,7 +19,7 @@ Widget userNavigation(
         case 1:
           page = const RequestsPage();
         case 2:
-          page = const ReplacementsRequestsPage();
+          page = const ReplacementRequestsPage();
       }
       if (page != null) {
         Navigator.pushReplacement(

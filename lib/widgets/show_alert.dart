@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-void showIncorrectDataAlert(BuildContext context) {
+void showIncorrectDataAlert(BuildContext context, [Widget title = const Text("Укажите правильные данные!")]) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Укажите правильные данные!"),
+          title: title,
           actionsAlignment: MainAxisAlignment.center,
           actions: [
             ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text("Окей"))
+                child: const Text("Ок"))
           ],
         );
       });

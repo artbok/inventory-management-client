@@ -90,29 +90,6 @@ class _RequestItemPageState extends State<RequestItemPage> {
   Widget build(BuildContext context) {
     List<dynamic> data = [];
     return Scaffold(
-        appBar: AppBar(
-            title: Row(
-          children: [
-            const Expanded(flex: 2, child: Text("Запросы предметов")),
-            Expanded(flex: 2, child: Container()),
-            Expanded(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "поиск",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Container(
-                        color: const Color.fromARGB(255, 35, 240, 185),
-                        child: TextFormField(controller: searchController)),
-                  ],
-                )),
-            Expanded(flex: 1, child: Container()),
-          ],
-        )),
         body: background(Row(children: [
             userNavigation(1, context),
             Expanded(

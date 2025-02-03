@@ -13,8 +13,9 @@ Future<String> giveItem(String user, int itemId, int quantity) async {
     "quantity": quantity,
     "itemId": itemId
   };
+    final Uri url = Uri.parse('${getValue("serverAddress")}/giveItem');
   var response = await http.post(
-    Uri.parse('http://127.0.0.1:5000/giveItem'),
+    url,
     headers: {'Content-Type': 'application/json'},
     body: json.encode(params),
   );

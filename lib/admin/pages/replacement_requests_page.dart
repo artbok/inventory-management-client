@@ -36,29 +36,6 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
   Widget build(BuildContext context) {
     List<dynamic> data = [];
     return Scaffold(
-        appBar: AppBar(
-            title: Row(
-          children: [
-            const Expanded(flex: 2, child: Text("Предметы")),
-            Expanded(flex: 2, child: Container()),
-            Expanded(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "поиск",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Container(
-                        color: const Color.fromARGB(255, 219, 240, 35),
-                        child: TextFormField(controller: searchController)),
-                  ],
-                )),
-            Expanded(flex: 1, child: Container()),
-          ],
-        )),
         body: background(Row(children: [
           adminNavigation(1, context),
           Expanded(

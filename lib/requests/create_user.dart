@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:inventory_managment/local_storage.dart';
 
-
-Future<Map<String, dynamic>> createUser(String username, String password, int rightsLevel) async {
+Future<Map<String, dynamic>> createUser(
+    String username, String password, int rightsLevel) async {
   Map<String, dynamic> params = {
     "username": username,
     "password": password,
     "rightsLevel": rightsLevel
   };
+  final Uri url = Uri.parse('${getValue("serverAddress")}/newUser');
   final response = await http.post(
-    Uri.parse('http://127.0.0.1:5000/newUser'),
+    url,
     headers: <String, String>{
       'Content-Type': 'application/json',
     },

@@ -12,8 +12,9 @@ Future<Map<String, dynamic>> changePlanningStatus(
     "id": id,
     "completed": completed
   };
+  final Uri url = Uri.parse('${getValue("serverAddress")}/changePlanningStatus');
   var response = await http.post(
-    Uri.parse('http://127.0.0.1:5000/changePlanningStatus'),
+    url,
     headers: {'Content-Type': 'application/json'},
     body: json.encode(params),
   );

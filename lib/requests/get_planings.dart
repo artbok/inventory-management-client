@@ -10,8 +10,9 @@ Future<Map<String, dynamic>> getPlanings() async {
     "username": username,
     "password": password,
   };
+  final Uri url = Uri.parse('${getValue("serverAddress")}/getPlanings');
   var response = await http.post(
-    Uri.parse('http://127.0.0.1:5000/getPlanings'),
+    url,
     headers: {'Content-Type': 'application/json'},
     body: json.encode(params),
   );
