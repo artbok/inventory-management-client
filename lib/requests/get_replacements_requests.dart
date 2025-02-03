@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:inventory_managment/local_storage.dart';
 
-
-Future<Map<String, dynamic>> getReplacementsRequests([String? owner]) async {
+Future<Map<String, dynamic>> getReplacementRequests([String? owner]) async {
   String? username = getValue("username");
   String? password = getValue("password");
   Map<String, dynamic> params = {
@@ -11,7 +10,7 @@ Future<Map<String, dynamic>> getReplacementsRequests([String? owner]) async {
     "password": password,
     "owner": owner
   };
-  final Uri url = Uri.parse('${getValue("serverAddress")}/getPlanings');
+  final Uri url = Uri.parse('${getValue("serverAddress")}/getReplacementRequests');
   var response = await http.post(
     url,
     headers: {'Content-Type': 'application/json'},

@@ -100,7 +100,7 @@ Widget giveItemToUser(int itemId, String name, int quantityAtStorage, String des
                 child: ElevatedButton(
                     child: const Text("Подтвердить"),
                     onPressed: () async {
-                      if (flag && errorText == null) {
+                      if (flag && errorText == null && controller2.text.isNotEmpty && int.parse(controller2.text) != 0) {
                         Navigator.pop(context);
                         await giveItem(controller1.text, itemId, 
                             int.parse(controller2.text));

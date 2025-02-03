@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_managment/widgets/user_navigation.dart';
-import 'package:inventory_managment/requests/get_users_items.dart';
+import 'package:inventory_managment/requests/get_user_items.dart';
 import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/widgets/page_changer.dart';
 import 'package:inventory_managment/user/dialogs/create_replacement_request_dialog.dart';
@@ -79,7 +79,7 @@ class UserStoragePageState extends State<UserStoragePage> {
       userNavigation(0, context),
       Expanded(
           child: FutureBuilder(
-              future: getUsersItems(
+              future: getUserItems(
                 owner,
                 currentPage,
               ),

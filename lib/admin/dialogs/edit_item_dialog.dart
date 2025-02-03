@@ -2,22 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inventory_managment/requests/edit_item.dart';
 
-void editItemDialog(
-    int itemId,
-    String name,
-    String description,
-    int quantity,
-    int minQuantity,
-    String status,
-    BuildContext context,
-    VoidCallback refreshPage
-    ) {
+void editItemDialog(int itemId, String name, String description, int quantity,
+    String status, BuildContext context, VoidCallback refreshPage) {
   TextEditingController nameController = TextEditingController(text: name);
   TextEditingController descriptionController =
       TextEditingController(text: description);
   TextEditingController quantityController =
       TextEditingController(text: quantity.toString());
-  String? errorText;
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -83,23 +74,9 @@ void editItemDialog(
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
-                                decoration: InputDecoration(
-                                  errorText: errorText,
+                                decoration: const InputDecoration(
                                   labelText: "Количество",
                                 ),
-                                onChanged: (value) {
-                                  final int? number = int.tryParse(value);
-                                  if (number == null || number < minQuantity) {
-                                    setState(() {
-                                      errorText =
-                                          'Количество должно быть больше $minQuantity';
-                                    });
-                                  } else {
-                                    setState(() {
-                                      errorText = null;
-                                    });
-                                  }
-                                },
                               );
                             })),
                         Expanded(flex: 1, child: Container()),
@@ -134,15 +111,16 @@ void editItemDialog(
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          editItem(
-                              itemId,
-                              name,
-                              description,
-                              nameController.text,
-                              int.parse(quantityController.text),
-                              descriptionController.text);
-                          Navigator.pop(context);
-                          refreshPage();
+                          if (quantityController.text.isNotEmpty &&
+                              int.parse(quantityController.text) != 0) {
+                            editItem(
+                                itemId,
+                                nameController.text,
+                                int.parse(quantityController.text),
+                                descriptionController.text);
+                            Navigator.pop(context);
+                            refreshPage();
+                          }
                         },
                         child: const Text("Подтвердить"),
                       ),

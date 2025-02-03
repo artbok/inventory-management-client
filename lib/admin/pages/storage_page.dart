@@ -24,22 +24,22 @@ class _StoragePageState extends State<StoragePage> {
   List<String> users = [];
 
   Widget getItemWidget(int itemId, String name, String description,
-      int quantity, int quantityInStorage, String status) {
+      int quantity, String status) {
     Widget titleText = Text(
-        "$name  Доступно: $quantityInStorageшт.  Всего: $quantityшт.",
+        "$name  | $quantityшт.",
         overflow: TextOverflow.ellipsis);
     return wrappedItem(ListTile(
         title: Row(children: [
           Expanded(child: titleText),
           Row(children: [
             ElevatedButton(
-                onPressed: (users.isNotEmpty && quantityInStorage != 0)
+                onPressed: (users.isNotEmpty && quantity != 0)
                     ? () {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return giveItemToUser(itemId, name,
-                                  quantityInStorage, description, users, () {
+                                  quantity, description, users, () {
                                 setState(() {});
                               });
                             });
@@ -49,15 +49,15 @@ class _StoragePageState extends State<StoragePage> {
             IconButton(
                 onPressed: () {
                   editItemDialog(itemId, name, description, quantity,
-                      quantity - quantityInStorage, status, context, () {
+                       status, context, () {
                     setState(() {});
                   });
                 },
                 icon: const Icon(Icons.edit)),
             IconButton(
-                onPressed: (quantityInStorage != 0)
+                onPressed: (quantity != 0)
                     ? () {
-                        deleteItemDialog(itemId, name, quantityInStorage,
+                        deleteItemDialog(itemId, name, quantity,
                             context, () => setState(() {}));
                       }
                     : null,
@@ -106,7 +106,6 @@ class _StoragePageState extends State<StoragePage> {
                             data[i]["name"]!,
                             data[i]["description"]!,
                             data[i]["quantity"]!,
-                            data[i]["quantityInStorage"]!,
                             data[i]["status"]));
                       }
                       if (items.isEmpty) {

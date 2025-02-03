@@ -110,7 +110,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
                               data[i]["id"],
                               data[i]["name"]!,
                               data[i]["description"]!,
-                              data[i]["quantityInStorage"]!));
+                              data[i]["quantity"]!));
                         }
                         if (items.isEmpty) {
                           items.add(const Text(

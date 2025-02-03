@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inventory_managment/requests/create_item_request.dart';
 import 'package:inventory_managment/widgets/show_alert.dart';
+import '../../widgets/button.dart';
 
 Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
   TextEditingController nameController = TextEditingController();
@@ -62,11 +63,11 @@ Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ElevatedButton(
-                      child: const Text("Отмена"),
-                      onPressed: () {
+                  Expanded(child: elButton(
+                      const Text("Отмена"),
+                      () {
                         Navigator.pop(context);
-                      }),
+                      })),
                   ElevatedButton(
                     child: const Text("Сохранить"),
                     onPressed: () async {
@@ -74,9 +75,12 @@ Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
                           quantityController.text.isNotEmpty &&
                           int.tryParse(quantityController.text) != null) {
                         Navigator.pop(context);
-                        await createItemRequest(null, nameController.text, descriptionController.text,
+                        await createItemRequest(
+                            null,
+                            nameController.text,
+                            descriptionController.text,
                             int.parse(quantityController.text));
-                        
+
                         refreshPage();
                       } else {
                         showIncorrectDataAlert(context);
