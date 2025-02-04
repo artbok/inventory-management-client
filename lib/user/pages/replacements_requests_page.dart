@@ -5,7 +5,7 @@ import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/widgets/user_navigation.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
-
+import 'package:inventory_managment/widgets/status_indicator.dart';
 
 class ReplacementRequestsPage extends StatefulWidget {
   const ReplacementRequestsPage({super.key});
@@ -23,13 +23,13 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
   Widget getReplacementRequestWidget(
       String itemName, int quantity, String status) {
     return wrappedItem(ListTile(
-          title: Text("$itemName     ${quantity}x"),
-          subtitle: Text(status, style: const TextStyle(fontSize: 15)),
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.black, width: 1),
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ));
+      title: Text("$itemName     ${quantity}x"),
+      subtitle: Row(children: [statusIndicator(status), Expanded(child: Container())]),
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: Colors.black, width: 1),
+        borderRadius: BorderRadius.circular(20),
+      ),
+    ));
   }
 
   @override
@@ -50,10 +50,8 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
                     List<dynamic> data = snapshot.data!["data"];
                     List<Widget> items = [];
                     for (int i = 0; i < data.length; i++) {
-                      items.add(getReplacementRequestWidget(
-                          data[i]["name"]!,
-                          data[i]["quantity"]!,
-                          data[i]["status"]!));
+                      items.add(getReplacementRequestWidget(data[i]["name"]!,
+                          data[i]["quantity"]!, data[i]["status"]!));
                     }
                     if (items.isEmpty) {
                       items.add(const Text(
