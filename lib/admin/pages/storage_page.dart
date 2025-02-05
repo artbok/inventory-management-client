@@ -8,6 +8,7 @@ import 'package:inventory_managment/widgets/page_changer.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 import 'package:inventory_managment/admin/dialogs/delete_item_dialog.dart';
+import '../../widgets/status_indicator.dart';
 
 class StoragePage extends StatefulWidget {
   const StoragePage({super.key});
@@ -25,9 +26,8 @@ class _StoragePageState extends State<StoragePage> {
 
   Widget getItemWidget(int itemId, String name, String description,
       int quantity, String status) {
-    Widget titleText = Text(
-        "$name  | $quantityшт.",
-        overflow: TextOverflow.ellipsis);
+    Widget titleText =
+        Text("$name  | $quantityшт.", overflow: TextOverflow.ellipsis);
     return wrappedItem(ListTile(
         title: Row(children: [
           Expanded(child: titleText),
@@ -38,8 +38,9 @@ class _StoragePageState extends State<StoragePage> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return giveItemToUser(itemId, name,
-                                  quantity, description, users, () {
+                              return giveItemToUser(
+                                  itemId, name, quantity, description, users,
+                                  () {
                                 setState(() {});
                               });
                             });
@@ -48,8 +49,8 @@ class _StoragePageState extends State<StoragePage> {
                 child: const Text("Выдать пользователю")),
             IconButton(
                 onPressed: () {
-                  editItemDialog(itemId, name, description, quantity,
-                       status, context, () {
+                  editItemDialog(
+                      itemId, name, description, quantity, status, context, () {
                     setState(() {});
                   });
                 },
@@ -57,16 +58,20 @@ class _StoragePageState extends State<StoragePage> {
             IconButton(
                 onPressed: (quantity != 0)
                     ? () {
-                        deleteItemDialog(itemId, name, quantity,
-                            context, () => setState(() {}));
+                        deleteItemDialog(itemId, name, quantity, context,
+                            () => setState(() {}));
                       }
                     : null,
                 icon: const Icon(Icons.delete))
           ])
         ]),
-        subtitle: Text(description,
-            style: const TextStyle(fontSize: 15),
-            overflow: TextOverflow.ellipsis)));
+        subtitle: Row(children: [
+          statusIndicator(status),
+          Expanded(child: Text(description,
+              style: const TextStyle(fontSize: 15),
+              overflow: TextOverflow.ellipsis),
+          
+        )])));
   }
 
   void nextPage() {

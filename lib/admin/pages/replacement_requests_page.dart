@@ -3,7 +3,7 @@ import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/requests/get_replacements_requests.dart';
 import 'package:inventory_managment/widgets/admin_navigation.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
-import 'package:inventory_managment/widgets/status_indicator.dart';
+import 'package:inventory_managment/widgets/request_status_indicator.dart';
 
 
 class ReplacementRequestsPage extends StatefulWidget {
@@ -30,7 +30,7 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
         IconButton(
             onPressed: () {}, icon: const Icon(Icons.close, color: Colors.red))
       ]),
-      subtitle: statusIndicator(status),
+      subtitle: requestStatusIndicator(status),
     ));
   }
 
