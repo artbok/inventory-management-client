@@ -6,7 +6,8 @@ import 'package:inventory_managment/widgets/wrapped_item.dart';
 import 'package:inventory_managment/widgets/status_indicator.dart';
 import 'package:inventory_managment/requests/accept_replacement_request.dart';
 import 'package:inventory_managment/requests/decline_replacement_request.dart';
-import 'package:inventory_managment/admin/dialogs/create_item_dialog.dart';
+import 'package:inventory_managment/admin/dialogs/not_enough_items_dialog.dart';
+
 
 class ReplacementRequestsPage extends StatefulWidget {
   const ReplacementRequestsPage({super.key});
@@ -19,33 +20,7 @@ class ReplacementRequestsPage extends StatefulWidget {
 class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
   TextEditingController searchController = TextEditingController();
 
-  void showNotEnoughItemsAlert(
-      BuildContext context, Map<String, dynamic> required) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text(
-                maxLines: 3,
-                "У вас недостаточно предметов для удовлетворения заявки."),
-            actionsAlignment: MainAxisAlignment.spaceAround,
-            actions: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Окей")),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    showCreateItemDialog(context, () => setState(() {}),
-                        required: required);
-                  },
-                  child: const Text("Создать необходимые предметы"))
-            ],
-          );
-        });
-  }
+  
 
   Widget getItemWidget(
       BuildContext context, String name, String status, int quantity, int id) {
@@ -58,7 +33,9 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
                     Map<String, dynamic> data =
                         await acceptReplacementRequest(id);
                     if (data["status"] == 'notEnoughItems') {
-                      showNotEnoughItemsAlert(context, data["required"]);
+                      showNotEnoughItemsAlert(context, () {
+                        setState(() {});
+                      }, data["required"]);
                     }
                     setState(() {});
                   },
