@@ -9,6 +9,7 @@ import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 import 'package:inventory_managment/admin/dialogs/delete_item_dialog.dart';
 import '../../widgets/status_indicator.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
 class StoragePage extends StatefulWidget {
   const StoragePage({super.key});
@@ -24,8 +25,9 @@ class _StoragePageState extends State<StoragePage> {
   String problem = "";
   List<String> users = [];
 
-  Widget getItemWidget(int itemId, String name, String description,
-      int quantity, String status) {
+
+  Widget getItemWidget(BuildContext context, int itemId, String name,
+      String description, int quantity, String status) {
     Widget titleText =
         Text("$name  | $quantityшт.", overflow: TextOverflow.ellipsis);
     return wrappedItem(ListTile(
@@ -47,6 +49,16 @@ class _StoragePageState extends State<StoragePage> {
                       }
                     : null,
                 child: const Text("Выдать пользователю")),
+            elButton(
+                const Text("Выдать пользователю",
+                    style: TextStyle(color: Colors.white)), 
+              (users.isNotEmpty && quantity != 0)
+                  ? () {giveItemToUser(
+                      context, itemId, name, quantity, description, users, () {
+                      setState(() {});
+                    });}
+                  : null
+            ),
             IconButton(
                 onPressed: () {
                   editItemDialog(
@@ -63,7 +75,7 @@ class _StoragePageState extends State<StoragePage> {
                       }
                     : null,
                 icon: const Icon(Icons.delete))
-          ])
+          ]),
         ]),
         subtitle: Row(children: [
           statusIndicator(status),
@@ -107,6 +119,7 @@ class _StoragePageState extends State<StoragePage> {
                       List<Widget> items = [];
                       for (int i = 0; i < data.length; i++) {
                         items.add(getItemWidget(
+                            context,
                             data[i]["id"],
                             data[i]["name"]!,
                             data[i]["description"]!,
@@ -138,6 +151,7 @@ class _StoragePageState extends State<StoragePage> {
                   }))
         ])),
         floatingActionButton: FloatingActionButton.extended(
+            backgroundColor: const Color.fromARGB(180, 147, 112, 219),
             label: const Text(
               "Создать предмет",
               style: TextStyle(fontSize: 40),

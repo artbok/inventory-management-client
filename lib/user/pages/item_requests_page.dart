@@ -5,6 +5,9 @@ import 'package:inventory_managment/requests/get_items_requests.dart';
 import 'package:inventory_managment/user/pages/request_storage_item_page.dart';
 import 'package:inventory_managment/user/pages/request_custom_item_page.dart';
 import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/widgets/wrapped_item.dart';
+import 'package:inventory_managment/widgets/status_indicator.dart';
+
 
 class RequestsPage extends StatefulWidget {
   const RequestsPage({super.key});
@@ -16,32 +19,14 @@ class RequestsPage extends StatefulWidget {
 class RequestsPageState extends State<RequestsPage> {
   TextEditingController searchController = TextEditingController();
 
-  Widget getItemWidget(String name, String status, int itemQuantity) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-        child: Container(
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: <Color>[
-                    Color.fromARGB(255, 108, 243, 213),
-                    Color.fromARGB(255, 113, 219, 196),
-                    Color.fromARGB(255, 19, 200, 181),
-                    Color.fromARGB(255, 33, 163, 163),
-                    Color.fromARGB(255, 115, 117, 165)
-                  ],
-                  tileMode: TileMode.clamp),
-              border: Border.all(
-                color: Colors.black,
-                width: 2.0,
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: ListTile(
-              title: Text("$name     ${itemQuantity}x"),
-              subtitle: Text(status, style: const TextStyle(fontSize: 15)),
-            )));
+  Widget getItemWidget(int id, String name, String description, String status,
+      int quantity, String owner) {
+    return wrappedItem(ListTile(
+              title: Text("$name     ${quantity}x"),
+              subtitle: Row(children: [
+                statusIndicator(status),
+                Expanded(child: Container())
+            ])));
   }
 
   @override
@@ -65,8 +50,14 @@ class RequestsPageState extends State<RequestsPage> {
                   data = snapshot.data!["data"];
                   List<Widget> items = [];
                   for (int i = 0; i < data.length; i++) {
-                    items.add(getItemWidget(data[i]["itemName"]!,
-                        data[i]["status"]!, data[i]["itemQuantity"]!));
+                    items.add(getItemWidget(
+                      data[i]["id"],
+                      data[i]["name"]!,
+                      data[i]["description"],
+                      data[i]["status"],
+                      data[i]["quantity"]!,
+                      data[i]["owner"],
+                    ));
                   }
                   return Column(
                     children: [
