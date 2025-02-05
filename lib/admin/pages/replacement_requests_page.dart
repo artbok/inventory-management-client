@@ -4,7 +4,9 @@ import 'package:inventory_managment/requests/get_replacements_requests.dart';
 import 'package:inventory_managment/widgets/admin_navigation.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 import 'package:inventory_managment/widgets/status_indicator.dart';
-
+import 'package:inventory_managment/requests/accept_replacement_request.dart';
+import 'package:inventory_managment/requests/decline_replacement_request.dart';
+import 'package:inventory_managment/admin/dialogs/create_item_dialog.dart';
 
 class ReplacementRequestsPage extends StatefulWidget {
   const ReplacementRequestsPage({super.key});
@@ -17,20 +19,63 @@ class ReplacementRequestsPage extends StatefulWidget {
 class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
   TextEditingController searchController = TextEditingController();
 
-  Widget getItemWidget(String name, String status, int quantity) {
+  void showNotEnoughItemsAlert(
+      BuildContext context, Map<String, dynamic> required) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text(
+                maxLines: 3,
+                "У вас недостаточно предметов для удовлетворения заявки."),
+            actionsAlignment: MainAxisAlignment.spaceAround,
+            actions: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Окей")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    showCreateItemDialog(context, () => setState(() {}),
+                        required: required);
+                  },
+                  child: const Text("Создать необходимые предметы"))
+            ],
+          );
+        });
+  }
+
+  Widget getItemWidget(
+      BuildContext context, String name, String status, int quantity, int id) {
     return wrappedItem(ListTile(
-      title: Row(children: [
-        Text("$name     $quantityшт."),
-        IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.check,
-              color: Colors.green,
-            )),
-        IconButton(
-            onPressed: () {}, icon: const Icon(Icons.close, color: Colors.red))
-      ]),
-      subtitle: statusIndicator(status),
+      title: (status == "Ожидает ответа")
+          ? Row(children: [
+              Text("$name     $quantityшт."),
+              IconButton(
+                  onPressed: () async {
+                    Map<String, dynamic> data =
+                        await acceptReplacementRequest(id);
+                    if (data["status"] == 'notEnoughItems') {
+                      showNotEnoughItemsAlert(context, data["required"]);
+                    }
+                    setState(() {});
+                  },
+                  icon: const Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  )),
+              IconButton(
+                  onPressed: () async {
+                    await declineReplacementRequest(id);
+                    setState(() {});
+                  },
+                  icon: const Icon(Icons.close, color: Colors.red))
+            ])
+          : Text("$name     $quantityшт."),
+      subtitle: Row(
+          children: [statusIndicator(status), Expanded(child: Container())]),
     ));
   }
 
@@ -52,8 +97,12 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
                   data = snapshot.data!["data"];
                   List<Widget> items = [];
                   for (int i = 0; i < data.length; i++) {
-                    items.add(getItemWidget(data[i]["name"]!,
-                        data[i]["status"]!, data[i]["quantity"]!));
+                    items.add(getItemWidget(
+                        context,
+                        data[i]["name"]!,
+                        data[i]["status"]!,
+                        data[i]["quantity"]!,
+                        data[i]["id"]!));
                   }
                   if (items.isEmpty) {
                     items.add(const Text(

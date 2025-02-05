@@ -8,6 +8,7 @@ import 'package:inventory_managment/widgets/page_changer.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 import 'package:inventory_managment/admin/dialogs/delete_item_dialog.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
 class StoragePage extends StatefulWidget {
   const StoragePage({super.key});
@@ -23,33 +24,28 @@ class _StoragePageState extends State<StoragePage> {
   String problem = "";
   List<String> users = [];
 
-  Widget getItemWidget(int itemId, String name, String description,
-      int quantity, String status) {
-    Widget titleText = Text(
-        "$name  | $quantityшт.",
-        overflow: TextOverflow.ellipsis);
+  Widget getItemWidget(BuildContext context, int itemId, String name,
+      String description, int quantity, String status) {
+    Widget titleText =
+        Text("$name  | $quantityшт.", overflow: TextOverflow.ellipsis);
     return wrappedItem(ListTile(
         title: Row(children: [
           Expanded(child: titleText),
           Row(children: [
-            ElevatedButton(
-                onPressed: (users.isNotEmpty && quantity != 0)
-                    ? () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return giveItemToUser(itemId, name,
-                                  quantity, description, users, () {
-                                setState(() {});
-                              });
-                            });
-                      }
-                    : null,
-                child: const Text("Выдать пользователю")),
+            elButton(
+                const Text("Выдать пользователю",
+                    style: TextStyle(color: Colors.white)), 
+              (users.isNotEmpty && quantity != 0)
+                  ? () {giveItemToUser(
+                      context, itemId, name, quantity, description, users, () {
+                      setState(() {});
+                    });}
+                  : null
+            ),
             IconButton(
                 onPressed: () {
-                  editItemDialog(itemId, name, description, quantity,
-                       status, context, () {
+                  editItemDialog(
+                      itemId, name, description, quantity, status, context, () {
                     setState(() {});
                   });
                 },
@@ -57,12 +53,12 @@ class _StoragePageState extends State<StoragePage> {
             IconButton(
                 onPressed: (quantity != 0)
                     ? () {
-                        deleteItemDialog(itemId, name, quantity,
-                            context, () => setState(() {}));
+                        deleteItemDialog(itemId, name, quantity, context,
+                            () => setState(() {}));
                       }
                     : null,
                 icon: const Icon(Icons.delete))
-          ])
+          ]),
         ]),
         subtitle: Text(description,
             style: const TextStyle(fontSize: 15),
@@ -102,6 +98,7 @@ class _StoragePageState extends State<StoragePage> {
                       List<Widget> items = [];
                       for (int i = 0; i < data.length; i++) {
                         items.add(getItemWidget(
+                            context,
                             data[i]["id"],
                             data[i]["name"]!,
                             data[i]["description"]!,
@@ -133,6 +130,7 @@ class _StoragePageState extends State<StoragePage> {
                   }))
         ])),
         floatingActionButton: FloatingActionButton.extended(
+            backgroundColor: const Color.fromARGB(180, 147, 112, 219),
             label: const Text(
               "Создать предмет",
               style: TextStyle(fontSize: 40),

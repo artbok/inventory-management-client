@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:inventory_managment/local_storage.dart';
 
-Future<String> acceptReplacementRequest(String username, String password, int id) async {
+
+Future<Map<String, dynamic>> acceptReplacementRequest(int id) async {
+  String? username = getValue("username");
+  String? password = getValue("password");
   Map<String, dynamic> params = {
     "username": username,
     "password": password,
@@ -18,5 +21,5 @@ Future<String> acceptReplacementRequest(String username, String password, int id
     body: json.encode(params),
   );
   Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
-  return data["status"];
+  return data;
 }

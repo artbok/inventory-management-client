@@ -2,13 +2,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:inventory_managment/local_storage.dart';
 
-Future<String> declineReplacementRequst(String username, String password, int id) async {
+Future<String> declineReplacementRequest(int id) async {
+  String? username = getValue("username");
+  String? password = getValue("password");
   Map<String, dynamic> params = {
     "username": username,
     "password": password,
     "id": id
   };
-  final Uri url = Uri.parse('${getValue("serverAddress")}/declineReplacementRequst');
+  final Uri url =
+      Uri.parse('${getValue("serverAddress")}/declineReplacementRequest');
 
   final response = await http.post(
     url,

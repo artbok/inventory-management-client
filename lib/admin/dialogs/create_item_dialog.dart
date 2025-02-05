@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inventory_managment/requests/create_item.dart';
 
-
-void showCreateItemDialog(BuildContext context, VoidCallback refreshPage) {
+void showCreateItemDialog(BuildContext context, VoidCallback refreshPage,
+    {Map<String, dynamic>? required}) {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
+  print(required);
+  if (required != null) {
+    nameController.text = required["name"];
+    descriptionController.text = required["description"];
+    quantityController.text = required["quantity"].toString();
+  }
+
   showDialog(
       context: context,
       builder: (BuildContext context) {
