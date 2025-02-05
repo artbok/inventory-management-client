@@ -8,6 +8,7 @@ import 'package:inventory_managment/widgets/page_changer.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 import 'package:inventory_managment/admin/dialogs/delete_item_dialog.dart';
+import '../../widgets/status_indicator.dart';
 import 'package:inventory_managment/widgets/button.dart';
 
 class StoragePage extends StatefulWidget {
@@ -24,6 +25,7 @@ class _StoragePageState extends State<StoragePage> {
   String problem = "";
   List<String> users = [];
 
+
   Widget getItemWidget(BuildContext context, int itemId, String name,
       String description, int quantity, String status) {
     Widget titleText =
@@ -32,6 +34,21 @@ class _StoragePageState extends State<StoragePage> {
         title: Row(children: [
           Expanded(child: titleText),
           Row(children: [
+            ElevatedButton(
+                onPressed: (users.isNotEmpty && quantity != 0)
+                    ? () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return giveItemToUser(
+                                  itemId, name, quantity, description, users,
+                                  () {
+                                setState(() {});
+                              });
+                            });
+                      }
+                    : null,
+                child: const Text("Выдать пользователю")),
             elButton(
                 const Text("Выдать пользователю",
                     style: TextStyle(color: Colors.white)), 
@@ -60,9 +77,13 @@ class _StoragePageState extends State<StoragePage> {
                 icon: const Icon(Icons.delete))
           ]),
         ]),
-        subtitle: Text(description,
-            style: const TextStyle(fontSize: 15),
-            overflow: TextOverflow.ellipsis)));
+        subtitle: Row(children: [
+          statusIndicator(status),
+          Expanded(child: Text(description,
+              style: const TextStyle(fontSize: 15),
+              overflow: TextOverflow.ellipsis),
+          
+        )])));
   }
 
   void nextPage() {

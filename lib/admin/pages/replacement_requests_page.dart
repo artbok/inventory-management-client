@@ -25,6 +25,18 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
   Widget getItemWidget(
       BuildContext context, String name, String status, int quantity, int id) {
     return wrappedItem(ListTile(
+      title: Row(children: [
+        Text("$name     $quantityшт."),
+        IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.check,
+              color: Colors.green,
+            )),
+        IconButton(
+            onPressed: () {}, icon: const Icon(Icons.close, color: Colors.red))
+      ]),
+      subtitle: requestStatusIndicator(status),
       title: (status == "Ожидает ответа")
           ? Row(children: [
               Text("$name     $quantityшт."),
@@ -53,6 +65,7 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
           : Text("$name     $quantityшт."),
       subtitle: Row(
           children: [statusIndicator(status), Expanded(child: Container())]),
+
     ));
   }
 

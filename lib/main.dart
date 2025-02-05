@@ -12,6 +12,7 @@ void main() async {
   await Hive.openBox("storage");
   putToTheStorage("serverAddress", serverAddress);
   //putToTheStorage("username", "bebrobruh");
+  //putToTheStorage("username", "bebra");
   putToTheStorage("username", "bebra");
   putToTheStorage("password", "12345");
 

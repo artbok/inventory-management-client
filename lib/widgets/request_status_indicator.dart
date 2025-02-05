@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-Widget statusIndicator(String status) {
+Widget requestStatusIndicator(String status) {
   Map<String, LinearGradient> gradients = {
-    "Новый": const LinearGradient(
+    "Одобрено": const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: <Color>[
@@ -10,20 +10,20 @@ Widget statusIndicator(String status) {
                   Color.fromARGB(255, 17, 161, 61),
                 ],
                 tileMode: TileMode.clamp),
-    "Использованный": const LinearGradient(
+    "Отклонено": const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: <Color>[
-                  Color.fromARGB(255, 9, 235, 186),
-                  Color.fromARGB(255, 11, 218, 255),
+                  Color.fromARGB(255, 235, 9, 9),
+                  Color.fromARGB(255, 255, 60, 11),
                 ],
                 tileMode: TileMode.clamp),
-    "Сломанный": const LinearGradient(
+    "Ожидает ответа": const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: <Color>[
-                  Color.fromARGB(255, 235, 9, 9),
-                  Color.fromARGB(255, 255, 60, 11),
+          Color.fromARGB(255, 9, 133, 235),
+          Color.fromARGB(255, 21, 173, 179),
         ],
         tileMode: TileMode.clamp),
   };

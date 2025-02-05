@@ -5,7 +5,7 @@ import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/widgets/user_navigation.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
-import 'package:inventory_managment/widgets/status_indicator.dart';
+import 'package:inventory_managment/widgets/request_status_indicator.dart';
 
 class ReplacementRequestsPage extends StatefulWidget {
   const ReplacementRequestsPage({super.key});
@@ -24,7 +24,7 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
       String itemName, int quantity, String status) {
     return wrappedItem(ListTile(
       title: Text("$itemName     ${quantity}x"),
-      subtitle: Row(children: [statusIndicator(status), Expanded(child: Container())]),
+      subtitle: Row(children: [requestStatusIndicator(status), Expanded(child: Container())]),
       shape: RoundedRectangleBorder(
         side: const BorderSide(color: Colors.black, width: 1),
         borderRadius: BorderRadius.circular(20),
