@@ -34,21 +34,6 @@ class _StoragePageState extends State<StoragePage> {
         title: Row(children: [
           Expanded(child: titleText),
           Row(children: [
-            ElevatedButton(
-                onPressed: (users.isNotEmpty && quantity != 0)
-                    ? () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return giveItemToUser(
-                                  itemId, name, quantity, description, users,
-                                  () {
-                                setState(() {});
-                              });
-                            });
-                      }
-                    : null,
-                child: const Text("Выдать пользователю")),
             elButton(
                 const Text("Выдать пользователю",
                     style: TextStyle(color: Colors.white)), 

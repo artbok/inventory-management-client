@@ -3,7 +3,7 @@ import 'package:inventory_managment/widgets/admin_navigation.dart';
 import 'package:inventory_managment/requests/get_items_requests.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
-import 'package:inventory_managment/widgets/status_indicator.dart';
+import 'package:inventory_managment/widgets/request_status_indicator.dart';
 import 'package:inventory_managment/requests/accept_item_request.dart';
 import 'package:inventory_managment/requests/decline_item_request.dart';
 import 'package:inventory_managment/admin/dialogs/not_enough_items_dialog.dart';
@@ -48,7 +48,7 @@ class _ItemRequestsPageState extends State<ItemRequestsPage> {
             ])
           : Text("$name     $quantityшт."),
       subtitle: Row(
-          children: [statusIndicator(status), Expanded(child: Container())]),
+          children: [requestStatusIndicator(status), Expanded(child: Container())]),
     ));
   }
 
@@ -89,7 +89,7 @@ class _ItemRequestsPageState extends State<ItemRequestsPage> {
                     children: [
                       Expanded(flex: 1, child: Container()),
                       Expanded(
-                          flex: 7,
+                          flex: 8,
                           child: SingleChildScrollView(
                               child: Column(
                             children: items,

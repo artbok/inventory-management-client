@@ -3,7 +3,7 @@ import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/requests/get_replacements_requests.dart';
 import 'package:inventory_managment/widgets/admin_navigation.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
-import 'package:inventory_managment/widgets/status_indicator.dart';
+import 'package:inventory_managment/widgets/request_status_indicator.dart';
 import 'package:inventory_managment/requests/accept_replacement_request.dart';
 import 'package:inventory_managment/requests/decline_replacement_request.dart';
 import 'package:inventory_managment/admin/dialogs/not_enough_items_dialog.dart';
@@ -25,18 +25,6 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
   Widget getItemWidget(
       BuildContext context, String name, String status, int quantity, int id) {
     return wrappedItem(ListTile(
-      title: Row(children: [
-        Text("$name     $quantityшт."),
-        IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.check,
-              color: Colors.green,
-            )),
-        IconButton(
-            onPressed: () {}, icon: const Icon(Icons.close, color: Colors.red))
-      ]),
-      subtitle: requestStatusIndicator(status),
       title: (status == "Ожидает ответа")
           ? Row(children: [
               Text("$name     $quantityшт."),
@@ -64,7 +52,7 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
             ])
           : Text("$name     $quantityшт."),
       subtitle: Row(
-          children: [statusIndicator(status), Expanded(child: Container())]),
+          children: [requestStatusIndicator(status), Expanded(child: Container())]),
 
     ));
   }
@@ -104,7 +92,7 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
                     children: [
                       Expanded(flex: 1, child: Container()),
                       Expanded(
-                          flex: 7,
+                          flex: 8,
                           child: SingleChildScrollView(
                               child: Column(
                             children: items,
