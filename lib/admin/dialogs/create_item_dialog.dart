@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inventory_managment/requests/create_item.dart';
+import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
 void showCreateItemDialog(BuildContext context, VoidCallback refreshPage,
     {Map<String, dynamic>? required}) {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
-  print(required);
   if (required != null) {
     nameController.text = required["name"];
     descriptionController.text = required["description"];
@@ -20,7 +21,7 @@ void showCreateItemDialog(BuildContext context, VoidCallback refreshPage,
         return Dialog(
           insetPadding:
               const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-          child: Column(
+          child: backgroundDialog(Column(
             children: [
               const Expanded(
                   flex: 1,
@@ -87,14 +88,18 @@ void showCreateItemDialog(BuildContext context, VoidCallback refreshPage,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
+                      buttonDialog(
+                        const Text("Отмена",
+                        style: TextStyle(color: Colors.white),
+                        ),
+                        () {
                           Navigator.pop(context);
                         },
-                        child: const Text("Отмена"),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
+                      buttonDialog(
+                      const Text("Создать",
+                      style: TextStyle(color: Colors.white),),
+                       () {
                           createItem(
                               nameController.text,
                               descriptionController.text,
@@ -102,11 +107,10 @@ void showCreateItemDialog(BuildContext context, VoidCallback refreshPage,
                           Navigator.pop(context);
                           refreshPage();
                         },
-                        child: const Text("Создать"),
                       ),
                     ],
                   ))
-            ],
+            ],),
           ),
         );
       });

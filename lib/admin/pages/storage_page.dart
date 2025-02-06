@@ -25,7 +25,6 @@ class _StoragePageState extends State<StoragePage> {
   String problem = "";
   List<String> users = [];
 
-
   Widget getItemWidget(BuildContext context, int itemId, String name,
       String description, int quantity, String status) {
     Widget titleText =
@@ -34,16 +33,18 @@ class _StoragePageState extends State<StoragePage> {
         title: Row(children: [
           Expanded(child: titleText),
           Row(children: [
-            elButton(
+            button(
                 const Text("Выдать пользователю",
-                    style: TextStyle(color: Colors.white)), 
-              (users.isNotEmpty && quantity != 0)
-                  ? () {giveItemToUser(
-                      context, itemId, name, quantity, description, users, () {
-                      setState(() {});
-                    });}
-                  : null
-            ),
+                    style: TextStyle(color: Colors.white)),
+                (users.isNotEmpty && quantity != 0)
+                    ? () {
+                        giveItemToUser(
+                            context, itemId, name, quantity, description, users,
+                            () {
+                          setState(() {});
+                        });
+                      }
+                    : null),
             IconButton(
                 onPressed: () {
                   editItemDialog(
@@ -64,11 +65,12 @@ class _StoragePageState extends State<StoragePage> {
         ]),
         subtitle: Row(children: [
           statusIndicator(status),
-          Expanded(child: Text(description,
-              style: const TextStyle(fontSize: 15),
-              overflow: TextOverflow.ellipsis),
-          
-        )])));
+          Expanded(
+            child: Text(description,
+                style: const TextStyle(fontSize: 15),
+                overflow: TextOverflow.ellipsis),
+          )
+        ])));
   }
 
   void nextPage() {
@@ -136,10 +138,12 @@ class _StoragePageState extends State<StoragePage> {
                   }))
         ])),
         floatingActionButton: FloatingActionButton.extended(
-            backgroundColor: const Color.fromARGB(180, 147, 112, 219),
+            backgroundColor: const Color.fromARGB(180, 255, 240, 245),
             label: const Text(
               "Создать предмет",
-              style: TextStyle(fontSize: 40),
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.black ),
             ),
             icon: const Icon(Icons.add, size: 50),
             onPressed: () {

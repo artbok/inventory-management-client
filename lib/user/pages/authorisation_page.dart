@@ -4,6 +4,8 @@ import 'package:inventory_managment/user/pages/user_storage_page.dart';
 import 'package:inventory_managment/user/pages/registration_page.dart';
 import 'package:inventory_managment/requests/auth_user.dart';
 import 'package:inventory_managment/local_storage.dart';
+import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -25,13 +27,20 @@ class _LoginPageState extends State<LoginPage> {
       icon = const Icon(Icons.visibility);
     }
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Авторизация"),
-      ),
-      body: Center(
+        body: background1(
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            const Flexible(
+              child: Text(
+                "Авторизация",
+                style: TextStyle(
+                  fontSize: 40,
+                ),
+              ),
+            ),
+            Expanded(flex: 2, child: Container()),
             const Flexible(
               flex: 1,
               child: Text(
@@ -106,47 +115,56 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Flexible(
               flex: 1,
-              child: ElevatedButton(
-                  onPressed: () async {
-                    String username = usernameController.text;
-                    String password = passwordController.text;
-                    Map<String, dynamic> data =
-                        await authUser(username, password);
-                    setState(() {
-                      status = data["status"];
-                      if (status == 'ok') {
-                        putToTheStorage("username", username);
-                        putToTheStorage('password', password);
-                        if (data["rightsLevel"] == 1) {
-                          Navigator.pushReplacement(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) =>
-                                  const UserStoragePage(),
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                            ),
-                          );
-                        } else {
-                          Navigator.pushReplacement(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) =>
-                                  const StoragePage(),
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                            ),
-                          );
-                        }
+              child: button(
+                const Text(
+                  "Войти",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                () async {
+                  String username = usernameController.text;
+                  String password = passwordController.text;
+                  Map<String, dynamic> data =
+                      await authUser(username, password);
+                  setState(() {
+                    status = data["status"];
+                    if (status == 'ok') {
+                      putToTheStorage("username", username);
+                      putToTheStorage('password', password);
+                      if (data["rightsLevel"] == 1) {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                const UserStoragePage(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
+                      } else {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                const StoragePage(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
                       }
-                    });
-                  },
-                  child: const Text("Логин")),
+                    }
+                  });
+                },
+              ),
             ),
             Flexible(
                 flex: 1,
                 child: InkWell(
-                  child: const Text("Нету аккаунта?"),
+                  child: const Text(
+                    "Нету аккаунта?",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
                   onTap: () => {
                     Navigator.pushReplacement(
                       context,
@@ -159,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                     )
                   },
                 )),
-            Flexible(flex: 5, child: Container()),
+            Flexible(flex: 2, child: Container()),
             Flexible(
               flex: 1,
               child: Text(status),
@@ -167,6 +185,6 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-    );
+    ));
   }
 }

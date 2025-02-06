@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inventory_managment/requests/give_item.dart';
 import 'package:inventory_managment/widgets/show_alert.dart';
+import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
 void giveItemToUser(
     BuildContext context,
@@ -23,7 +25,7 @@ void giveItemToUser(
           return Dialog(
               insetPadding:
                   const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-              child: Column(
+              child: backgroundDialog(Column(
                 children: [
                   Expanded(
                       flex: 1,
@@ -110,9 +112,10 @@ void giveItemToUser(
                       )),
                   Expanded(
                       flex: 1,
-                      child: ElevatedButton(
-                          child: const Text("Подтвердить"),
-                          onPressed: () async {
+                      child: buttonDialog(
+                           const Text("Подтвердить",
+                           style: TextStyle(color: Colors.white),),
+                           () async {
                             if (flag &&
                                 errorText == null &&
                                 controller2.text.isNotEmpty &&
@@ -126,7 +129,7 @@ void giveItemToUser(
                             }
                           }))
                 ],
-              ));
+              )));
         });
       });
 }
