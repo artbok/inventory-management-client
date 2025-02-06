@@ -17,7 +17,7 @@ Widget userNavigation(
         case 0:
           page = const UserStoragePage();
         case 1:
-          page = const RequestsPage();
+          page = const ItemRequestsPage();
         case 2:
           page = const ReplacementRequestsPage();
       }
