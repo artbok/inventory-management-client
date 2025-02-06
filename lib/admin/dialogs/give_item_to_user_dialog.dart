@@ -111,7 +111,7 @@ void giveItemToUser(
                   Expanded(
                       flex: 1,
                       child: ElevatedButton(
-                          child: const Text("Подтвердить"),
+                          child: const Text("Выдать"),
                           onPressed: () async {
                             if (flag &&
                                 errorText == null &&
@@ -124,6 +124,13 @@ void giveItemToUser(
                             } else {
                               showIncorrectDataAlert(context);
                             }
+                          })),
+                  Expanded(
+                      flex: 1,
+                      child: ElevatedButton(
+                          child: const Text("Отменить"),
+                          onPressed: () async {
+                            Navigator.pop(context);
                           }))
                 ],
               ));

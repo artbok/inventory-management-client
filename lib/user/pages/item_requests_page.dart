@@ -6,7 +6,7 @@ import 'package:inventory_managment/user/pages/request_storage_item_page.dart';
 import 'package:inventory_managment/user/pages/request_custom_item_page.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
-import 'package:inventory_managment/widgets/status_indicator.dart';
+import 'package:inventory_managment/widgets/request_status_indicator.dart';
 
 
 class RequestsPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class RequestsPageState extends State<RequestsPage> {
     return wrappedItem(ListTile(
               title: Text("$name     ${quantity}x"),
               subtitle: Row(children: [
-                statusIndicator(status),
+                requestStatusIndicator(status),
                 Expanded(child: Container())
             ])));
   }

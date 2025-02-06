@@ -25,7 +25,6 @@ class _StoragePageState extends State<StoragePage> {
   String problem = "";
   List<String> users = [];
 
-
   Widget getItemWidget(BuildContext context, int itemId, String name,
       String description, int quantity, String status) {
     Widget titleText =
@@ -36,14 +35,16 @@ class _StoragePageState extends State<StoragePage> {
           Row(children: [
             elButton(
                 const Text("Выдать пользователю",
-                    style: TextStyle(color: Colors.white)), 
-              (users.isNotEmpty && quantity != 0)
-                  ? () {giveItemToUser(
-                      context, itemId, name, quantity, description, users, () {
-                      setState(() {});
-                    });}
-                  : null
-            ),
+                    style: TextStyle(color: Colors.white)),
+                (users.isNotEmpty && quantity != 0)
+                    ? () {
+                        giveItemToUser(
+                            context, itemId, name, quantity, description, users,
+                            () {
+                          setState(() {});
+                        });
+                      }
+                    : null),
             IconButton(
                 onPressed: () {
                   editItemDialog(
@@ -64,11 +65,14 @@ class _StoragePageState extends State<StoragePage> {
         ]),
         subtitle: Row(children: [
           statusIndicator(status),
-          Expanded(child: Text(description,
-              style: const TextStyle(fontSize: 15),
-              overflow: TextOverflow.ellipsis),
-          
-        )])));
+          Expanded(
+              child: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(description,
+                style: const TextStyle(fontSize: 15),
+                overflow: TextOverflow.ellipsis),
+          ))
+        ])));
   }
 
   void nextPage() {
