@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_managment/widgets/user_navigation.dart';
-import 'package:inventory_managment/requests/get_items.dart';
+import 'package:inventory_managment/requests/get_storage_items.dart';
 import 'package:inventory_managment/widgets/quantity_input.dart';
 import 'package:inventory_managment/requests/create_item_request.dart';
 import 'package:inventory_managment/widgets/page_changer.dart';
 import 'package:inventory_managment/widgets/background.dart';
 
 
-class RequestItemPage extends StatefulWidget {
-  const RequestItemPage({super.key});
+class RequestStorageItemPage extends StatefulWidget {
+  const RequestStorageItemPage({super.key});
 
   @override
-  State<RequestItemPage> createState() => _RequestItemPageState();
+  State<RequestStorageItemPage> createState() => _RequestStorageItemPageState();
 }
 
-class _RequestItemPageState extends State<RequestItemPage> {
+class _RequestStorageItemPageState extends State<RequestStorageItemPage> {
   TextEditingController searchController = TextEditingController();
   int currentPage = 1;
   int totalPages = 0;
@@ -22,7 +22,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
   List<Widget> inputWidgets = [];
   List<TextEditingController> controllers = [];
   Widget getItemWidget(
-      int i, int id, String name, String description, int quantity) {
+      int i, int id, String name, String description, int quantity, int requestsCounter) {
     if (inputWidgets.length - 1 < i) {
       controllers.add(TextEditingController());
       inputWidgets.add(quantityInput(quantity, controllers[i]));
@@ -50,7 +50,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
             ),
             child: ListTile(
                 title: Row(children: [
-                  Expanded(flex: 2, child: Text("$name     ${quantity}x")),
+                  Expanded(flex: 2, child: Text("$name     Доступно: ${quantity}x   Запрошено: ${requestsCounter}x")),
                   Expanded(flex: 1, child: Container()),
                   Expanded(flex: 1, child: inputWidgets[i])
                 ]),
@@ -94,7 +94,7 @@ class _RequestItemPageState extends State<RequestItemPage> {
             userNavigation(1, context),
             Expanded(
                 child: FutureBuilder(
-                    future: getItems(currentPage),
+                    future: getStorageItems(currentPage),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
@@ -110,7 +110,9 @@ class _RequestItemPageState extends State<RequestItemPage> {
                               data[i]["id"],
                               data[i]["name"]!,
                               data[i]["description"]!,
-                              data[i]["quantity"]!));
+                              data[i]["quantity"]!,
+                              data[i]["requestsCounter"],
+                              ));
                         }
                         if (items.isEmpty) {
                           items.add(const Text(

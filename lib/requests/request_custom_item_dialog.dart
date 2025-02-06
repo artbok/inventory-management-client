@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inventory_managment/requests/create_item_request.dart';
 import 'package:inventory_managment/widgets/show_alert.dart';
-import '../../widgets/button.dart';
+import '../widgets/button.dart';
 
-Widget requestCustomItemPage(BuildContext context, VoidCallback refreshPage) {
+Widget requestCustomItemDialog(BuildContext context, VoidCallback refreshPage) {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController quantityController = TextEditingController();

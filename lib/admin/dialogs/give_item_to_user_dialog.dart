@@ -112,10 +112,9 @@ void giveItemToUser(
                       )),
                   Expanded(
                       flex: 1,
-                      child: buttonDialog(
-                           const Text("Подтвердить",
-                           style: TextStyle(color: Colors.white),),
-                           () async {
+                      child: ElevatedButton(
+                          child: const Text("Выдать"),
+                          onPressed: () async {
                             if (flag &&
                                 errorText == null &&
                                 controller2.text.isNotEmpty &&
@@ -127,6 +126,13 @@ void giveItemToUser(
                             } else {
                               showIncorrectDataAlert(context);
                             }
+                          })),
+                  Expanded(
+                      flex: 1,
+                      child: ElevatedButton(
+                          child: const Text("Отменить"),
+                          onPressed: () async {
+                            Navigator.pop(context);
                           }))
                 ],
               )));

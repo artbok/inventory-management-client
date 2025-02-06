@@ -58,7 +58,11 @@ class UserStoragePageState extends State<UserStoragePage> {
                 ]),
                 subtitle: Row(children: [
                   statusIndicator(status),
-                  Expanded(child: Text(description, style: const TextStyle(fontSize: 15)))
+                  Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(description,
+                              style: const TextStyle(fontSize: 15))))
                 ]))));
   }
 

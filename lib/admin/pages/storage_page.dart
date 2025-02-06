@@ -66,10 +66,12 @@ class _StoragePageState extends State<StoragePage> {
         subtitle: Row(children: [
           statusIndicator(status),
           Expanded(
+              child: Padding(
+            padding: const EdgeInsets.only(left: 10),
             child: Text(description,
                 style: const TextStyle(fontSize: 15),
                 overflow: TextOverflow.ellipsis),
-          )
+          ))
         ])));
   }
 
