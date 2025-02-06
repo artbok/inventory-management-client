@@ -3,20 +3,20 @@ import 'package:inventory_managment/widgets/user_navigation.dart';
 import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/requests/get_items_requests.dart';
 import 'package:inventory_managment/user/pages/request_storage_item_page.dart';
-import 'package:inventory_managment/user/pages/request_custom_item_page.dart';
+import 'package:inventory_managment/requests/request_custom_item_dialog.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 import 'package:inventory_managment/widgets/request_status_indicator.dart';
 
 
-class RequestsPage extends StatefulWidget {
-  const RequestsPage({super.key});
+class ItemRequestsPage extends StatefulWidget {
+  const ItemRequestsPage({super.key});
 
   @override
-  State<RequestsPage> createState() => RequestsPageState();
+  State<ItemRequestsPage> createState() => ItemRequestsPageState();
 }
 
-class RequestsPageState extends State<RequestsPage> {
+class ItemRequestsPageState extends State<ItemRequestsPage> {
   TextEditingController searchController = TextEditingController();
 
   Widget getItemWidget(int id, String name, String description, String status,
@@ -72,7 +72,7 @@ class RequestsPageState extends State<RequestsPage> {
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
-                                            return requestCustomItemPage(
+                                            return requestCustomItemDialog(
                                                 context, () {
                                               setState(() {});
                                             });
@@ -90,7 +90,7 @@ class RequestsPageState extends State<RequestsPage> {
                                         PageRouteBuilder(
                                           pageBuilder: (context, animation1,
                                                   animation2) =>
-                                              const RequestItemPage(),
+                                              const RequestStorageItemPage(),
                                           transitionDuration: Duration.zero,
                                           reverseTransitionDuration:
                                               Duration.zero,
