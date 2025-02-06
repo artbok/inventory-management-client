@@ -6,6 +6,7 @@ import 'package:inventory_managment/admin/dialogs/create_planning_dialog.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 
+
 class InventoryPlanningPage extends StatefulWidget {
   const InventoryPlanningPage({super.key});
 
@@ -148,9 +149,12 @@ class _InventoryPlanningPageState extends State<InventoryPlanningPage> {
                   }))
         ])),
         floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: const Color.fromARGB(255, 255, 240, 245),
             label: const Text(
               "Добавить закупку",
-              style: TextStyle(fontSize: 40),
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.black),
             ),
             icon: const Icon(Icons.add, size: 50),
             onPressed: () {

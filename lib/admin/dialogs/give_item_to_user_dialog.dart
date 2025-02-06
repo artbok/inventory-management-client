@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inventory_managment/requests/give_item.dart';
 import 'package:inventory_managment/widgets/show_alert.dart';
+import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
 void giveItemToUser(
     BuildContext context,
@@ -23,7 +25,7 @@ void giveItemToUser(
           return Dialog(
               insetPadding:
                   const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-              child: Column(
+              child: backgroundDialog(Column(
                 children: [
                   Expanded(
                       flex: 1,
@@ -133,7 +135,7 @@ void giveItemToUser(
                             Navigator.pop(context);
                           }))
                 ],
-              ));
+              )));
         });
       });
 }

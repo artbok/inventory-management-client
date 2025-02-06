@@ -33,7 +33,7 @@ class _StoragePageState extends State<StoragePage> {
         title: Row(children: [
           Expanded(child: titleText),
           Row(children: [
-            elButton(
+            button(
                 const Text("Выдать пользователю",
                     style: TextStyle(color: Colors.white)),
                 (users.isNotEmpty && quantity != 0)
@@ -140,10 +140,12 @@ class _StoragePageState extends State<StoragePage> {
                   }))
         ])),
         floatingActionButton: FloatingActionButton.extended(
-            backgroundColor: const Color.fromARGB(180, 147, 112, 219),
+            backgroundColor: const Color.fromARGB(180, 255, 240, 245),
             label: const Text(
               "Создать предмет",
-              style: TextStyle(fontSize: 40),
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.black ),
             ),
             icon: const Icon(Icons.add, size: 50),
             onPressed: () {

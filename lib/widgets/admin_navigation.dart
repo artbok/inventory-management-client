@@ -12,13 +12,13 @@ Widget adminNavigation(
   return NavigationRail(
     selectedIndex: curPage,
     groupAlignment: -1.0,
-    backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+    backgroundColor:  const Color.fromARGB(0, 0, 0, 0),
     selectedLabelTextStyle: const TextStyle(
-      color: Color.fromARGB(255, 243, 175, 150),
+      color: Colors.black,
       fontSize: 20,
     ),
     unselectedLabelTextStyle: const TextStyle(
-        color: Color.fromARGB(255, 243, 175, 150), fontSize: 20),
+        color: Colors.black, fontSize: 20),
     onDestinationSelected: (int index) {
       Widget? page;
       switch (index) {

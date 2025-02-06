@@ -4,7 +4,8 @@ import 'package:inventory_managment/user/pages/authorisation_page.dart';
 import 'package:inventory_managment/user/pages/admin_registration_page.dart';
 import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/requests/create_user.dart';
-
+import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -27,13 +28,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Регистрация"),
-      ),
-      body: Center(
+        body: background1(
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            const Flexible(
+              child: Text("Регистрация",
+                  style: TextStyle(
+                    fontSize: 40,
+                  )),
+            ),
+            Expanded(flex: 2, child: Container()),
             const Flexible(
               flex: 1,
               child: Text(
@@ -108,33 +114,39 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             Flexible(
               flex: 1,
-              child: ElevatedButton(
-                  onPressed: () async {
-                    String username = usernameController.text;
-                    String password = passwordController.text;
-                    Map<String, dynamic> data = await createUser(username, password, 1);
-                    setState(() {
-                      if (data["status"] == "ok") {
-                        putToTheStorage("username", username);
-                        putToTheStorage("password", password);
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) =>
-                                const UserStoragePage(),
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
-                          ),
-                        );
-                      }
-                    });
-                  },
-                  child: const Text("Сохранить")),
+              child: button(
+                const Text("Зарегистрироваться",
+                    style: TextStyle(fontSize: 20, color: Colors.white)),
+                () async {
+                  String username = usernameController.text;
+                  String password = passwordController.text;
+                  Map<String, dynamic> data =
+                      await createUser(username, password, 1);
+                  setState(() {
+                    if (data["status"] == "ok") {
+                      putToTheStorage("username", username);
+                      putToTheStorage("password", password);
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              const UserStoragePage(),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    }
+                  });
+                },
+              ),
             ),
             Flexible(
                 flex: 1,
                 child: InkWell(
-                  child: const Text("Уже есть аккаунт?"),
+                  child: const Text("Уже есть аккаунт?",
+                      style: TextStyle(
+                        fontSize: 20,
+                      )),
                   onTap: () => {
                     Navigator.pushReplacement(
                       context,
@@ -148,7 +160,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   },
                 )),
             Flexible(
-                flex: 5,
+                flex: 2,
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: InkWell(
@@ -165,12 +177,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     },
                     child: const Text("Регистрация для админов",
                         style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600)),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        )),
                   ),
                 )),
           ],
         ),
       ),
-    );
+    ));
   }
 }

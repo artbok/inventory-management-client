@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inventory_managment/requests/edit_item.dart';
+import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
 void editItemDialog(int itemId, String name, String description, int quantity,
     String status, BuildContext context, VoidCallback refreshPage) {
@@ -15,7 +17,7 @@ void editItemDialog(int itemId, String name, String description, int quantity,
         return Dialog(
           insetPadding:
               const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-          child: Column(
+          child: backgroundDialog(Column(
             children: [
               Expanded(
                   flex: 1,
@@ -103,14 +105,17 @@ void editItemDialog(int itemId, String name, String description, int quantity,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
+                      buttonDialog(
+                        const Text("Отмена",
+                        style: TextStyle(color: Colors.white),),
+                        () {
                           Navigator.pop(context);
                         },
-                        child: const Text("Отмена"),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
+                      buttonDialog(
+                        const Text("Подтвердить",
+                        style: TextStyle(color: Colors.white),),
+                         () {
                           if (quantityController.text.isNotEmpty &&
                               int.parse(quantityController.text) != 0) {
                             editItem(
@@ -122,12 +127,11 @@ void editItemDialog(int itemId, String name, String description, int quantity,
                             refreshPage();
                           }
                         },
-                        child: const Text("Подтвердить"),
                       ),
                     ],
                   ))
             ],
-          ),
+          ),)
         );
       });
 }

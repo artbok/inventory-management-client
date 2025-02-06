@@ -63,11 +63,10 @@ Widget requestCustomItemDialog(BuildContext context, VoidCallback refreshPage) {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Expanded(child: elButton(
-                      const Text("Отмена"),
-                      () {
-                        Navigator.pop(context);
-                      })),
+                  Expanded(
+                      child: button(const Text("Отмена"), () {
+                    Navigator.pop(context);
+                  })),
                   ElevatedButton(
                     child: const Text("Сохранить"),
                     onPressed: () async {

@@ -3,7 +3,8 @@ import 'package:inventory_managment/user/pages/authorisation_page.dart';
 import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/requests/create_user.dart';
 import 'package:inventory_managment/admin/pages/storage_page.dart';
-
+import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
 class AdminRegistrationPage extends StatefulWidget {
   const AdminRegistrationPage({super.key});
@@ -26,15 +27,21 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Регистрация для администратора"),
-      ),
-      body: Center(
+        body: background1(
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             const Flexible(
-              flex: 1,
+              child: Text(
+                "Регистрация для администратора",
+                style: TextStyle(
+                  fontSize: 40,
+                ),
+              ),
+            ),
+            Expanded(flex: 2, child: Container()),
+            const Flexible(
               child: Text(
                 "Имя пользователя",
                 style: TextStyle(
@@ -106,9 +113,11 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
               ),
             ),
             Flexible(
-              flex: 1,
-              child: ElevatedButton(
-                  onPressed: () async {
+                flex: 1,
+                child: button(
+                  const Text("Зарегистроваться",
+                      style: TextStyle(fontSize: 20, color: Colors.white)),
+                  () async {
                     String username = usernameController.text;
                     String password = passwordController.text;
                     Map<String, dynamic> data =
@@ -129,12 +138,16 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                       }
                     });
                   },
-                  child: const Text("Сохранить")),
-            ),
+                )),
             Flexible(
                 flex: 1,
                 child: InkWell(
-                  child: const Text("Уже есть аккаунт?"),
+                  child: const Text(
+                    "Уже есть аккаунт?",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
                   onTap: () => {
                     Navigator.pushReplacement(
                       context,
@@ -147,10 +160,10 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                     )
                   },
                 )),
-            Flexible(flex: 4, child: Container()),
+            Flexible(flex: 2, child: Container()),
           ],
         ),
       ),
-    );
+    ));
   }
 }

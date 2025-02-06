@@ -13,7 +13,8 @@ void main() async {
   putToTheStorage("serverAddress", serverAddress);
   putToTheStorage("username", "bebrobruh");
   //putToTheStorage("username", "bebra");
-  putToTheStorage("password", "12345");
+//putToTheStorage("username", "bebra");
+//putToTheStorage("password", "12345");
 
   runApp(const RedirectPage());
 }
