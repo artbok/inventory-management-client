@@ -4,8 +4,6 @@ import 'package:inventory_managment/requests/get_storage_items.dart';
 import 'package:inventory_managment/widgets/quantity_input.dart';
 import 'package:inventory_managment/requests/create_item_request.dart';
 import 'package:inventory_managment/widgets/page_changer.dart';
-import 'package:inventory_managment/widgets/background.dart';
-
 
 class RequestStorageItemPage extends StatefulWidget {
   const RequestStorageItemPage({super.key});
@@ -21,8 +19,8 @@ class _RequestStorageItemPageState extends State<RequestStorageItemPage> {
   String problem = "";
   List<Widget> inputWidgets = [];
   List<TextEditingController> controllers = [];
-  Widget getItemWidget(
-      int i, int id, String name, String description, int quantity, int requestsCounter) {
+  Widget getItemWidget(int i, int id, String name, String description,
+      int quantity, int requestsCounter) {
     if (inputWidgets.length - 1 < i) {
       controllers.add(TextEditingController());
       inputWidgets.add(quantityInput(quantity, controllers[i]));
@@ -50,7 +48,10 @@ class _RequestStorageItemPageState extends State<RequestStorageItemPage> {
             ),
             child: ListTile(
                 title: Row(children: [
-                  Expanded(flex: 2, child: Text("$name     Доступно: ${quantity}x   Запрошено: ${requestsCounter}x")),
+                  Expanded(
+                      flex: 2,
+                      child: Text(
+                          "$name     Доступно: ${quantity}x   Запрошено: ${requestsCounter}x")),
                   Expanded(flex: 1, child: Container()),
                   Expanded(flex: 1, child: inputWidgets[i])
                 ]),
@@ -89,67 +90,64 @@ class _RequestStorageItemPageState extends State<RequestStorageItemPage> {
   @override
   Widget build(BuildContext context) {
     List<dynamic> data = [];
-    return Scaffold(
-        body: background(Row(children: [
-            userNavigation(1, context),
-            Expanded(
-                child: FutureBuilder(
-                    future: getStorageItems(currentPage),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return Text('ошибка: ${snapshot.error}');
-                      } else {
-                        data = snapshot.data!['data'];
-                        totalPages = snapshot.data!['totalPages'];
-                        List<Widget> items = [];
-                        for (int i = 0; i < data.length; i++) {
-                          items.add(getItemWidget(
-                              i,
-                              data[i]["id"],
-                              data[i]["name"]!,
-                              data[i]["description"]!,
-                              data[i]["quantity"]!,
-                              data[i]["requestsCounter"],
-                              ));
-                        }
-                        if (items.isEmpty) {
-                          items.add(const Text(
-                            "Ничего не найдено :(",
-                            style: TextStyle(fontSize: 40),
-                          ));
-                        }
-                        return Container(
-                            decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: <Color>[
-                                      Color.fromARGB(255, 6, 94, 209),
-                                      Color.fromARGB(255, 32, 192, 93),
-                                      Color.fromARGB(255, 6, 152, 209),
-                                    ],
-                                    tileMode: TileMode.clamp)),
-                            child: Center(
-                                child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                  Expanded(flex: 1, child: Container()),
-                                  Expanded(
-                                      flex: 7,
-                                      child: SingleChildScrollView(
-                                          child: Column(
-                                        children: items,
-                                      ))),
-                                  Expanded(
-                                      flex: 1,
-                                      child: pageChanger(currentPage,
-                                          totalPages, nextPage, previousPage))
-                                ])));
-                      }
-                    }))
-          ])));
+    return scaffoldWithUserNavigation(
+        1,
+        context,
+        FutureBuilder(
+            future: getStorageItems(currentPage),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('ошибка: ${snapshot.error}');
+              } else {
+                data = snapshot.data!['data'];
+                totalPages = snapshot.data!['totalPages'];
+                List<Widget> items = [];
+                for (int i = 0; i < data.length; i++) {
+                  items.add(getItemWidget(
+                    i,
+                    data[i]["id"],
+                    data[i]["name"]!,
+                    data[i]["description"]!,
+                    data[i]["quantity"]!,
+                    data[i]["requestsCounter"],
+                  ));
+                }
+                if (items.isEmpty) {
+                  items.add(const Text(
+                    "Ничего не найдено :(",
+                    style: TextStyle(fontSize: 40),
+                  ));
+                }
+                return Container(
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: <Color>[
+                              Color.fromARGB(255, 6, 94, 209),
+                              Color.fromARGB(255, 32, 192, 93),
+                              Color.fromARGB(255, 6, 152, 209),
+                            ],
+                            tileMode: TileMode.clamp)),
+                    child: Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                          Expanded(flex: 1, child: Container()),
+                          Expanded(
+                              flex: 7,
+                              child: SingleChildScrollView(
+                                  child: Column(
+                                children: items,
+                              ))),
+                          Expanded(
+                              flex: 1,
+                              child: pageChanger(currentPage, totalPages,
+                                  nextPage, previousPage))
+                        ])));
+              }
+            }));
   }
 }

@@ -4,7 +4,6 @@ import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/requests/get_items_requests.dart';
 import 'package:inventory_managment/user/pages/request_storage_item_page.dart';
 import 'package:inventory_managment/requests/request_custom_item_dialog.dart';
-import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 import 'package:inventory_managment/widgets/request_status_indicator.dart';
 
@@ -33,11 +32,8 @@ class ItemRequestsPageState extends State<ItemRequestsPage> {
   Widget build(BuildContext context) {
     List<dynamic> data = [];
     String owner = getValue("username");
-    return Scaffold(
-        body: background(Row(children: [
-      userNavigation(1, context),
-      Expanded(
-          child: FutureBuilder(
+    return scaffoldWithUserNavigation(1, context, 
+        FutureBuilder(
               future: getItemsRequests(
                 owner,
               ),
@@ -114,7 +110,6 @@ class ItemRequestsPageState extends State<ItemRequestsPage> {
                     ],
                   );
                 }
-              }))
-    ])));
+              }));
   }
 }

@@ -18,7 +18,7 @@ class _ReportsPageState extends State<ReportsPage> {
   String problem = "";
   List<String> users = [];
 
-  Widget reportsPage(String text, String operationType) {
+  Widget reportsPage(String text) {
     Widget titleText = Text(text, overflow: TextOverflow.ellipsis);
     return wrappedItem(ListTile(
       title: Row(children: [
@@ -42,7 +42,7 @@ class _ReportsPageState extends State<ReportsPage> {
   @override
   Widget build(BuildContext context) {
     List<dynamic> data = [];
-    return scaffoldWithNavigation(
+    return scaffoldWithAdminNavigation(
         4,
         context,
         FutureBuilder(
@@ -57,8 +57,7 @@ class _ReportsPageState extends State<ReportsPage> {
                 data = snapshot.data!["data"];
                 List<Widget> items = [];
                 for (int i = 0; i < data.length; i++) {
-                  items.add(
-                      reportsPage(data[i]["text"]!, data[i]["operationType"]));
+                  items.add(reportsPage(data[i]["text"]!));
                 }
                 return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -8,7 +8,6 @@ import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/user/pages/authorisation_page.dart';
 import 'package:inventory_managment/widgets/background.dart';
 
-
 void onDestinationSelected(BuildContext context, int index) {
   Widget? page;
   switch (index) {
@@ -35,39 +34,57 @@ void onDestinationSelected(BuildContext context, int index) {
   }
 }
 
-Widget scaffoldWithNavigation(int curPage, BuildContext context, Widget body, [Widget? floatingActionButton]) {
+Widget scaffoldWithAdminNavigation(
+    int curPage, BuildContext context, Widget body) {
   if (MediaQuery.of(context).size.width < MediaQuery.of(context).size.height) {
     return Scaffold(
-        bottomNavigationBar: NavigationBar(
-          destinations: const <NavigationDestination>[
-            NavigationDestination(
-              icon: Icon(Icons.storage),
-              label: 'Хранилище',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.cached),
-              label: 'Запросы на замену',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.get_app),
-              label: 'Запросы предметов',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.calendar_today),
-              label: 'Планирование закупок',
-            ),
-            NavigationDestination(
-                icon: Icon(Icons.description), label: 'Отчеты'),
-          ],
-          selectedIndex: curPage,
-          backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-          onDestinationSelected: (index) =>
-              onDestinationSelected(context, index),
-        ),
-        body: background(body),
-        floatingActionButton: floatingActionButton,
-        );
-  } else {}
+      bottomNavigationBar: NavigationBar(
+        destinations: const <NavigationDestination>[
+          NavigationDestination(
+            icon: Icon(Icons.storage),
+            label: 'Хранилище',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.cached),
+            label: 'Запросы на замену',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.get_app),
+            label: 'Запросы предметов',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.calendar_today),
+            label: 'Планирование закупок',
+          ),
+          NavigationDestination(icon: Icon(Icons.description), label: 'Отчеты'),
+        ],
+        selectedIndex: curPage,
+        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+        onDestinationSelected: (index) => onDestinationSelected(context, index),
+      ),
+      body: background(Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.logout, size: 20),
+            onPressed: () {
+              clearUserData();
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      const LoginPage(),
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero,
+                ),
+              );
+            },
+          ),
+          Expanded(child: body)
+        ],
+      )),
+    );
+  }
   return Scaffold(
       body: background(Row(children: [
     Column(

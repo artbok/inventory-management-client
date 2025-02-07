@@ -4,7 +4,6 @@ import 'package:inventory_managment/requests/get_user_items.dart';
 import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/widgets/page_changer.dart';
 import 'package:inventory_managment/user/dialogs/create_replacement_request_dialog.dart';
-import 'package:inventory_managment/widgets/background.dart';
 import '../../widgets/status_indicator.dart';
 
 class UserStoragePage extends StatefulWidget {
@@ -29,14 +28,13 @@ class UserStoragePageState extends State<UserStoragePage> {
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: <Color>[
-                    // Color.fromARGB(255, 236, 221, 208),
                     Color.fromARGB(200, 248, 201, 222),
                     Color.fromARGB(255, 226, 209, 247),
                   ],
                   tileMode: TileMode.clamp),
               border: Border.all(
-                color: const Color.fromARGB(200, 47, 47, 143), // Border color
-                width: 2.0, // Border width
+                color: const Color.fromARGB(200, 47, 47, 143),
+                width: 2.0,
               ),
               borderRadius: BorderRadius.circular(20),
             ),
@@ -82,73 +80,55 @@ class UserStoragePageState extends State<UserStoragePage> {
   Widget build(BuildContext context) {
     List<dynamic> data = [];
     String owner = getValue("username");
-    return Scaffold(
-        body: background(Row(children: [
-      userNavigation(0, context),
-      Expanded(
-          child: FutureBuilder(
-              future: getUserItems(
-                owner,
-                currentPage,
-              ),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Ошибка: ${snapshot.error}');
-                } else {
-                  totalPages = snapshot.data!["totalPages"];
-                  data = snapshot.data!["data"];
-                  List<Widget> items = [];
-                  for (int i = 0; i < data.length; i++) {
-                    items.add(getItemWidget(
-                        data[i]["id"],
-                        data[i]["name"]!,
-                        data[i]["description"]!,
-                        data[i]["quantity"]!,
-                        data[i]["status"]));
-                  }
-                  if (items.isEmpty) {
-                    return const Center(
-                        child: Text(
-                      "Ничего не найдено :(",
-                      style: TextStyle(fontSize: 40),
-                    ));
-                  }
-                  return Container(
-                      decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: <Color>[
-                                Color.fromARGB(255, 51, 51, 124),
-                                Color.fromARGB(255, 91, 91, 177),
-                                Color.fromARGB(255, 111, 131, 191),
-                                Color.fromARGB(255, 164, 168, 217),
-                                Color.fromARGB(255, 164, 168, 217),
-                                Color.fromARGB(255, 111, 131, 191),
-                                Color.fromARGB(255, 91, 91, 177),
-                                Color.fromARGB(255, 51, 51, 124),
-                              ],
-                              tileMode: TileMode.clamp)),
-                      child: Column(
-                        children: [
-                          Expanded(flex: 1, child: Container()),
-                          Expanded(
-                              flex: 6,
-                              child: SingleChildScrollView(
-                                  child: Column(
-                                children: items,
-                              ))),
-                          Expanded(
-                              flex: 1,
-                              child: pageChanger(currentPage, totalPages,
-                                  nextPage, previousPage)),
-                          Expanded(flex: 1, child: Container())
-                        ],
-                      ));
+    return scaffoldWithUserNavigation(
+        0,
+        context,
+        FutureBuilder(
+            future: getUserItems(
+              owner,
+              currentPage,
+            ),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Ошибка: ${snapshot.error}');
+              } else {
+                totalPages = snapshot.data!["totalPages"];
+                data = snapshot.data!["data"];
+                List<Widget> items = [];
+                for (int i = 0; i < data.length; i++) {
+                  items.add(getItemWidget(
+                      data[i]["id"],
+                      data[i]["name"]!,
+                      data[i]["description"]!,
+                      data[i]["quantity"]!,
+                      data[i]["status"]));
                 }
-              }))
-    ])));
+                if (items.isEmpty) {
+                  return const Center(
+                      child: Text(
+                    "Ничего не найдено :(",
+                    style: TextStyle(fontSize: 40),
+                  ));
+                }
+                return Column(
+                  children: [
+                    Expanded(flex: 1, child: Container()),
+                    Expanded(
+                        flex: 6,
+                        child: SingleChildScrollView(
+                            child: Column(
+                          children: items,
+                        ))),
+                    Expanded(
+                        flex: 1,
+                        child: pageChanger(
+                            currentPage, totalPages, nextPage, previousPage)),
+                    Expanded(flex: 1, child: Container())
+                  ],
+                );
+              }
+            }));
   }
 }

@@ -33,10 +33,8 @@ class _StoragePageState extends State<StoragePage> {
         title: Row(children: [
           Expanded(child: titleText),
           Row(children: [
-            button(
-                const Text("Выдать пользователю",
-                    style: TextStyle(color: Colors.white)),
-                (users.isNotEmpty && quantity != 0)
+            IconButton(
+                onPressed: (quantity != 0)
                     ? () {
                         giveItemToUser(
                             context, itemId, name, quantity, description, users,
@@ -44,7 +42,8 @@ class _StoragePageState extends State<StoragePage> {
                           setState(() {});
                         });
                       }
-                    : null),
+                    : null,
+                icon: const Icon(Icons.send)),
             IconButton(
                 onPressed: () {
                   editItemDialog(
@@ -94,65 +93,63 @@ class _StoragePageState extends State<StoragePage> {
   @override
   Widget build(BuildContext context) {
     List<dynamic> data = [];
-    return Scaffold(
-        body: scaffoldWithNavigation(
-            0,
-            context,
-            FutureBuilder(
-                future: getItems(currentPage),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Container();
-                  } else if (snapshot.hasError) {
-                    return Text('ошибка: ${snapshot.error}');
-                  } else {
-                    totalPages = snapshot.data!["totalPages"];
-                    users = snapshot.data!["users"].cast<String>();
-                    data = snapshot.data!["data"];
-                    List<Widget> items = [];
-                    for (int i = 0; i < data.length; i++) {
-                      items.add(getItemWidget(
-                          context,
-                          data[i]["id"],
-                          data[i]["name"]!,
-                          data[i]["description"]!,
-                          data[i]["quantity"]!,
-                          data[i]["status"]));
+    return scaffoldWithAdminNavigation(
+        0,
+        context,
+        Column(children: [
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: button(
+                  const Row(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(Icons.add, size: 30),
+                    Text(
+                      "Создать предмет",
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                  ]), () {
+                showCreateItemDialog(context, () => setState(() {}));
+              })),
+          Expanded(
+              child: FutureBuilder(
+                  future: getItems(currentPage),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container();
+                    } else if (snapshot.hasError) {
+                      return Text('ошибка: ${snapshot.error}');
+                    } else {
+                      totalPages = snapshot.data!["totalPages"];
+                      users = snapshot.data!["users"].cast<String>();
+                      data = snapshot.data!["data"];
+                      List<Widget> items = [];
+                      for (int i = 0; i < data.length; i++) {
+                        items.add(getItemWidget(
+                            context,
+                            data[i]["id"],
+                            data[i]["name"]!,
+                            data[i]["description"]!,
+                            data[i]["quantity"]!,
+                            data[i]["status"]));
+                      }
+                      if (items.isEmpty) {
+                        return const Center(
+                            child: Text(
+                          "Ничего не найдено :(",
+                          style: TextStyle(fontSize: 40),
+                        ));
+                      }
+                      return Column(children: [
+                        Expanded(
+                            flex: 7,
+                            child: SingleChildScrollView(
+                                child: Column(
+                              children: items,
+                            ))),
+                        pageChanger(
+                            currentPage, totalPages, nextPage, previousPage),
+                      ]);
                     }
-                    if (items.isEmpty) {
-                      return const Center(
-                          child: Text(
-                        "Ничего не найдено :(",
-                        style: TextStyle(fontSize: 40),
-                      ));
-                    }
-                    return Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                              flex: 7,
-                              child: SingleChildScrollView(
-                                  child: Column(
-                                children: items,
-                              ))),
-                          Expanded(
-                              flex: 1,
-                              child: pageChanger(currentPage, totalPages,
-                                  nextPage, previousPage)),
-                        ]);
-                  }
-                })),
-        floatingActionButton: FloatingActionButton.extended(
-            backgroundColor: const Color.fromARGB(180, 255, 240, 245),
-            label: const Text(
-              "Создать предмет",
-              style: TextStyle(fontSize: 40, color: Colors.black),
-            ),
-            icon: const Icon(Icons.add, size: 50),
-            onPressed: () {
-              showCreateItemDialog(context, () {
-                setState(() {});
-              });
-            }));
+                  }))
+        ]));
   }
 }

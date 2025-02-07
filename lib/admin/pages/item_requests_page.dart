@@ -55,46 +55,48 @@ class _ItemRequestsPageState extends State<ItemRequestsPage> {
   @override
   Widget build(BuildContext context) {
     List<dynamic> data = [];
-    return scaffoldWithNavigation(2, context,
-          FutureBuilder(
-              future: getItemsRequests(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Ошибка: ${snapshot.error}');
-                } else {
-                  data = snapshot.data!["data"];
-                  List<Widget> items = [];
-                  for (int i = 0; i < data.length; i++) {
-                    items.add(getItemWidget(
-                      data[i]["id"],
-                      data[i]["name"]!,
-                      data[i]["description"],
-                      data[i]["status"],
-                      data[i]["quantity"]!,
-                      data[i]["owner"],
-                    ));
-                  }
-                  if (items.isEmpty) {
-                    items.add(const Text(
-                      "Ничего не найдено :(",
-                      style: TextStyle(fontSize: 40),
-                    ));
-                  }
-                  return Column(
-                    children: [
-                      Expanded(flex: 1, child: Container()),
-                      Expanded(
-                          flex: 8,
-                          child: SingleChildScrollView(
-                              child: Column(
-                            children: items,
-                          ))),
-                      Expanded(flex: 1, child: Container())
-                    ],
-                  );
+    return scaffoldWithAdminNavigation(
+        2,
+        context,
+        FutureBuilder(
+            future: getItemsRequests(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Ошибка: ${snapshot.error}');
+              } else {
+                data = snapshot.data!["data"];
+                List<Widget> items = [];
+                for (int i = 0; i < data.length; i++) {
+                  items.add(getItemWidget(
+                    data[i]["id"],
+                    data[i]["name"]!,
+                    data[i]["description"],
+                    data[i]["status"],
+                    data[i]["quantity"]!,
+                    data[i]["owner"],
+                  ));
                 }
-              }));
+                if (items.isEmpty) {
+                  items.add(const Text(
+                    "Ничего не найдено :(",
+                    style: TextStyle(fontSize: 40),
+                  ));
+                }
+                return Column(
+                  children: [
+                    Expanded(flex: 1, child: Container()),
+                    Expanded(
+                        flex: 8,
+                        child: SingleChildScrollView(
+                            child: Column(
+                          children: items,
+                        ))),
+                    Expanded(flex: 1, child: Container())
+                  ],
+                );
+              }
+            }));
   }
 }
