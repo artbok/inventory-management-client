@@ -89,7 +89,24 @@ class _StoragePageState extends State<StoragePage> {
   Widget build(BuildContext context) {
     List<dynamic> data = [];
     return Scaffold(
-        body: background(Row(children: [
+        body: background(
+          Column(children: [
+         button(const Row(children: [
+              Text(
+              "Создать предмет",
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.black ),
+            ),
+              Icon(Icons.add, size: 50),
+              ]
+              ),
+            () {
+              showCreateItemDialog(context, () {
+                setState(() {});
+              });
+            }),
+          Row(children: [
           adminNavigation(0, context),
           Expanded(
               child: FutureBuilder(
@@ -136,20 +153,8 @@ class _StoragePageState extends State<StoragePage> {
                           ]);
                     }
                   }))
-        ])),
-        floatingActionButton: FloatingActionButton.extended(
-            backgroundColor: const Color.fromARGB(180, 255, 240, 245),
-            label: const Text(
-              "Создать предмет",
-              style: TextStyle(
-                fontSize: 40,
-                color: Colors.black ),
-            ),
-            icon: const Icon(Icons.add, size: 50),
-            onPressed: () {
-              showCreateItemDialog(context, () {
-                setState(() {});
-              });
-            }));
+        ])])),
+    );
+        
   }
 }

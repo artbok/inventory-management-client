@@ -4,6 +4,7 @@ import 'package:inventory_managment/requests/get_planings.dart';
 import 'package:inventory_managment/requests/change_planning_status.dart';
 import 'package:inventory_managment/admin/dialogs/create_planning_dialog.dart';
 import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/widgets/button.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 
 
@@ -46,7 +47,24 @@ class _InventoryPlanningPageState extends State<InventoryPlanningPage> {
     List<dynamic> data1 = [];
     List<dynamic> data2 = [];
     return Scaffold(
-        body: background(Row(children: [
+        body: background(
+          Column(children: [
+          button(const Row(children: [
+            Text(
+              "Добавить закупку",
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.black),
+            ),
+             Icon(Icons.add, size: 50),
+          ]
+          ),
+             () {
+              return showCreatePlanningDialog(context, () {
+                setState(() {});
+              });
+            }),
+          Row(children: [
           adminNavigation(3, context),
           Expanded(
               child: FutureBuilder(
@@ -147,20 +165,7 @@ class _InventoryPlanningPageState extends State<InventoryPlanningPage> {
                       });
                     }
                   }))
-        ])),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: const Color.fromARGB(255, 255, 240, 245),
-            label: const Text(
-              "Добавить закупку",
-              style: TextStyle(
-                fontSize: 40,
-                color: Colors.black),
-            ),
-            icon: const Icon(Icons.add, size: 50),
-            onPressed: () {
-              return showCreatePlanningDialog(context, () {
-                setState(() {});
-              });
-            }));
+        ])]),
+        ));
   }
 }
