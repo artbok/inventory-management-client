@@ -3,6 +3,7 @@ import 'package:inventory_managment/widgets/admin_navigation.dart';
 import 'package:inventory_managment/requests/get_planings.dart';
 import 'package:inventory_managment/requests/change_planning_status.dart';
 import 'package:inventory_managment/admin/dialogs/create_planning_dialog.dart';
+import 'package:inventory_managment/widgets/button.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 
 class InventoryPlanningPage extends StatefulWidget {
@@ -46,6 +47,22 @@ class _InventoryPlanningPageState extends State<InventoryPlanningPage> {
     return scaffoldWithNavigation(
         3,
         context,
+        Column(children: [
+          button(const Row(children: [
+            Text(
+              "Добавить закупку",
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.black),
+            ),
+             Icon(Icons.add, size: 50),
+          ]
+          ),
+             () {
+              return showCreatePlanningDialog(context, () {
+                setState(() {});
+              });
+            }),
         FutureBuilder(
             future: getPlanings(),
             builder: (context, snapshot) {
@@ -141,7 +158,7 @@ class _InventoryPlanningPageState extends State<InventoryPlanningPage> {
                       ]);
                 });
               }
-            }),
+            })]),
         FloatingActionButton.extended(
             backgroundColor: const Color.fromARGB(255, 255, 240, 245),
             label: const Text(

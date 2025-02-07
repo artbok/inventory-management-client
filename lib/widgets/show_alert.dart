@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
 void showIncorrectDataAlert(BuildContext context, [Widget title = const Text("Укажите правильные данные!")]) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 255, 222, 173),
           title: title,
           actionsAlignment: MainAxisAlignment.center,
           actions: [
-            ElevatedButton(
-                onPressed: () {
+            buttonDialog(
+                  const Text("Ок",
+                  style: TextStyle(color: Colors.white),
+                  ),
+                 () {
                   Navigator.pop(context);
-                },
-                child: const Text("Ок"))
+                },)
           ],
         );
       });
