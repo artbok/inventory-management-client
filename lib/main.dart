@@ -11,10 +11,10 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox("storage");
   putToTheStorage("serverAddress", serverAddress);
-  putToTheStorage("username", "bebrobruh");
-  //putToTheStorage("username", "bebra");
+  //putToTheStorage("username", "bebrobruh");
+  putToTheStorage("username", "bebra");
 //putToTheStorage("username", "bebra");
-//putToTheStorage("password", "12345");
+  putToTheStorage("password", "12345");
 
   runApp(const RedirectPage());
 }

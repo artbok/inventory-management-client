@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:inventory_managment/local_storage.dart';
 
-Future<String> editItem(
-    int itemId, int quantity, String status) async {
+Future<String> changeStatus(int itemId, int quantity, String status) async {
   String? username = getValue("username");
   String? password = getValue("password");
   Map<String, dynamic> params = {

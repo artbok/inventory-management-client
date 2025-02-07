@@ -112,9 +112,9 @@ void giveItemToUser(
                       )),
                   Expanded(
                       flex: 1,
-                      child: ElevatedButton(
-                          child: const Text("Выдать"),
-                          onPressed: () async {
+                      child: button(
+                          const Text("Выдать"),
+                          () async {
                             if (flag &&
                                 errorText == null &&
                                 controller2.text.isNotEmpty &&
@@ -129,9 +129,9 @@ void giveItemToUser(
                           })),
                   Expanded(
                       flex: 1,
-                      child: ElevatedButton(
-                          child: const Text("Отменить"),
-                          onPressed: () async {
+                      child: button(
+                          const Text("Отменить"),
+                          () async {
                             Navigator.pop(context);
                           }))
                 ],

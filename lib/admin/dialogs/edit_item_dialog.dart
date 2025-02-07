@@ -43,25 +43,7 @@ void editItemDialog(int itemId, String name, String description, int quantity,
                         ),
                         Expanded(flex: 1, child: Container()),
                       ])),
-                  //       Expanded(
-                  //         flex: 1,
-                  //         child: StatefulBuilder(builder: (context, setState) {
-                  //                   return
-                  //         DropdownButton<String>(
-                  //   value: status,
-                  //   onChanged: (String? newValue) {
-                  //     setState(() {
-                  //       status = newValue!;
-                  //     });
-                  //   },
-                  //   items: statuses.map((String item) {
-                  //     return DropdownMenuItem<String>(
-                  //       value: item,
-                  //       child: Text(item),
-                  //     );
-                  //   }).toList(),
-                  // );}),
-                  //       ),
+
                   Expanded(
                       flex: 1,
                       child: Row(children: [

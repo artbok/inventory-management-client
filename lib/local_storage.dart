@@ -9,3 +9,9 @@ dynamic getValue(var key) {
   var box = Hive.box('storage');
   return box.get(key);
 }
+
+void clearUserData() {
+  var box = Hive.box('storage');
+  box.delete('username');
+  box.delete('password');
+}
