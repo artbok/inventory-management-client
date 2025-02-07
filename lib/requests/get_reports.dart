@@ -2,17 +2,15 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:inventory_managment/local_storage.dart';
 
-Future<String> changeStatus(int itemId, int quantity, String status) async {
+Future<Map<String, dynamic>> getReports(int page) async {
   String? username = getValue("username");
   String? password = getValue("password");
   Map<String, dynamic> params = {
     "username": username,
     "password": password,
-    "itemId": itemId,
-    "quantity": quantity,
-    "status": status
+    "page": page
   };
-  final Uri url = Uri.parse('${getValue("serverAddress")}/changeItemStatus');
+  final Uri url = Uri.parse('${getValue("serverAddress")}/getReports');
   var response = await http.post(
     url,
     headers: {'Content-Type': 'application/json'},
@@ -20,5 +18,5 @@ Future<String> changeStatus(int itemId, int quantity, String status) async {
   );
 
   Map<String, dynamic> data = jsonDecode(response.body) as Map<String, dynamic>;
-  return data["status"];
+  return data;
 }

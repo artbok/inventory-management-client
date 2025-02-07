@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_managment/widgets/admin_navigation.dart';
 import 'package:inventory_managment/requests/get_items_requests.dart';
-import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
 import 'package:inventory_managment/widgets/request_status_indicator.dart';
 import 'package:inventory_managment/requests/accept_item_request.dart';
 import 'package:inventory_managment/requests/decline_item_request.dart';
 import 'package:inventory_managment/admin/dialogs/not_enough_items_dialog.dart';
-
 
 class ItemRequestsPage extends StatefulWidget {
   const ItemRequestsPage({super.key});
@@ -47,19 +45,18 @@ class _ItemRequestsPageState extends State<ItemRequestsPage> {
                   icon: const Icon(Icons.close, color: Colors.red))
             ])
           : Text("$name     $quantityшт."),
-      subtitle: Row(
-          children: [requestStatusIndicator(status), Expanded(child: Container())]),
+      subtitle: Row(children: [
+        requestStatusIndicator(status),
+        Expanded(child: Container())
+      ]),
     ));
   }
 
   @override
   Widget build(BuildContext context) {
     List<dynamic> data = [];
-    return Scaffold(
-        body: background(Row(children: [
-      adminNavigation(2, context),
-      Expanded(
-          child: FutureBuilder(
+    return scaffoldWithNavigation(2, context,
+          FutureBuilder(
               future: getItemsRequests(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -98,7 +95,6 @@ class _ItemRequestsPageState extends State<ItemRequestsPage> {
                     ],
                   );
                 }
-              }))
-    ])));
+              }));
   }
 }

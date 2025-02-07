@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/requests/get_replacements_requests.dart';
 import 'package:inventory_managment/widgets/admin_navigation.dart';
 import 'package:inventory_managment/widgets/wrapped_item.dart';
@@ -7,7 +6,6 @@ import 'package:inventory_managment/widgets/request_status_indicator.dart';
 import 'package:inventory_managment/requests/accept_replacement_request.dart';
 import 'package:inventory_managment/requests/decline_replacement_request.dart';
 import 'package:inventory_managment/admin/dialogs/not_enough_items_dialog.dart';
-
 
 class ReplacementRequestsPage extends StatefulWidget {
   const ReplacementRequestsPage({super.key});
@@ -19,8 +17,6 @@ class ReplacementRequestsPage extends StatefulWidget {
 
 class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
   TextEditingController searchController = TextEditingController();
-
-  
 
   Widget getItemWidget(
       BuildContext context, String name, String status, int quantity, int id) {
@@ -51,20 +47,18 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
                   icon: const Icon(Icons.close, color: Colors.red))
             ])
           : Text("$name     $quantityшт."),
-      subtitle: Row(
-          children: [requestStatusIndicator(status), Expanded(child: Container())]),
-
+      subtitle: Row(children: [
+        requestStatusIndicator(status),
+        Expanded(child: Container())
+      ]),
     ));
   }
 
   @override
   Widget build(BuildContext context) {
     List<dynamic> data = [];
-    return Scaffold(
-        body: background(Row(children: [
-      adminNavigation(1, context),
-      Expanded(
-          child: FutureBuilder(
+    return 
+      scaffoldWithNavigation(1, context, FutureBuilder(
               future: getReplacementRequests(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -101,7 +95,6 @@ class _ReplacementRequestsPageState extends State<ReplacementRequestsPage> {
                     ],
                   );
                 }
-              }))
-    ])));
+              }));
   }
 }
