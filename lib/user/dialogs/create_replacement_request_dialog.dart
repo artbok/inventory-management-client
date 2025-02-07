@@ -3,14 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:inventory_managment/requests/create_replacement_request.dart';
 import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/widgets/show_alert.dart';
+import 'package:inventory_managment/widgets/background.dart';
+import 'package:inventory_managment/widgets/button.dart';
 
-Widget createReplacementRequestPage(int itemId, String itemName, String description,
-    int maxQuantity, VoidCallback refreshPage) {
+Widget createReplacementRequestPage(int itemId, String itemName,
+    String description, int maxQuantity, VoidCallback refreshPage) {
   TextEditingController controller = TextEditingController();
   String? errorText;
   return StatefulBuilder(builder: (context, setState) {
     return Dialog(
-      child: Column(
+        child: backgroundDialog(
+      Column(
         children: [
           const Expanded(
               child: Text(
@@ -50,29 +53,31 @@ Widget createReplacementRequestPage(int itemId, String itemName, String descript
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(
-                    onPressed: () {
+                buttonDialog(
+                    const Text("Отмена",
+                    style: TextStyle(color: Colors.white),),
+                     () {
                       Navigator.pop(context);
-                    },
-                    child: const Text("Отмена")),
-                ElevatedButton(
-                    onPressed: () async {
+                    },),
+                buttonDialog(
+                      const Text("Запрос",
+                      style: TextStyle(color: Colors.white),),
+                     () async {
                       if (errorText == null) {
                         String owner = getValue("username");
                         Navigator.pop(context);
-                        await createReplacementRequest(owner, itemId,
-                            int.parse(controller.text));
+                        await createReplacementRequest(
+                            owner, itemId, int.parse(controller.text));
                         refreshPage();
                       } else {
                         showIncorrectDataAlert(context);
                       }
-                    },
-                    child: const Text("Запрос")),
+                    },),
               ],
             ),
           )
         ],
       ),
-    );
+    ));
   });
 }

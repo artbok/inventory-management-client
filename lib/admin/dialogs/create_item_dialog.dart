@@ -21,7 +21,9 @@ void showCreateItemDialog(BuildContext context, VoidCallback refreshPage,
         return Dialog(
           insetPadding:
               const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-          child: backgroundDialog(Column(
+          child: backgroundDialog(
+            
+            Column(
             children: [
               const Expanded(
                   flex: 1,
