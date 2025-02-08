@@ -43,7 +43,6 @@ app.*.map.json
 /linux
 /macos
 /test
-/web
 /windows
 /test
 .metadata
