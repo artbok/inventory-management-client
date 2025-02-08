@@ -1,0 +1,35 @@
+name: inv-mgmt
+
+services:
+  client:
+    image: ghcr.io/artbok/inventory-management-client:latest
+    ports:
+      - "60080:80" # Map host port 60080 to container port 80
+    environment:
+      - SERVER_URL=http://localhost:5000
+    depends_on:
+      - server # Ensure server starts first
+
+  server:
+    image: ghcr.io/artbok/inventory-management-server:latest
+    ports:
+      - "5000:5000" # Map host port 65000 to container port 5000 (if needed externally)
+
+#    volumes:
+#      - ./database:/app/database # Mount a host directory named 'database' to /app/database in the container
+#    depends_on:
+#      - postgres
+
+#  postgres:
+#    image: postgres:latest  # Or specify a particular version like postgres:15
+#    ports:
+#      - "60432:5432"  # Map host port 60432 to container port 5432
+#    environment:
+#      POSTGRES_USER: your_user  # Replace with your desired username
+#      POSTGRES_PASSWORD: your_password  # Replace with a strong password
+#      POSTGRES_DB: inventory_db  # Replace with your desired database name
+#    volumes: # Persist data across container restarts
+#      - postgres_data:/var/lib/postgresql/data
+
+#volumes:
+#  postgres_data: # Named volume for PostgreSQL data persistence
