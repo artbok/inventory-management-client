@@ -18,12 +18,12 @@ class _ReportsPageState extends State<ReportsPage> {
   String problem = "";
   List<String> users = [];
 
-  Widget reportsPage(String text) {
-    Widget titleText = Text(text, overflow: TextOverflow.ellipsis);
+  Widget reportItem(String text, String date) {
     return wrappedItem(ListTile(
       title: Row(children: [
-        Expanded(child: titleText),
+        Expanded(child: Text(text, maxLines: 400, overflow: TextOverflow.ellipsis)),
       ]),
+      subtitle: Text(date, style: const TextStyle(color: Colors.grey, fontSize: 10),),
     ));
   }
 
@@ -57,7 +57,7 @@ class _ReportsPageState extends State<ReportsPage> {
                 data = snapshot.data!["data"];
                 List<Widget> items = [];
                 for (int i = 0; i < data.length; i++) {
-                  items.add(reportsPage(data[i]["text"]!));
+                  items.add(reportItem(data[i]["text"]!, data[i]["date"]!), );
                 }
                 return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
