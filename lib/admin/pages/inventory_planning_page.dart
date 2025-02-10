@@ -49,13 +49,13 @@ class _InventoryPlanningPageState extends State<InventoryPlanningPage> {
         context,
         Column(children: [
           Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: button(
                 const Row(mainAxisSize: MainAxisSize.min, children: [
-                  Icon(Icons.add, size: 50),
+                  Icon(Icons.add, size: 30, color: Colors.black,),
                   Text(
                     "Добавить закупку",
-                    style: TextStyle(fontSize: 40, color: Colors.black),
+                    style: TextStyle(fontSize: 20, color: Colors.black),
                   )
                 ]),
                 () {

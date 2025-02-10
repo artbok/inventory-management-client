@@ -27,18 +27,14 @@ void giveItemToUser(
                   const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
               child: backgroundDialog(Column(
                 children: [
-                  Expanded(
-                      flex: 1,
-                      child: Padding(
-                          padding: const EdgeInsets.all(40.0),
+                      Padding(
+                          padding: const EdgeInsets.all(30.0),
                           child: Text(
-                            "Выдать $name пользователю",
+                            "Выдача предмета '$name'",
                             style: const TextStyle(fontSize: 40),
-                          ))),
-                  Flexible(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(40.0),
+                          )),
+                          Padding(
+                      padding: const EdgeInsets.all(30.0),
                       child: Autocomplete<String>(
                         optionsBuilder: (TextEditingValue textEditingValue) {
                           if (textEditingValue.text.isEmpty) {
@@ -74,14 +70,11 @@ void giveItemToUser(
                             },
                           );
                         },
-                      ),
+              
                     ),
                   ),
-                  Expanded(flex: 1, child: Container()),
-                  Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(40.0),
+                        Padding(
+                        padding: const EdgeInsets.all(30.0),
                         child: TextField(
                           controller: controller2,
                           keyboardType: TextInputType.number,
@@ -108,32 +101,31 @@ void giveItemToUser(
                               });
                             }
                           },
-                        ),
+              
                       )),
-                  Expanded(
-                      flex: 1,
-                      child: button(
-                          const Text("Выдать"),
-                          () async {
-                            if (flag &&
-                                errorText == null &&
-                                controller2.text.isNotEmpty &&
-                                int.parse(controller2.text) != 0) {
-                              Navigator.pop(context);
-                              await giveItem(controller1.text, itemId,
-                                  int.parse(controller2.text));
-                              refreshPage();
-                            } else {
-                              showIncorrectDataAlert(context);
-                            }
-                          })),
-                  Expanded(
-                      flex: 1,
-                      child: button(
-                          const Text("Отменить"),
-                          () async {
-                            Navigator.pop(context);
-                          }))
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                      
+                      buttonDialog(const Text("Отменить", style: TextStyle(color: Colors.white),), () async {
+                        Navigator.pop(context);
+                      }),
+                      buttonDialog(const Text("Выдать", style: TextStyle(color: Colors.white)), () async {
+                        if (flag &&
+                            errorText == null &&
+                            controller2.text.isNotEmpty &&
+                            int.parse(controller2.text) != 0) {
+                          Navigator.pop(context);
+                          await giveItem(controller1.text, itemId,
+                              int.parse(controller2.text));
+                          refreshPage();
+                        } else {
+                          showIncorrectDataAlert(context);
+                        }
+                      }),
+                        ],
+                      )
+                  
                 ],
               )));
         });

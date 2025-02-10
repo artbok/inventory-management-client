@@ -9,8 +9,9 @@ Widget quantityInput(int quantityAtStorage, TextEditingController controller) {
         controller: controller,
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        maxLength: 9,
         decoration: InputDecoration(
-          labelText: 'Количество предметов',
+          labelText: 'Количество',
           errorText: errorText,
           border: const OutlineInputBorder(),
         ),

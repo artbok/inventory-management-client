@@ -15,7 +15,6 @@ Widget background(Widget child) {
       child: child);
 }
 
-
 Widget background1(Widget child) {
   return Container(
       decoration: const BoxDecoration(
@@ -33,16 +32,16 @@ Widget background1(Widget child) {
 
 Widget backgroundDialog(Widget child) {
   return Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-            Color.fromARGB(255, 255, 248, 220),
-            Color.fromARGB(255, 255, 228, 196),
-            Color.fromARGB(255, 222, 184, 135),
-            Color.fromARGB(255,250, 128, 114)
-          ])),
+                Color.fromARGB(255, 255, 248, 220),
+                Color.fromARGB(255, 255, 228, 196),
+                Color.fromARGB(255, 222, 184, 135),
+                Color.fromARGB(255, 250, 128, 114)
+              ])),
       child: child);
 }
-

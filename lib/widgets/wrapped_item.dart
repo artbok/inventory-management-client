@@ -10,9 +10,9 @@ Widget wrappedItem(Widget child) {
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 colors: <Color>[
-                  Color.fromARGB(255, 214, 195, 198),
-                  Color.fromARGB(255, 235, 205, 197),
-                  Color.fromARGB(255, 243, 175, 150),
+                    Color.fromARGB(255, 249, 232, 236),
+                    Color.fromARGB(255, 255, 208, 219),
+                    Color.fromARGB(255, 225, 222, 234)
                 ],
                 tileMode: TileMode.clamp),
             border: Border.all(

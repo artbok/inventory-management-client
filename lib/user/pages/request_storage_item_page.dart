@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_managment/widgets/button.dart';
 import 'package:inventory_managment/widgets/user_navigation.dart';
 import 'package:inventory_managment/requests/get_storage_items.dart';
-import 'package:inventory_managment/widgets/quantity_input.dart';
 import 'package:inventory_managment/requests/create_item_request.dart';
 import 'package:inventory_managment/widgets/page_changer.dart';
+import 'package:inventory_managment/widgets/wrapped_item.dart';
+import 'package:flutter/services.dart';
 
 class RequestStorageItemPage extends StatefulWidget {
   const RequestStorageItemPage({super.key});
@@ -23,56 +25,44 @@ class _RequestStorageItemPageState extends State<RequestStorageItemPage> {
       int quantity, int requestsCounter) {
     if (inputWidgets.length - 1 < i) {
       controllers.add(TextEditingController());
-      inputWidgets.add(quantityInput(quantity, controllers[i]));
+      inputWidgets.add(TextField(
+        controller: controllers[i],
+        maxLength: 9,
+        keyboardType: TextInputType.number,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        decoration: const InputDecoration(
+          labelText: 'Количество',
+          border: OutlineInputBorder(),
+        ),
+      ));
     }
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-        child: Container(
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: <Color>[
-                    Color.fromARGB(255, 108, 243, 213),
-                    Color.fromARGB(255, 113, 219, 196),
-                    Color.fromARGB(255, 19, 200, 181),
-                    Color.fromARGB(255, 33, 163, 163),
-                    Color.fromARGB(255, 115, 117, 165)
-                  ],
-                  tileMode: TileMode.clamp),
-              border: Border.all(
-                color: Colors.black,
-                width: 2.0,
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: ListTile(
-                title: Row(children: [
-                  Expanded(
-                      flex: 2,
-                      child: Text(
-                          "$name     Доступно: ${quantity}x   Запрошено: ${requestsCounter}x")),
-                  Expanded(flex: 1, child: Container()),
-                  Expanded(flex: 1, child: inputWidgets[i])
-                ]),
-                subtitle: Row(
-                  children: [
-                    Expanded(
-                        flex: 2,
-                        child: Text(description,
-                            style: const TextStyle(fontSize: 15))),
-                    Expanded(
-                        flex: 1,
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              await createItemRequest(id, name, description,
-                                  int.parse(controllers[i].text));
-                              controllers[i].clear();
-                              setState(() {});
-                            },
-                            child: const Text("Запросить")))
-                  ],
-                ))));
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+        child: wrappedItem(ListTile(
+            title: Row(children: [
+              Expanded(
+                  child: Text(
+                      "$name     Доступно: ${quantity}x   Запрошено: ${requestsCounter}x")),
+              SizedBox(width: 130, child: inputWidgets[i])
+            ]),
+            subtitle: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(description, style: const TextStyle(fontSize: 15)),
+                button(
+                  const Text(
+                    "Запросить",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  () async {
+                    await createItemRequest(
+                        id, name, description, int.parse(controllers[i].text));
+                    controllers[i].clear();
+                    setState(() {});
+                  },
+                )
+              ],
+            ))));
   }
 
   void nextPage() {
@@ -120,33 +110,19 @@ class _RequestStorageItemPageState extends State<RequestStorageItemPage> {
                     style: TextStyle(fontSize: 40),
                   ));
                 }
-                return Container(
-                    decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: <Color>[
-                              Color.fromARGB(255, 6, 94, 209),
-                              Color.fromARGB(255, 32, 192, 93),
-                              Color.fromARGB(255, 6, 152, 209),
-                            ],
-                            tileMode: TileMode.clamp)),
-                    child: Center(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                          Expanded(flex: 1, child: Container()),
+                return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
                           Expanded(
-                              flex: 7,
                               child: SingleChildScrollView(
                                   child: Column(
-                                children: items,
-                              ))),
-                          Expanded(
-                              flex: 1,
-                              child: pageChanger(currentPage, totalPages,
-                                  nextPage, previousPage))
-                        ])));
+                            children: items,
+                          ))),
+                          pageChanger(
+                              currentPage, totalPages, nextPage, previousPage)
+                        ]));
               }
             }));
   }

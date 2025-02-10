@@ -6,6 +6,7 @@ import 'package:inventory_managment/requests/auth_user.dart';
 import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/button.dart';
+import 'package:inventory_managment/widgets/show_alert.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -59,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                   Flexible(
                     flex: 1,
                     child: TextFormField(
+                      maxLength: 16,
                       controller: usernameController,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(
@@ -90,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                   Flexible(
                     flex: 1,
                     child: TextFormField(
+                      maxLength: 20,
                       controller: passwordController,
                       obscureText: obscureText,
                       decoration: InputDecoration(
@@ -151,6 +154,11 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         );
                       }
+                    } else {
+                      showIncorrectDataAlert(
+                          context,
+                          const Text(
+                              "Пароль или Имя пользователя введены некорректно"));
                     }
                   });
                 },
@@ -160,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                 flex: 1,
                 child: InkWell(
                   child: const Text(
-                    "Нету аккаунта?",
+                    "Нет аккаунта?",
                     style: TextStyle(
                       fontSize: 20,
                     ),

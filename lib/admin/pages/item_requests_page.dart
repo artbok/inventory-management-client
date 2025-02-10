@@ -84,17 +84,12 @@ class _ItemRequestsPageState extends State<ItemRequestsPage> {
                     style: TextStyle(fontSize: 40),
                   ));
                 }
-                return Column(
-                  children: [
-                    Expanded(flex: 1, child: Container()),
-                    Expanded(
-                        flex: 8,
-                        child: SingleChildScrollView(
+                return Align(alignment: Alignment.topCenter, child:  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: SingleChildScrollView(
                             child: Column(
                           children: items,
                         ))),
-                    Expanded(flex: 1, child: Container())
-                  ],
                 );
               }
             }));

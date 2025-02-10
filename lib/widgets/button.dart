@@ -4,28 +4,29 @@ Widget button(Widget child, VoidCallback? func) {
   return ElevatedButton(
       onPressed: func,
       style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 181, 131, 141),
+        backgroundColor: const Color.fromARGB(255, 233, 141, 133),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: const BorderSide(
-              color: Colors.black,
-              width: 1.5,
-            ),
-          )),
+        borderRadius: BorderRadius.circular(20),
+        side: const BorderSide(
+          color: Colors.black,
+          width: 1.5,
+        ),
+      )),
       child: child);
 }
 
 Widget buttonDialog(Widget child, VoidCallback? func) {
   return ElevatedButton(
       onPressed: func,
+      
       style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 205, 133, 63),
+         backgroundColor: const Color.fromARGB(255, 205, 133, 63),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: const BorderSide(
-              color: Colors.black,
-              width: 1.5,
-            ),
-          )),
+        borderRadius: BorderRadius.circular(20),
+        side: const BorderSide(
+          color: Colors.black,
+          width: 1.5,
+        ),
+      )),
       child: child);
 }

@@ -43,6 +43,7 @@ void deleteItemDialog(int itemId, String name, int quantity, BuildContext contex
               },
             );
           }),
+          actionsAlignment: MainAxisAlignment.spaceAround,
           actions: [
             buttonDialog(
               const Text("Отмена",

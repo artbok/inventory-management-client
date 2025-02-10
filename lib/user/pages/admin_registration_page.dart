@@ -5,6 +5,7 @@ import 'package:inventory_managment/requests/create_user.dart';
 import 'package:inventory_managment/admin/pages/storage_page.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/button.dart';
+import 'package:inventory_managment/widgets/show_alert.dart';
 
 class AdminRegistrationPage extends StatefulWidget {
   const AdminRegistrationPage({super.key});
@@ -58,6 +59,7 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                   Flexible(
                     flex: 1,
                     child: TextFormField(
+                      maxLength: 16,
                       controller: usernameController,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(
@@ -89,6 +91,7 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                   Flexible(
                     flex: 1,
                     child: TextFormField(
+                      maxLength: 20,
                       controller: passwordController,
                       obscureText: obscureText,
                       decoration: InputDecoration(
@@ -135,6 +138,11 @@ class _AdminRegistrationPageState extends State<AdminRegistrationPage> {
                             reverseTransitionDuration: Duration.zero,
                           ),
                         );
+                      } else {
+                        showIncorrectDataAlert(
+                            context,
+                            const Text(
+                                "Пользователь с таким именем уже существует"));
                       }
                     });
                   },

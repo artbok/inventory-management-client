@@ -101,7 +101,7 @@ class _StoragePageState extends State<StoragePage> {
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: button(
                   const Row(mainAxisSize: MainAxisSize.min, children: [
-                    Icon(Icons.add, size: 30),
+                    Icon(Icons.add, size: 20, color: Colors.black,),
                     Text(
                       "Создать предмет",
                       style: TextStyle(fontSize: 20, color: Colors.black),

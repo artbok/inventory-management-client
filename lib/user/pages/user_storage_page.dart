@@ -114,18 +114,18 @@ class UserStoragePageState extends State<UserStoragePage> {
                 }
                 return Column(
                   children: [
-                    Expanded(flex: 1, child: Container()),
                     Expanded(
                         flex: 6,
-                        child: SingleChildScrollView(
-                            child: Column(
-                          children: items,
-                        ))),
-                    Expanded(
-                        flex: 1,
-                        child: pageChanger(
-                            currentPage, totalPages, nextPage, previousPage)),
-                    Expanded(flex: 1, child: Container())
+                        child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: SingleChildScrollView(
+                                    child: Column(
+                                  children: items,
+                                ))))),
+                    pageChanger(currentPage, totalPages, nextPage, previousPage)
                   ],
                 );
               }

@@ -48,7 +48,8 @@ Widget scaffoldWithUserNavigation(
           ),
         ],
         selectedIndex: curPage,
-        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+        backgroundColor: const Color.fromARGB(255, 254, 221, 220),
+        indicatorColor: const Color.fromARGB(255, 233, 141, 133),
         onDestinationSelected: (index) =>
             _onDestinationSelected(context, index),
       ),
@@ -84,6 +85,7 @@ Widget scaffoldWithUserNavigation(
             selectedIndex: curPage,
             groupAlignment: -1.0,
             backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+            indicatorColor: const Color.fromARGB(255, 233, 141, 133),
             selectedLabelTextStyle: const TextStyle(
               color: Colors.black,
               fontSize: 20,

@@ -6,6 +6,7 @@ import 'package:inventory_managment/local_storage.dart';
 import 'package:inventory_managment/requests/create_user.dart';
 import 'package:inventory_managment/widgets/background.dart';
 import 'package:inventory_managment/widgets/button.dart';
+import 'package:inventory_managment/widgets/show_alert.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -58,6 +59,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   Flexible(
                     flex: 1,
                     child: TextFormField(
+                      maxLength: 16,
                       controller: usernameController,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(
@@ -89,6 +91,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   Flexible(
                     flex: 1,
                     child: TextFormField(
+                      maxLength: 20,
                       controller: passwordController,
                       obscureText: obscureText,
                       decoration: InputDecoration(
@@ -135,6 +138,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           reverseTransitionDuration: Duration.zero,
                         ),
                       );
+                    } else {
+                      showIncorrectDataAlert(
+                          context,
+                          const Text(
+                              "Пользователь с таким именем уже существует"));
                     }
                   });
                 },

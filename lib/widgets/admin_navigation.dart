@@ -59,7 +59,8 @@ Widget scaffoldWithAdminNavigation(
           NavigationDestination(icon: Icon(Icons.description), label: 'Отчеты'),
         ],
         selectedIndex: curPage,
-        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+        backgroundColor: const Color.fromARGB(255, 254, 221, 220),
+        indicatorColor: const Color.fromARGB(255, 233, 141, 133),
         onDestinationSelected: (index) => onDestinationSelected(context, index),
       ),
       body: background(Column(
@@ -94,6 +95,7 @@ Widget scaffoldWithAdminNavigation(
             selectedIndex: curPage,
             groupAlignment: -1.0,
             backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+            indicatorColor: const Color.fromARGB(255, 233, 141, 133),
             selectedLabelTextStyle: const TextStyle(
               color: Colors.black,
               fontSize: 20,
@@ -127,7 +129,6 @@ Widget scaffoldWithAdminNavigation(
             ],
           ),
         ),
-        const Divider(),
         IconButton(
           icon: const Icon(Icons.logout, size: 40),
           onPressed: () {
